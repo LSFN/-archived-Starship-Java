@@ -1,4 +1,4 @@
-package starship;
+package org.lsfn.starship;
 
 public class Starship {
 
