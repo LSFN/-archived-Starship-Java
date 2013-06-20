@@ -8,6 +8,8 @@ class files go, it is recommended you don't.
 
 SOURCE_DIRECTORY = 'src/'
 BUILD_DIRECTORY = 'build/'
+LIB_DIRECTORY = 'lib/'
+LIB_DIRECTORY_CONTENTS = [str(s) for s in Glob('lib/*')]
 OUTPUT_JAR_FILENAME = 'starship.jar'
 
 # Scons has a concept of a build 'environment', so this is needed:
@@ -19,10 +21,12 @@ make_build_directory = env.Command(BUILD_DIRECTORY,
 								   Mkdir(BUILD_DIRECTORY))
 
 # task for actually doing the java build:
+env.Append(JAVACLASSPATH = LIB_DIRECTORY_CONTENTS)
 java_build = env.Java(target = BUILD_DIRECTORY, source = SOURCE_DIRECTORY)
 
 # task for producing console-pc.jar:
-jar_build = env.Jar(target = OUTPUT_JAR_FILENAME, source = SOURCE_DIRECTORY)
+jar_build = env.Jar(target = OUTPUT_JAR_FILENAME, 
+                    source = [BUILD_DIRECTORY, LIB_DIRECTORY])
 
 # Tell scons that one must build the java files before JARing them:
 env.Depends(jar_build, java_build)
