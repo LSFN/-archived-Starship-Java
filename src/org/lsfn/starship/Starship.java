@@ -20,6 +20,13 @@ public class Starship {
         this.consoleServer.run();
     }
     
+    private void printHelp() {
+        System.out.println("Starship:");
+        System.out.println("\thelp   : print this help text.");
+        System.out.println("\tlisten : opens the console server on the default port.");
+        System.out.println("\texit   : end this program.");
+    }
+    
     private void processCommand(String commandStr) {
         String[] commandParts = commandStr.split(" ");
          
@@ -27,12 +34,16 @@ public class Starship {
             startConsoleServer();
         } else if(commandParts[0].equals("exit")) {
             this.keepGoing = false;
+        } else if(commandParts[0].equals("help")) {
+            printHelp();
         } else {
             System.out.println("You're spouting gibberish. Please try English.");
         }
     }
     
     public void run(String[] args) {
+        printHelp();
+        
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while(this.keepGoing) {
             try {
