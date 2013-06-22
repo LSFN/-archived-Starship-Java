@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.lsfn.starship.ConsoleServer.ServerStatus;
+
 
 public class Starship {
 
@@ -17,11 +19,12 @@ public class Starship {
     
     private void startConsoleServer() {
         this.consoleServer = new ConsoleServer();
+        this.consoleServer.listen();
         this.consoleServer.run();
     }
     
     private void printHelp() {
-        System.out.println("Starship:");
+        System.out.println("Starship commands:");
         System.out.println("\thelp   : print this help text.");
         System.out.println("\tlisten : opens the console server on the default port.");
         System.out.println("\texit   : end this program.");
@@ -54,12 +57,16 @@ public class Starship {
         }
         
         // Close up the threads
-        consoleServer.disconnect();
-        try {
-            consoleServer.join();
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        if(consoleServer.getListenStatus() == ServerStatus.OPEN) {
+            consoleServer.shutDown();
+        }
+        if(consoleServer.isAlive()) {
+            try {
+                consoleServer.join();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
     }
     
