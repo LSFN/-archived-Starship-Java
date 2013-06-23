@@ -20,7 +20,7 @@ public class Starship {
     private void startConsoleServer() {
         this.consoleServer = new ConsoleServer();
         this.consoleServer.listen();
-        this.consoleServer.run();
+        this.consoleServer.start();
     }
     
     private void printHelp() {
