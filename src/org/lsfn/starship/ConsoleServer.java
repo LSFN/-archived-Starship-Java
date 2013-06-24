@@ -192,7 +192,7 @@ public class ConsoleServer extends Thread {
                 Socket consoleSocket = this.consoleServer.accept();
                 addListener(id, new ConsoleListener(consoleSocket));
                 addConnectedConsole(id);
-                System.out.println("New console " + id.toString() + " connected from " + consoleSocket.getInetAddress());
+                System.out.println("New Console " + id.toString() + " connected from " + consoleSocket.getInetAddress());
             } catch (SocketTimeoutException e) {
                 // Timeouts are normal, do nothing
             } catch (SocketException e) {

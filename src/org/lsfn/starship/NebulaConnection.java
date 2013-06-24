@@ -11,6 +11,8 @@ import org.lsfn.starship.FF.*;
 
 public class NebulaConnection extends Thread {
 
+    private static final String defaultHost = "localhost";
+    private static final Integer defaultPort = 39461;
     private static final Integer pollWait = 50;
     
     private Socket nebulaSocket;
@@ -95,6 +97,10 @@ public class NebulaConnection extends Thread {
             }
         }
         return this.connectionStatus;
+    }
+    
+    public ConnectionStatus connect() {
+        return this.connect(defaultHost, defaultPort);
     }
     
     /**
