@@ -53,11 +53,12 @@ public class Starship {
     
     private void printHelp() {
         System.out.println("Starship commands:");
-        System.out.println("\thelp   : print this help text.");
-        System.out.println("\tlisten : opens the console server on the default port.");
+        System.out.println("\thelp                  : print this help text.");
+        System.out.println("\tlisten                : opens the console server on the default port.");
         System.out.println("\tconnect <host> <port> : connects to the Nebula on the given host and port.");
         System.out.println("\tconnect               : connects to the Nebula on the default host and port.");
-        System.out.println("\texit   : end this program.");
+        System.out.println("\tdisconnect            : disconnects from the Nebula if connected.");
+        System.out.println("\texit                  : end this program.");
     }
     
     private void processCommand(String commandStr) {
