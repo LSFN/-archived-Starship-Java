@@ -41,7 +41,6 @@ public class Lobby extends Thread {
             try {
                 Thread.sleep(pollWait);
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
