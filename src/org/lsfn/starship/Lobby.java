@@ -1,48 +1,72 @@
 package org.lsfn.starship;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
+import org.lsfn.starship.FF.FFdown;
+import org.lsfn.starship.FF.FFup;
+import org.lsfn.starship.STS.STSdown;
 import org.lsfn.starship.STS.STSup;
 
-public class Lobby extends Thread {
+public class Lobby {
     
-    private static final Integer pollWait = 50; 
+    private String shipName;
+    private List<String> shipNames;
+    private boolean ready;
+    private boolean gameStarted;
     
-    private ConsoleServer consoleServer;
-    private Map<UUID, ConsoleInfo> consoles;
-    
-    public Lobby(ConsoleServer consoleServer) {
-        this.consoleServer = consoleServer;
-        this.consoles = new HashMap<UUID, ConsoleInfo>();
+    public Lobby() {
+        this.shipName = "";
+        this.shipNames = new ArrayList<String>();
+        this.ready = false;
+        this.gameStarted = false;
     }
-        
-    @Override
-    public void run() {
-        while(true) {
-            // There is no need to remember consoles between connections. 
-            for(UUID id : consoleServer.getDisconnectedConsoles()) {
-                consoles.remove(id);
-            }
-            for(UUID id : consoleServer.getConnectedConsoles()) {
-                if(!consoles.containsKey(id)) {
-                    consoles.put(id, new ConsoleInfo(id));
-                }
-            }
-            Map<UUID, List<STSup>> messages = consoleServer.receiveMessagesFromConsoles();
-            for(UUID id : messages.keySet()) {
-                for(STSup upMessage : messages.get(id)) {
-                    
-                }
-            }
-            
-            try {
-                Thread.sleep(pollWait);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+    
+    public STSdown.Lobby processLobby(FFdown.Lobby lobby) {
+        STSdown.Lobby.Builder stsDownLobby = STSdown.Lobby.newBuilder();
+        if(lobby.hasReadyState()) {
+            this.ready = lobby.getReadyState();
+            stsDownLobby.setReadyState(this.ready);
         }
+        if(lobby.hasShipName()) {
+            this.shipName = lobby.getShipName();
+            stsDownLobby.setShipName(this.shipName);
+        }
+        if(lobby.getShipsInGameCount() > 0) {
+            this.shipNames = lobby.getShipsInGameList();
+            stsDownLobby.addAllShipsInGame(this.shipNames);
+        }
+        if(lobby.hasGameStarted()) {
+            this.gameStarted = lobby.getGameStarted();
+            stsDownLobby.setGameStarted(this.gameStarted);
+        }
+        return stsDownLobby.build();
+    }
+
+    public static FFup.Lobby processLobby(STSup.Lobby lobby) {
+        FFup.Lobby.Builder ffUpLobby = FFup.Lobby.newBuilder();
+        if(lobby.hasReadyState()) {
+            ffUpLobby.setReadyState(lobby.getReadyState());
+        }
+        if(lobby.hasShipName()) {
+            ffUpLobby.setShipName(lobby.getShipName());
+        }
+        return ffUpLobby.build();
+    }
+    
+    public String getShipName() {
+        return shipName;
+    }
+
+    public List<String> getShipNames() {
+        return shipNames;
+    }
+
+    public boolean isReady() {
+        return ready;
+    }
+
+    public boolean isGameStarted() {
+        return gameStarted;
     }
 }

@@ -15,18 +15,18 @@ public class Starship {
     private boolean keepGoing;
     
     public Starship() {
-        this.consoleServer = null;
+        // TODO make sure ConsoleServer and NebulaConnection can do multiple runs without needing a new one of them. 
+        this.consoleServer = new ConsoleServer();
+        this.nebulaConnection = new NebulaConnection();
         this.keepGoing = true;
     }
     
     private void startConsoleServer() {
-        this.consoleServer = new ConsoleServer();
         this.consoleServer.listen();
         this.consoleServer.start();
     }
     
     private void startNebulaClient(String host, Integer port) {
-        this.nebulaConnection = new NebulaConnection();
         System.out.println("Connecting...");
         ConnectionStatus status = ConnectionStatus.DISCONNECTED;
         if(host == null || port == null) {

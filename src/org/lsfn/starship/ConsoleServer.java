@@ -132,6 +132,16 @@ public class ConsoleServer extends Thread {
         }
     }
     
+    public void sendMessageToAllConsoles(STSdown downMessage) {
+        Set<UUID> ids = getListenerIDs();
+        for(UUID id: ids) {
+            ConsoleListener listener = getListener(id);
+            if(listener != null) {
+                listener.sendMessageToConsole(downMessage);
+            }
+        }
+    }
+    
     private synchronized void addListener(UUID id, ConsoleListener listener) {
         this.listeners.put(id, listener);
         this.buffers.put(id, new ArrayList<STSup>());

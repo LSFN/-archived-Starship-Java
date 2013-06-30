@@ -11,15 +11,25 @@ public final class STS {
   public interface STSupOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
     
-    // optional .STSup.Lobby lobby = 1;
+    // optional .STSup.RCon rcon = 1;
+    boolean hasRcon();
+    org.lsfn.starship.STS.STSup.RCon getRcon();
+    org.lsfn.starship.STS.STSup.RConOrBuilder getRconOrBuilder();
+    
+    // optional .STSup.Connection connection = 2;
+    boolean hasConnection();
+    org.lsfn.starship.STS.STSup.Connection getConnection();
+    org.lsfn.starship.STS.STSup.ConnectionOrBuilder getConnectionOrBuilder();
+    
+    // optional .STSup.Lobby lobby = 3;
     boolean hasLobby();
     org.lsfn.starship.STS.STSup.Lobby getLobby();
     org.lsfn.starship.STS.STSup.LobbyOrBuilder getLobbyOrBuilder();
     
-    // optional .STSup.RCon rcon = 2;
-    boolean hasRcon();
-    org.lsfn.starship.STS.STSup.RCon getRcon();
-    org.lsfn.starship.STS.STSup.RConOrBuilder getRconOrBuilder();
+    // optional .STSup.Piloting piloting = 4;
+    boolean hasPiloting();
+    org.lsfn.starship.STS.STSup.Piloting getPiloting();
+    org.lsfn.starship.STS.STSup.PilotingOrBuilder getPilotingOrBuilder();
   }
   public static final class STSup extends
       com.google.protobuf.GeneratedMessage
@@ -49,44 +59,47 @@ public final class STS {
       return org.lsfn.starship.STS.internal_static_STSup_fieldAccessorTable;
     }
     
-    public interface LobbyOrBuilder
+    public interface ConnectionOrBuilder
         extends com.google.protobuf.MessageOrBuilder {
       
-      // optional bool readyState = 1;
-      boolean hasReadyState();
-      boolean getReadyState();
+      // optional .STSup.Connection.ConnectionCommand connectionCommand = 1;
+      boolean hasConnectionCommand();
+      org.lsfn.starship.STS.STSup.Connection.ConnectionCommand getConnectionCommand();
       
-      // optional .STSup.Lobby.Connection connection = 2;
-      boolean hasConnection();
-      org.lsfn.starship.STS.STSup.Lobby.Connection getConnection();
-      org.lsfn.starship.STS.STSup.Lobby.ConnectionOrBuilder getConnectionOrBuilder();
+      // optional string host = 2;
+      boolean hasHost();
+      String getHost();
+      
+      // optional uint32 port = 3;
+      boolean hasPort();
+      int getPort();
     }
-    public static final class Lobby extends
+    public static final class Connection extends
         com.google.protobuf.GeneratedMessage
-        implements LobbyOrBuilder {
-      // Use Lobby.newBuilder() to construct.
-      private Lobby(Builder builder) {
+        implements ConnectionOrBuilder {
+      // Use Connection.newBuilder() to construct.
+      private Connection(Builder builder) {
         super(builder);
       }
-      private Lobby(boolean noInit) {}
+      private Connection(boolean noInit) {}
       
-      private static final Lobby defaultInstance;
-      public static Lobby getDefaultInstance() {
+      private static final Connection defaultInstance;
+      public static Connection getDefaultInstance() {
         return defaultInstance;
       }
       
-      public Lobby getDefaultInstanceForType() {
+      public Connection getDefaultInstanceForType() {
         return defaultInstance;
       }
       
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return org.lsfn.starship.STS.internal_static_STSup_Lobby_descriptor;
+        return org.lsfn.starship.STS.internal_static_STSup_Connection_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return org.lsfn.starship.STS.internal_static_STSup_Lobby_fieldAccessorTable;
+        return org.lsfn.starship.STS.internal_static_STSup_Connection_fieldAccessorTable;
       }
       
       public enum ConnectionCommand
@@ -131,7 +144,7 @@ public final class STS {
         }
         public static final com.google.protobuf.Descriptors.EnumDescriptor
             getDescriptor() {
-          return org.lsfn.starship.STS.STSup.Lobby.getDescriptor().getEnumTypes().get(0);
+          return org.lsfn.starship.STS.STSup.Connection.getDescriptor().getEnumTypes().get(0);
         }
         
         private static final ConnectionCommand[] VALUES = {
@@ -155,505 +168,501 @@ public final class STS {
           this.value = value;
         }
         
-        // @@protoc_insertion_point(enum_scope:STSup.Lobby.ConnectionCommand)
+        // @@protoc_insertion_point(enum_scope:STSup.Connection.ConnectionCommand)
       }
       
-      public interface ConnectionOrBuilder
-          extends com.google.protobuf.MessageOrBuilder {
-        
-        // optional .STSup.Lobby.ConnectionCommand connectionCommand = 1;
-        boolean hasConnectionCommand();
-        org.lsfn.starship.STS.STSup.Lobby.ConnectionCommand getConnectionCommand();
-        
-        // optional string host = 2;
-        boolean hasHost();
-        String getHost();
-        
-        // optional uint32 port = 3;
-        boolean hasPort();
-        int getPort();
+      private int bitField0_;
+      // optional .STSup.Connection.ConnectionCommand connectionCommand = 1;
+      public static final int CONNECTIONCOMMAND_FIELD_NUMBER = 1;
+      private org.lsfn.starship.STS.STSup.Connection.ConnectionCommand connectionCommand_;
+      public boolean hasConnectionCommand() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public static final class Connection extends
-          com.google.protobuf.GeneratedMessage
-          implements ConnectionOrBuilder {
-        // Use Connection.newBuilder() to construct.
-        private Connection(Builder builder) {
-          super(builder);
+      public org.lsfn.starship.STS.STSup.Connection.ConnectionCommand getConnectionCommand() {
+        return connectionCommand_;
+      }
+      
+      // optional string host = 2;
+      public static final int HOST_FIELD_NUMBER = 2;
+      private java.lang.Object host_;
+      public boolean hasHost() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      public String getHost() {
+        java.lang.Object ref = host_;
+        if (ref instanceof String) {
+          return (String) ref;
+        } else {
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          String s = bs.toStringUtf8();
+          if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+            host_ = s;
+          }
+          return s;
         }
-        private Connection(boolean noInit) {}
-        
-        private static final Connection defaultInstance;
-        public static Connection getDefaultInstance() {
-          return defaultInstance;
+      }
+      private com.google.protobuf.ByteString getHostBytes() {
+        java.lang.Object ref = host_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+          host_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
         }
+      }
+      
+      // optional uint32 port = 3;
+      public static final int PORT_FIELD_NUMBER = 3;
+      private int port_;
+      public boolean hasPort() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      public int getPort() {
+        return port_;
+      }
+      
+      private void initFields() {
+        connectionCommand_ = org.lsfn.starship.STS.STSup.Connection.ConnectionCommand.CONNECT;
+        host_ = "";
+        port_ = 0;
+      }
+      private byte memoizedIsInitialized = -1;
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized != -1) return isInitialized == 1;
         
-        public Connection getDefaultInstanceForType() {
-          return defaultInstance;
+        memoizedIsInitialized = 1;
+        return true;
+      }
+      
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        getSerializedSize();
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          output.writeEnum(1, connectionCommand_.getNumber());
         }
-        
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          output.writeBytes(2, getHostBytes());
+        }
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          output.writeUInt32(3, port_);
+        }
+        getUnknownFields().writeTo(output);
+      }
+      
+      private int memoizedSerializedSize = -1;
+      public int getSerializedSize() {
+        int size = memoizedSerializedSize;
+        if (size != -1) return size;
+      
+        size = 0;
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeEnumSize(1, connectionCommand_.getNumber());
+        }
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBytesSize(2, getHostBytes());
+        }
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeUInt32Size(3, port_);
+        }
+        size += getUnknownFields().getSerializedSize();
+        memoizedSerializedSize = size;
+        return size;
+      }
+      
+      private static final long serialVersionUID = 0L;
+      @java.lang.Override
+      protected java.lang.Object writeReplace()
+          throws java.io.ObjectStreamException {
+        return super.writeReplace();
+      }
+      
+      public static org.lsfn.starship.STS.STSup.Connection parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return newBuilder().mergeFrom(data).buildParsed();
+      }
+      public static org.lsfn.starship.STS.STSup.Connection parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return newBuilder().mergeFrom(data, extensionRegistry)
+                 .buildParsed();
+      }
+      public static org.lsfn.starship.STS.STSup.Connection parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return newBuilder().mergeFrom(data).buildParsed();
+      }
+      public static org.lsfn.starship.STS.STSup.Connection parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return newBuilder().mergeFrom(data, extensionRegistry)
+                 .buildParsed();
+      }
+      public static org.lsfn.starship.STS.STSup.Connection parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return newBuilder().mergeFrom(input).buildParsed();
+      }
+      public static org.lsfn.starship.STS.STSup.Connection parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return newBuilder().mergeFrom(input, extensionRegistry)
+                 .buildParsed();
+      }
+      public static org.lsfn.starship.STS.STSup.Connection parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        Builder builder = newBuilder();
+        if (builder.mergeDelimitedFrom(input)) {
+          return builder.buildParsed();
+        } else {
+          return null;
+        }
+      }
+      public static org.lsfn.starship.STS.STSup.Connection parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        Builder builder = newBuilder();
+        if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+          return builder.buildParsed();
+        } else {
+          return null;
+        }
+      }
+      public static org.lsfn.starship.STS.STSup.Connection parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return newBuilder().mergeFrom(input).buildParsed();
+      }
+      public static org.lsfn.starship.STS.STSup.Connection parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return newBuilder().mergeFrom(input, extensionRegistry)
+                 .buildParsed();
+      }
+      
+      public static Builder newBuilder() { return Builder.create(); }
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder(org.lsfn.starship.STS.STSup.Connection prototype) {
+        return newBuilder().mergeFrom(prototype);
+      }
+      public Builder toBuilder() { return newBuilder(this); }
+      
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements org.lsfn.starship.STS.STSup.ConnectionOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
-          return org.lsfn.starship.STS.internal_static_STSup_Lobby_Connection_descriptor;
+          return org.lsfn.starship.STS.internal_static_STSup_Connection_descriptor;
         }
         
         protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
             internalGetFieldAccessorTable() {
-          return org.lsfn.starship.STS.internal_static_STSup_Lobby_Connection_fieldAccessorTable;
+          return org.lsfn.starship.STS.internal_static_STSup_Connection_fieldAccessorTable;
+        }
+        
+        // Construct using org.lsfn.starship.STS.STSup.Connection.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+        
+        private Builder(BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          }
+        }
+        private static Builder create() {
+          return new Builder();
+        }
+        
+        public Builder clear() {
+          super.clear();
+          connectionCommand_ = org.lsfn.starship.STS.STSup.Connection.ConnectionCommand.CONNECT;
+          bitField0_ = (bitField0_ & ~0x00000001);
+          host_ = "";
+          bitField0_ = (bitField0_ & ~0x00000002);
+          port_ = 0;
+          bitField0_ = (bitField0_ & ~0x00000004);
+          return this;
+        }
+        
+        public Builder clone() {
+          return create().mergeFrom(buildPartial());
+        }
+        
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return org.lsfn.starship.STS.STSup.Connection.getDescriptor();
+        }
+        
+        public org.lsfn.starship.STS.STSup.Connection getDefaultInstanceForType() {
+          return org.lsfn.starship.STS.STSup.Connection.getDefaultInstance();
+        }
+        
+        public org.lsfn.starship.STS.STSup.Connection build() {
+          org.lsfn.starship.STS.STSup.Connection result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+        
+        private org.lsfn.starship.STS.STSup.Connection buildParsed()
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          org.lsfn.starship.STS.STSup.Connection result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(
+              result).asInvalidProtocolBufferException();
+          }
+          return result;
+        }
+        
+        public org.lsfn.starship.STS.STSup.Connection buildPartial() {
+          org.lsfn.starship.STS.STSup.Connection result = new org.lsfn.starship.STS.STSup.Connection(this);
+          int from_bitField0_ = bitField0_;
+          int to_bitField0_ = 0;
+          if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+            to_bitField0_ |= 0x00000001;
+          }
+          result.connectionCommand_ = connectionCommand_;
+          if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+            to_bitField0_ |= 0x00000002;
+          }
+          result.host_ = host_;
+          if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+            to_bitField0_ |= 0x00000004;
+          }
+          result.port_ = port_;
+          result.bitField0_ = to_bitField0_;
+          onBuilt();
+          return result;
+        }
+        
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof org.lsfn.starship.STS.STSup.Connection) {
+            return mergeFrom((org.lsfn.starship.STS.STSup.Connection)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+        
+        public Builder mergeFrom(org.lsfn.starship.STS.STSup.Connection other) {
+          if (other == org.lsfn.starship.STS.STSup.Connection.getDefaultInstance()) return this;
+          if (other.hasConnectionCommand()) {
+            setConnectionCommand(other.getConnectionCommand());
+          }
+          if (other.hasHost()) {
+            setHost(other.getHost());
+          }
+          if (other.hasPort()) {
+            setPort(other.getPort());
+          }
+          this.mergeUnknownFields(other.getUnknownFields());
+          return this;
+        }
+        
+        public final boolean isInitialized() {
+          return true;
+        }
+        
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder(
+              this.getUnknownFields());
+          while (true) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                this.setUnknownFields(unknownFields.build());
+                onChanged();
+                return this;
+              default: {
+                if (!parseUnknownField(input, unknownFields,
+                                       extensionRegistry, tag)) {
+                  this.setUnknownFields(unknownFields.build());
+                  onChanged();
+                  return this;
+                }
+                break;
+              }
+              case 8: {
+                int rawValue = input.readEnum();
+                org.lsfn.starship.STS.STSup.Connection.ConnectionCommand value = org.lsfn.starship.STS.STSup.Connection.ConnectionCommand.valueOf(rawValue);
+                if (value == null) {
+                  unknownFields.mergeVarintField(1, rawValue);
+                } else {
+                  bitField0_ |= 0x00000001;
+                  connectionCommand_ = value;
+                }
+                break;
+              }
+              case 18: {
+                bitField0_ |= 0x00000002;
+                host_ = input.readBytes();
+                break;
+              }
+              case 24: {
+                bitField0_ |= 0x00000004;
+                port_ = input.readUInt32();
+                break;
+              }
+            }
+          }
         }
         
         private int bitField0_;
-        // optional .STSup.Lobby.ConnectionCommand connectionCommand = 1;
-        public static final int CONNECTIONCOMMAND_FIELD_NUMBER = 1;
-        private org.lsfn.starship.STS.STSup.Lobby.ConnectionCommand connectionCommand_;
+        
+        // optional .STSup.Connection.ConnectionCommand connectionCommand = 1;
+        private org.lsfn.starship.STS.STSup.Connection.ConnectionCommand connectionCommand_ = org.lsfn.starship.STS.STSup.Connection.ConnectionCommand.CONNECT;
         public boolean hasConnectionCommand() {
           return ((bitField0_ & 0x00000001) == 0x00000001);
         }
-        public org.lsfn.starship.STS.STSup.Lobby.ConnectionCommand getConnectionCommand() {
+        public org.lsfn.starship.STS.STSup.Connection.ConnectionCommand getConnectionCommand() {
           return connectionCommand_;
+        }
+        public Builder setConnectionCommand(org.lsfn.starship.STS.STSup.Connection.ConnectionCommand value) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          bitField0_ |= 0x00000001;
+          connectionCommand_ = value;
+          onChanged();
+          return this;
+        }
+        public Builder clearConnectionCommand() {
+          bitField0_ = (bitField0_ & ~0x00000001);
+          connectionCommand_ = org.lsfn.starship.STS.STSup.Connection.ConnectionCommand.CONNECT;
+          onChanged();
+          return this;
         }
         
         // optional string host = 2;
-        public static final int HOST_FIELD_NUMBER = 2;
-        private java.lang.Object host_;
+        private java.lang.Object host_ = "";
         public boolean hasHost() {
           return ((bitField0_ & 0x00000002) == 0x00000002);
         }
         public String getHost() {
           java.lang.Object ref = host_;
-          if (ref instanceof String) {
-            return (String) ref;
-          } else {
-            com.google.protobuf.ByteString bs = 
-                (com.google.protobuf.ByteString) ref;
-            String s = bs.toStringUtf8();
-            if (com.google.protobuf.Internal.isValidUtf8(bs)) {
-              host_ = s;
-            }
+          if (!(ref instanceof String)) {
+            String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+            host_ = s;
             return s;
+          } else {
+            return (String) ref;
           }
         }
-        private com.google.protobuf.ByteString getHostBytes() {
-          java.lang.Object ref = host_;
-          if (ref instanceof String) {
-            com.google.protobuf.ByteString b = 
-                com.google.protobuf.ByteString.copyFromUtf8((String) ref);
-            host_ = b;
-            return b;
-          } else {
-            return (com.google.protobuf.ByteString) ref;
-          }
+        public Builder setHost(String value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+          host_ = value;
+          onChanged();
+          return this;
+        }
+        public Builder clearHost() {
+          bitField0_ = (bitField0_ & ~0x00000002);
+          host_ = getDefaultInstance().getHost();
+          onChanged();
+          return this;
+        }
+        void setHost(com.google.protobuf.ByteString value) {
+          bitField0_ |= 0x00000002;
+          host_ = value;
+          onChanged();
         }
         
         // optional uint32 port = 3;
-        public static final int PORT_FIELD_NUMBER = 3;
-        private int port_;
+        private int port_ ;
         public boolean hasPort() {
           return ((bitField0_ & 0x00000004) == 0x00000004);
         }
         public int getPort() {
           return port_;
         }
-        
-        private void initFields() {
-          connectionCommand_ = org.lsfn.starship.STS.STSup.Lobby.ConnectionCommand.CONNECT;
-          host_ = "";
+        public Builder setPort(int value) {
+          bitField0_ |= 0x00000004;
+          port_ = value;
+          onChanged();
+          return this;
+        }
+        public Builder clearPort() {
+          bitField0_ = (bitField0_ & ~0x00000004);
           port_ = 0;
-        }
-        private byte memoizedIsInitialized = -1;
-        public final boolean isInitialized() {
-          byte isInitialized = memoizedIsInitialized;
-          if (isInitialized != -1) return isInitialized == 1;
-          
-          memoizedIsInitialized = 1;
-          return true;
+          onChanged();
+          return this;
         }
         
-        public void writeTo(com.google.protobuf.CodedOutputStream output)
-                            throws java.io.IOException {
-          getSerializedSize();
-          if (((bitField0_ & 0x00000001) == 0x00000001)) {
-            output.writeEnum(1, connectionCommand_.getNumber());
-          }
-          if (((bitField0_ & 0x00000002) == 0x00000002)) {
-            output.writeBytes(2, getHostBytes());
-          }
-          if (((bitField0_ & 0x00000004) == 0x00000004)) {
-            output.writeUInt32(3, port_);
-          }
-          getUnknownFields().writeTo(output);
-        }
-        
-        private int memoizedSerializedSize = -1;
-        public int getSerializedSize() {
-          int size = memoizedSerializedSize;
-          if (size != -1) return size;
-        
-          size = 0;
-          if (((bitField0_ & 0x00000001) == 0x00000001)) {
-            size += com.google.protobuf.CodedOutputStream
-              .computeEnumSize(1, connectionCommand_.getNumber());
-          }
-          if (((bitField0_ & 0x00000002) == 0x00000002)) {
-            size += com.google.protobuf.CodedOutputStream
-              .computeBytesSize(2, getHostBytes());
-          }
-          if (((bitField0_ & 0x00000004) == 0x00000004)) {
-            size += com.google.protobuf.CodedOutputStream
-              .computeUInt32Size(3, port_);
-          }
-          size += getUnknownFields().getSerializedSize();
-          memoizedSerializedSize = size;
-          return size;
-        }
-        
-        private static final long serialVersionUID = 0L;
-        @java.lang.Override
-        protected java.lang.Object writeReplace()
-            throws java.io.ObjectStreamException {
-          return super.writeReplace();
-        }
-        
-        public static org.lsfn.starship.STS.STSup.Lobby.Connection parseFrom(
-            com.google.protobuf.ByteString data)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          return newBuilder().mergeFrom(data).buildParsed();
-        }
-        public static org.lsfn.starship.STS.STSup.Lobby.Connection parseFrom(
-            com.google.protobuf.ByteString data,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          return newBuilder().mergeFrom(data, extensionRegistry)
-                   .buildParsed();
-        }
-        public static org.lsfn.starship.STS.STSup.Lobby.Connection parseFrom(byte[] data)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          return newBuilder().mergeFrom(data).buildParsed();
-        }
-        public static org.lsfn.starship.STS.STSup.Lobby.Connection parseFrom(
-            byte[] data,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          return newBuilder().mergeFrom(data, extensionRegistry)
-                   .buildParsed();
-        }
-        public static org.lsfn.starship.STS.STSup.Lobby.Connection parseFrom(java.io.InputStream input)
-            throws java.io.IOException {
-          return newBuilder().mergeFrom(input).buildParsed();
-        }
-        public static org.lsfn.starship.STS.STSup.Lobby.Connection parseFrom(
-            java.io.InputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
-          return newBuilder().mergeFrom(input, extensionRegistry)
-                   .buildParsed();
-        }
-        public static org.lsfn.starship.STS.STSup.Lobby.Connection parseDelimitedFrom(java.io.InputStream input)
-            throws java.io.IOException {
-          Builder builder = newBuilder();
-          if (builder.mergeDelimitedFrom(input)) {
-            return builder.buildParsed();
-          } else {
-            return null;
-          }
-        }
-        public static org.lsfn.starship.STS.STSup.Lobby.Connection parseDelimitedFrom(
-            java.io.InputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
-          Builder builder = newBuilder();
-          if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-            return builder.buildParsed();
-          } else {
-            return null;
-          }
-        }
-        public static org.lsfn.starship.STS.STSup.Lobby.Connection parseFrom(
-            com.google.protobuf.CodedInputStream input)
-            throws java.io.IOException {
-          return newBuilder().mergeFrom(input).buildParsed();
-        }
-        public static org.lsfn.starship.STS.STSup.Lobby.Connection parseFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
-          return newBuilder().mergeFrom(input, extensionRegistry)
-                   .buildParsed();
-        }
-        
-        public static Builder newBuilder() { return Builder.create(); }
-        public Builder newBuilderForType() { return newBuilder(); }
-        public static Builder newBuilder(org.lsfn.starship.STS.STSup.Lobby.Connection prototype) {
-          return newBuilder().mergeFrom(prototype);
-        }
-        public Builder toBuilder() { return newBuilder(this); }
-        
-        @java.lang.Override
-        protected Builder newBuilderForType(
-            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-          Builder builder = new Builder(parent);
-          return builder;
-        }
-        public static final class Builder extends
-            com.google.protobuf.GeneratedMessage.Builder<Builder>
-           implements org.lsfn.starship.STS.STSup.Lobby.ConnectionOrBuilder {
-          public static final com.google.protobuf.Descriptors.Descriptor
-              getDescriptor() {
-            return org.lsfn.starship.STS.internal_static_STSup_Lobby_Connection_descriptor;
-          }
-          
-          protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-              internalGetFieldAccessorTable() {
-            return org.lsfn.starship.STS.internal_static_STSup_Lobby_Connection_fieldAccessorTable;
-          }
-          
-          // Construct using org.lsfn.starship.STS.STSup.Lobby.Connection.newBuilder()
-          private Builder() {
-            maybeForceBuilderInitialization();
-          }
-          
-          private Builder(BuilderParent parent) {
-            super(parent);
-            maybeForceBuilderInitialization();
-          }
-          private void maybeForceBuilderInitialization() {
-            if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-            }
-          }
-          private static Builder create() {
-            return new Builder();
-          }
-          
-          public Builder clear() {
-            super.clear();
-            connectionCommand_ = org.lsfn.starship.STS.STSup.Lobby.ConnectionCommand.CONNECT;
-            bitField0_ = (bitField0_ & ~0x00000001);
-            host_ = "";
-            bitField0_ = (bitField0_ & ~0x00000002);
-            port_ = 0;
-            bitField0_ = (bitField0_ & ~0x00000004);
-            return this;
-          }
-          
-          public Builder clone() {
-            return create().mergeFrom(buildPartial());
-          }
-          
-          public com.google.protobuf.Descriptors.Descriptor
-              getDescriptorForType() {
-            return org.lsfn.starship.STS.STSup.Lobby.Connection.getDescriptor();
-          }
-          
-          public org.lsfn.starship.STS.STSup.Lobby.Connection getDefaultInstanceForType() {
-            return org.lsfn.starship.STS.STSup.Lobby.Connection.getDefaultInstance();
-          }
-          
-          public org.lsfn.starship.STS.STSup.Lobby.Connection build() {
-            org.lsfn.starship.STS.STSup.Lobby.Connection result = buildPartial();
-            if (!result.isInitialized()) {
-              throw newUninitializedMessageException(result);
-            }
-            return result;
-          }
-          
-          private org.lsfn.starship.STS.STSup.Lobby.Connection buildParsed()
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            org.lsfn.starship.STS.STSup.Lobby.Connection result = buildPartial();
-            if (!result.isInitialized()) {
-              throw newUninitializedMessageException(
-                result).asInvalidProtocolBufferException();
-            }
-            return result;
-          }
-          
-          public org.lsfn.starship.STS.STSup.Lobby.Connection buildPartial() {
-            org.lsfn.starship.STS.STSup.Lobby.Connection result = new org.lsfn.starship.STS.STSup.Lobby.Connection(this);
-            int from_bitField0_ = bitField0_;
-            int to_bitField0_ = 0;
-            if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-              to_bitField0_ |= 0x00000001;
-            }
-            result.connectionCommand_ = connectionCommand_;
-            if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-              to_bitField0_ |= 0x00000002;
-            }
-            result.host_ = host_;
-            if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
-              to_bitField0_ |= 0x00000004;
-            }
-            result.port_ = port_;
-            result.bitField0_ = to_bitField0_;
-            onBuilt();
-            return result;
-          }
-          
-          public Builder mergeFrom(com.google.protobuf.Message other) {
-            if (other instanceof org.lsfn.starship.STS.STSup.Lobby.Connection) {
-              return mergeFrom((org.lsfn.starship.STS.STSup.Lobby.Connection)other);
-            } else {
-              super.mergeFrom(other);
-              return this;
-            }
-          }
-          
-          public Builder mergeFrom(org.lsfn.starship.STS.STSup.Lobby.Connection other) {
-            if (other == org.lsfn.starship.STS.STSup.Lobby.Connection.getDefaultInstance()) return this;
-            if (other.hasConnectionCommand()) {
-              setConnectionCommand(other.getConnectionCommand());
-            }
-            if (other.hasHost()) {
-              setHost(other.getHost());
-            }
-            if (other.hasPort()) {
-              setPort(other.getPort());
-            }
-            this.mergeUnknownFields(other.getUnknownFields());
-            return this;
-          }
-          
-          public final boolean isInitialized() {
-            return true;
-          }
-          
-          public Builder mergeFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws java.io.IOException {
-            com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-              com.google.protobuf.UnknownFieldSet.newBuilder(
-                this.getUnknownFields());
-            while (true) {
-              int tag = input.readTag();
-              switch (tag) {
-                case 0:
-                  this.setUnknownFields(unknownFields.build());
-                  onChanged();
-                  return this;
-                default: {
-                  if (!parseUnknownField(input, unknownFields,
-                                         extensionRegistry, tag)) {
-                    this.setUnknownFields(unknownFields.build());
-                    onChanged();
-                    return this;
-                  }
-                  break;
-                }
-                case 8: {
-                  int rawValue = input.readEnum();
-                  org.lsfn.starship.STS.STSup.Lobby.ConnectionCommand value = org.lsfn.starship.STS.STSup.Lobby.ConnectionCommand.valueOf(rawValue);
-                  if (value == null) {
-                    unknownFields.mergeVarintField(1, rawValue);
-                  } else {
-                    bitField0_ |= 0x00000001;
-                    connectionCommand_ = value;
-                  }
-                  break;
-                }
-                case 18: {
-                  bitField0_ |= 0x00000002;
-                  host_ = input.readBytes();
-                  break;
-                }
-                case 24: {
-                  bitField0_ |= 0x00000004;
-                  port_ = input.readUInt32();
-                  break;
-                }
-              }
-            }
-          }
-          
-          private int bitField0_;
-          
-          // optional .STSup.Lobby.ConnectionCommand connectionCommand = 1;
-          private org.lsfn.starship.STS.STSup.Lobby.ConnectionCommand connectionCommand_ = org.lsfn.starship.STS.STSup.Lobby.ConnectionCommand.CONNECT;
-          public boolean hasConnectionCommand() {
-            return ((bitField0_ & 0x00000001) == 0x00000001);
-          }
-          public org.lsfn.starship.STS.STSup.Lobby.ConnectionCommand getConnectionCommand() {
-            return connectionCommand_;
-          }
-          public Builder setConnectionCommand(org.lsfn.starship.STS.STSup.Lobby.ConnectionCommand value) {
-            if (value == null) {
-              throw new NullPointerException();
-            }
-            bitField0_ |= 0x00000001;
-            connectionCommand_ = value;
-            onChanged();
-            return this;
-          }
-          public Builder clearConnectionCommand() {
-            bitField0_ = (bitField0_ & ~0x00000001);
-            connectionCommand_ = org.lsfn.starship.STS.STSup.Lobby.ConnectionCommand.CONNECT;
-            onChanged();
-            return this;
-          }
-          
-          // optional string host = 2;
-          private java.lang.Object host_ = "";
-          public boolean hasHost() {
-            return ((bitField0_ & 0x00000002) == 0x00000002);
-          }
-          public String getHost() {
-            java.lang.Object ref = host_;
-            if (!(ref instanceof String)) {
-              String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-              host_ = s;
-              return s;
-            } else {
-              return (String) ref;
-            }
-          }
-          public Builder setHost(String value) {
-            if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000002;
-            host_ = value;
-            onChanged();
-            return this;
-          }
-          public Builder clearHost() {
-            bitField0_ = (bitField0_ & ~0x00000002);
-            host_ = getDefaultInstance().getHost();
-            onChanged();
-            return this;
-          }
-          void setHost(com.google.protobuf.ByteString value) {
-            bitField0_ |= 0x00000002;
-            host_ = value;
-            onChanged();
-          }
-          
-          // optional uint32 port = 3;
-          private int port_ ;
-          public boolean hasPort() {
-            return ((bitField0_ & 0x00000004) == 0x00000004);
-          }
-          public int getPort() {
-            return port_;
-          }
-          public Builder setPort(int value) {
-            bitField0_ |= 0x00000004;
-            port_ = value;
-            onChanged();
-            return this;
-          }
-          public Builder clearPort() {
-            bitField0_ = (bitField0_ & ~0x00000004);
-            port_ = 0;
-            onChanged();
-            return this;
-          }
-          
-          // @@protoc_insertion_point(builder_scope:STSup.Lobby.Connection)
-        }
-        
-        static {
-          defaultInstance = new Connection(true);
-          defaultInstance.initFields();
-        }
-        
-        // @@protoc_insertion_point(class_scope:STSup.Lobby.Connection)
+        // @@protoc_insertion_point(builder_scope:STSup.Connection)
+      }
+      
+      static {
+        defaultInstance = new Connection(true);
+        defaultInstance.initFields();
+      }
+      
+      // @@protoc_insertion_point(class_scope:STSup.Connection)
+    }
+    
+    public interface LobbyOrBuilder
+        extends com.google.protobuf.MessageOrBuilder {
+      
+      // optional bool readyState = 1;
+      boolean hasReadyState();
+      boolean getReadyState();
+      
+      // optional string shipName = 2;
+      boolean hasShipName();
+      String getShipName();
+    }
+    public static final class Lobby extends
+        com.google.protobuf.GeneratedMessage
+        implements LobbyOrBuilder {
+      // Use Lobby.newBuilder() to construct.
+      private Lobby(Builder builder) {
+        super(builder);
+      }
+      private Lobby(boolean noInit) {}
+      
+      private static final Lobby defaultInstance;
+      public static Lobby getDefaultInstance() {
+        return defaultInstance;
+      }
+      
+      public Lobby getDefaultInstanceForType() {
+        return defaultInstance;
+      }
+      
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.lsfn.starship.STS.internal_static_STSup_Lobby_descriptor;
+      }
+      
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.lsfn.starship.STS.internal_static_STSup_Lobby_fieldAccessorTable;
       }
       
       private int bitField0_;
@@ -667,22 +676,41 @@ public final class STS {
         return readyState_;
       }
       
-      // optional .STSup.Lobby.Connection connection = 2;
-      public static final int CONNECTION_FIELD_NUMBER = 2;
-      private org.lsfn.starship.STS.STSup.Lobby.Connection connection_;
-      public boolean hasConnection() {
+      // optional string shipName = 2;
+      public static final int SHIPNAME_FIELD_NUMBER = 2;
+      private java.lang.Object shipName_;
+      public boolean hasShipName() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public org.lsfn.starship.STS.STSup.Lobby.Connection getConnection() {
-        return connection_;
+      public String getShipName() {
+        java.lang.Object ref = shipName_;
+        if (ref instanceof String) {
+          return (String) ref;
+        } else {
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          String s = bs.toStringUtf8();
+          if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+            shipName_ = s;
+          }
+          return s;
+        }
       }
-      public org.lsfn.starship.STS.STSup.Lobby.ConnectionOrBuilder getConnectionOrBuilder() {
-        return connection_;
+      private com.google.protobuf.ByteString getShipNameBytes() {
+        java.lang.Object ref = shipName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+          shipName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
       }
       
       private void initFields() {
         readyState_ = false;
-        connection_ = org.lsfn.starship.STS.STSup.Lobby.Connection.getDefaultInstance();
+        shipName_ = "";
       }
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
@@ -700,7 +728,7 @@ public final class STS {
           output.writeBool(1, readyState_);
         }
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          output.writeMessage(2, connection_);
+          output.writeBytes(2, getShipNameBytes());
         }
         getUnknownFields().writeTo(output);
       }
@@ -717,7 +745,7 @@ public final class STS {
         }
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
           size += com.google.protobuf.CodedOutputStream
-            .computeMessageSize(2, connection_);
+            .computeBytesSize(2, getShipNameBytes());
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSerializedSize = size;
@@ -835,7 +863,6 @@ public final class STS {
         }
         private void maybeForceBuilderInitialization() {
           if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-            getConnectionFieldBuilder();
           }
         }
         private static Builder create() {
@@ -846,11 +873,7 @@ public final class STS {
           super.clear();
           readyState_ = false;
           bitField0_ = (bitField0_ & ~0x00000001);
-          if (connectionBuilder_ == null) {
-            connection_ = org.lsfn.starship.STS.STSup.Lobby.Connection.getDefaultInstance();
-          } else {
-            connectionBuilder_.clear();
-          }
+          shipName_ = "";
           bitField0_ = (bitField0_ & ~0x00000002);
           return this;
         }
@@ -897,11 +920,7 @@ public final class STS {
           if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
             to_bitField0_ |= 0x00000002;
           }
-          if (connectionBuilder_ == null) {
-            result.connection_ = connection_;
-          } else {
-            result.connection_ = connectionBuilder_.build();
-          }
+          result.shipName_ = shipName_;
           result.bitField0_ = to_bitField0_;
           onBuilt();
           return result;
@@ -921,8 +940,8 @@ public final class STS {
           if (other.hasReadyState()) {
             setReadyState(other.getReadyState());
           }
-          if (other.hasConnection()) {
-            mergeConnection(other.getConnection());
+          if (other.hasShipName()) {
+            setShipName(other.getShipName());
           }
           this.mergeUnknownFields(other.getUnknownFields());
           return this;
@@ -961,12 +980,8 @@ public final class STS {
                 break;
               }
               case 18: {
-                org.lsfn.starship.STS.STSup.Lobby.Connection.Builder subBuilder = org.lsfn.starship.STS.STSup.Lobby.Connection.newBuilder();
-                if (hasConnection()) {
-                  subBuilder.mergeFrom(getConnection());
-                }
-                input.readMessage(subBuilder, extensionRegistry);
-                setConnection(subBuilder.buildPartial());
+                bitField0_ |= 0x00000002;
+                shipName_ = input.readBytes();
                 break;
               }
             }
@@ -996,94 +1011,40 @@ public final class STS {
           return this;
         }
         
-        // optional .STSup.Lobby.Connection connection = 2;
-        private org.lsfn.starship.STS.STSup.Lobby.Connection connection_ = org.lsfn.starship.STS.STSup.Lobby.Connection.getDefaultInstance();
-        private com.google.protobuf.SingleFieldBuilder<
-            org.lsfn.starship.STS.STSup.Lobby.Connection, org.lsfn.starship.STS.STSup.Lobby.Connection.Builder, org.lsfn.starship.STS.STSup.Lobby.ConnectionOrBuilder> connectionBuilder_;
-        public boolean hasConnection() {
+        // optional string shipName = 2;
+        private java.lang.Object shipName_ = "";
+        public boolean hasShipName() {
           return ((bitField0_ & 0x00000002) == 0x00000002);
         }
-        public org.lsfn.starship.STS.STSup.Lobby.Connection getConnection() {
-          if (connectionBuilder_ == null) {
-            return connection_;
+        public String getShipName() {
+          java.lang.Object ref = shipName_;
+          if (!(ref instanceof String)) {
+            String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+            shipName_ = s;
+            return s;
           } else {
-            return connectionBuilder_.getMessage();
+            return (String) ref;
           }
         }
-        public Builder setConnection(org.lsfn.starship.STS.STSup.Lobby.Connection value) {
-          if (connectionBuilder_ == null) {
-            if (value == null) {
-              throw new NullPointerException();
-            }
-            connection_ = value;
-            onChanged();
-          } else {
-            connectionBuilder_.setMessage(value);
-          }
-          bitField0_ |= 0x00000002;
-          return this;
-        }
-        public Builder setConnection(
-            org.lsfn.starship.STS.STSup.Lobby.Connection.Builder builderForValue) {
-          if (connectionBuilder_ == null) {
-            connection_ = builderForValue.build();
-            onChanged();
-          } else {
-            connectionBuilder_.setMessage(builderForValue.build());
-          }
-          bitField0_ |= 0x00000002;
-          return this;
-        }
-        public Builder mergeConnection(org.lsfn.starship.STS.STSup.Lobby.Connection value) {
-          if (connectionBuilder_ == null) {
-            if (((bitField0_ & 0x00000002) == 0x00000002) &&
-                connection_ != org.lsfn.starship.STS.STSup.Lobby.Connection.getDefaultInstance()) {
-              connection_ =
-                org.lsfn.starship.STS.STSup.Lobby.Connection.newBuilder(connection_).mergeFrom(value).buildPartial();
-            } else {
-              connection_ = value;
-            }
-            onChanged();
-          } else {
-            connectionBuilder_.mergeFrom(value);
-          }
-          bitField0_ |= 0x00000002;
-          return this;
-        }
-        public Builder clearConnection() {
-          if (connectionBuilder_ == null) {
-            connection_ = org.lsfn.starship.STS.STSup.Lobby.Connection.getDefaultInstance();
-            onChanged();
-          } else {
-            connectionBuilder_.clear();
-          }
-          bitField0_ = (bitField0_ & ~0x00000002);
-          return this;
-        }
-        public org.lsfn.starship.STS.STSup.Lobby.Connection.Builder getConnectionBuilder() {
-          bitField0_ |= 0x00000002;
+        public Builder setShipName(String value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+          shipName_ = value;
           onChanged();
-          return getConnectionFieldBuilder().getBuilder();
+          return this;
         }
-        public org.lsfn.starship.STS.STSup.Lobby.ConnectionOrBuilder getConnectionOrBuilder() {
-          if (connectionBuilder_ != null) {
-            return connectionBuilder_.getMessageOrBuilder();
-          } else {
-            return connection_;
-          }
+        public Builder clearShipName() {
+          bitField0_ = (bitField0_ & ~0x00000002);
+          shipName_ = getDefaultInstance().getShipName();
+          onChanged();
+          return this;
         }
-        private com.google.protobuf.SingleFieldBuilder<
-            org.lsfn.starship.STS.STSup.Lobby.Connection, org.lsfn.starship.STS.STSup.Lobby.Connection.Builder, org.lsfn.starship.STS.STSup.Lobby.ConnectionOrBuilder> 
-            getConnectionFieldBuilder() {
-          if (connectionBuilder_ == null) {
-            connectionBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-                org.lsfn.starship.STS.STSup.Lobby.Connection, org.lsfn.starship.STS.STSup.Lobby.Connection.Builder, org.lsfn.starship.STS.STSup.Lobby.ConnectionOrBuilder>(
-                    connection_,
-                    getParentForChildren(),
-                    isClean());
-            connection_ = null;
-          }
-          return connectionBuilder_;
+        void setShipName(com.google.protobuf.ByteString value) {
+          bitField0_ |= 0x00000002;
+          shipName_ = value;
+          onChanged();
         }
         
         // @@protoc_insertion_point(builder_scope:STSup.Lobby)
@@ -1472,25 +1433,635 @@ public final class STS {
       // @@protoc_insertion_point(class_scope:STSup.RCon)
     }
     
-    private int bitField0_;
-    // optional .STSup.Lobby lobby = 1;
-    public static final int LOBBY_FIELD_NUMBER = 1;
-    private org.lsfn.starship.STS.STSup.Lobby lobby_;
-    public boolean hasLobby() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
+    public interface PilotingOrBuilder
+        extends com.google.protobuf.MessageOrBuilder {
+      
+      // optional bool turnAnti = 1;
+      boolean hasTurnAnti();
+      boolean getTurnAnti();
+      
+      // optional bool turnClock = 2;
+      boolean hasTurnClock();
+      boolean getTurnClock();
+      
+      // optional bool thrustLeft = 3;
+      boolean hasThrustLeft();
+      boolean getThrustLeft();
+      
+      // optional bool thrustRight = 4;
+      boolean hasThrustRight();
+      boolean getThrustRight();
+      
+      // optional bool thrustForward = 5;
+      boolean hasThrustForward();
+      boolean getThrustForward();
+      
+      // optional bool thrustBackward = 6;
+      boolean hasThrustBackward();
+      boolean getThrustBackward();
     }
-    public org.lsfn.starship.STS.STSup.Lobby getLobby() {
-      return lobby_;
-    }
-    public org.lsfn.starship.STS.STSup.LobbyOrBuilder getLobbyOrBuilder() {
-      return lobby_;
+    public static final class Piloting extends
+        com.google.protobuf.GeneratedMessage
+        implements PilotingOrBuilder {
+      // Use Piloting.newBuilder() to construct.
+      private Piloting(Builder builder) {
+        super(builder);
+      }
+      private Piloting(boolean noInit) {}
+      
+      private static final Piloting defaultInstance;
+      public static Piloting getDefaultInstance() {
+        return defaultInstance;
+      }
+      
+      public Piloting getDefaultInstanceForType() {
+        return defaultInstance;
+      }
+      
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.lsfn.starship.STS.internal_static_STSup_Piloting_descriptor;
+      }
+      
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.lsfn.starship.STS.internal_static_STSup_Piloting_fieldAccessorTable;
+      }
+      
+      private int bitField0_;
+      // optional bool turnAnti = 1;
+      public static final int TURNANTI_FIELD_NUMBER = 1;
+      private boolean turnAnti_;
+      public boolean hasTurnAnti() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      public boolean getTurnAnti() {
+        return turnAnti_;
+      }
+      
+      // optional bool turnClock = 2;
+      public static final int TURNCLOCK_FIELD_NUMBER = 2;
+      private boolean turnClock_;
+      public boolean hasTurnClock() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      public boolean getTurnClock() {
+        return turnClock_;
+      }
+      
+      // optional bool thrustLeft = 3;
+      public static final int THRUSTLEFT_FIELD_NUMBER = 3;
+      private boolean thrustLeft_;
+      public boolean hasThrustLeft() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      public boolean getThrustLeft() {
+        return thrustLeft_;
+      }
+      
+      // optional bool thrustRight = 4;
+      public static final int THRUSTRIGHT_FIELD_NUMBER = 4;
+      private boolean thrustRight_;
+      public boolean hasThrustRight() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      public boolean getThrustRight() {
+        return thrustRight_;
+      }
+      
+      // optional bool thrustForward = 5;
+      public static final int THRUSTFORWARD_FIELD_NUMBER = 5;
+      private boolean thrustForward_;
+      public boolean hasThrustForward() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      public boolean getThrustForward() {
+        return thrustForward_;
+      }
+      
+      // optional bool thrustBackward = 6;
+      public static final int THRUSTBACKWARD_FIELD_NUMBER = 6;
+      private boolean thrustBackward_;
+      public boolean hasThrustBackward() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      public boolean getThrustBackward() {
+        return thrustBackward_;
+      }
+      
+      private void initFields() {
+        turnAnti_ = false;
+        turnClock_ = false;
+        thrustLeft_ = false;
+        thrustRight_ = false;
+        thrustForward_ = false;
+        thrustBackward_ = false;
+      }
+      private byte memoizedIsInitialized = -1;
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized != -1) return isInitialized == 1;
+        
+        memoizedIsInitialized = 1;
+        return true;
+      }
+      
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        getSerializedSize();
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          output.writeBool(1, turnAnti_);
+        }
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          output.writeBool(2, turnClock_);
+        }
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          output.writeBool(3, thrustLeft_);
+        }
+        if (((bitField0_ & 0x00000008) == 0x00000008)) {
+          output.writeBool(4, thrustRight_);
+        }
+        if (((bitField0_ & 0x00000010) == 0x00000010)) {
+          output.writeBool(5, thrustForward_);
+        }
+        if (((bitField0_ & 0x00000020) == 0x00000020)) {
+          output.writeBool(6, thrustBackward_);
+        }
+        getUnknownFields().writeTo(output);
+      }
+      
+      private int memoizedSerializedSize = -1;
+      public int getSerializedSize() {
+        int size = memoizedSerializedSize;
+        if (size != -1) return size;
+      
+        size = 0;
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBoolSize(1, turnAnti_);
+        }
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBoolSize(2, turnClock_);
+        }
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBoolSize(3, thrustLeft_);
+        }
+        if (((bitField0_ & 0x00000008) == 0x00000008)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBoolSize(4, thrustRight_);
+        }
+        if (((bitField0_ & 0x00000010) == 0x00000010)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBoolSize(5, thrustForward_);
+        }
+        if (((bitField0_ & 0x00000020) == 0x00000020)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBoolSize(6, thrustBackward_);
+        }
+        size += getUnknownFields().getSerializedSize();
+        memoizedSerializedSize = size;
+        return size;
+      }
+      
+      private static final long serialVersionUID = 0L;
+      @java.lang.Override
+      protected java.lang.Object writeReplace()
+          throws java.io.ObjectStreamException {
+        return super.writeReplace();
+      }
+      
+      public static org.lsfn.starship.STS.STSup.Piloting parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return newBuilder().mergeFrom(data).buildParsed();
+      }
+      public static org.lsfn.starship.STS.STSup.Piloting parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return newBuilder().mergeFrom(data, extensionRegistry)
+                 .buildParsed();
+      }
+      public static org.lsfn.starship.STS.STSup.Piloting parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return newBuilder().mergeFrom(data).buildParsed();
+      }
+      public static org.lsfn.starship.STS.STSup.Piloting parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return newBuilder().mergeFrom(data, extensionRegistry)
+                 .buildParsed();
+      }
+      public static org.lsfn.starship.STS.STSup.Piloting parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return newBuilder().mergeFrom(input).buildParsed();
+      }
+      public static org.lsfn.starship.STS.STSup.Piloting parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return newBuilder().mergeFrom(input, extensionRegistry)
+                 .buildParsed();
+      }
+      public static org.lsfn.starship.STS.STSup.Piloting parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        Builder builder = newBuilder();
+        if (builder.mergeDelimitedFrom(input)) {
+          return builder.buildParsed();
+        } else {
+          return null;
+        }
+      }
+      public static org.lsfn.starship.STS.STSup.Piloting parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        Builder builder = newBuilder();
+        if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+          return builder.buildParsed();
+        } else {
+          return null;
+        }
+      }
+      public static org.lsfn.starship.STS.STSup.Piloting parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return newBuilder().mergeFrom(input).buildParsed();
+      }
+      public static org.lsfn.starship.STS.STSup.Piloting parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return newBuilder().mergeFrom(input, extensionRegistry)
+                 .buildParsed();
+      }
+      
+      public static Builder newBuilder() { return Builder.create(); }
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder(org.lsfn.starship.STS.STSup.Piloting prototype) {
+        return newBuilder().mergeFrom(prototype);
+      }
+      public Builder toBuilder() { return newBuilder(this); }
+      
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements org.lsfn.starship.STS.STSup.PilotingOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return org.lsfn.starship.STS.internal_static_STSup_Piloting_descriptor;
+        }
+        
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return org.lsfn.starship.STS.internal_static_STSup_Piloting_fieldAccessorTable;
+        }
+        
+        // Construct using org.lsfn.starship.STS.STSup.Piloting.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+        
+        private Builder(BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          }
+        }
+        private static Builder create() {
+          return new Builder();
+        }
+        
+        public Builder clear() {
+          super.clear();
+          turnAnti_ = false;
+          bitField0_ = (bitField0_ & ~0x00000001);
+          turnClock_ = false;
+          bitField0_ = (bitField0_ & ~0x00000002);
+          thrustLeft_ = false;
+          bitField0_ = (bitField0_ & ~0x00000004);
+          thrustRight_ = false;
+          bitField0_ = (bitField0_ & ~0x00000008);
+          thrustForward_ = false;
+          bitField0_ = (bitField0_ & ~0x00000010);
+          thrustBackward_ = false;
+          bitField0_ = (bitField0_ & ~0x00000020);
+          return this;
+        }
+        
+        public Builder clone() {
+          return create().mergeFrom(buildPartial());
+        }
+        
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return org.lsfn.starship.STS.STSup.Piloting.getDescriptor();
+        }
+        
+        public org.lsfn.starship.STS.STSup.Piloting getDefaultInstanceForType() {
+          return org.lsfn.starship.STS.STSup.Piloting.getDefaultInstance();
+        }
+        
+        public org.lsfn.starship.STS.STSup.Piloting build() {
+          org.lsfn.starship.STS.STSup.Piloting result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+        
+        private org.lsfn.starship.STS.STSup.Piloting buildParsed()
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          org.lsfn.starship.STS.STSup.Piloting result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(
+              result).asInvalidProtocolBufferException();
+          }
+          return result;
+        }
+        
+        public org.lsfn.starship.STS.STSup.Piloting buildPartial() {
+          org.lsfn.starship.STS.STSup.Piloting result = new org.lsfn.starship.STS.STSup.Piloting(this);
+          int from_bitField0_ = bitField0_;
+          int to_bitField0_ = 0;
+          if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+            to_bitField0_ |= 0x00000001;
+          }
+          result.turnAnti_ = turnAnti_;
+          if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+            to_bitField0_ |= 0x00000002;
+          }
+          result.turnClock_ = turnClock_;
+          if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+            to_bitField0_ |= 0x00000004;
+          }
+          result.thrustLeft_ = thrustLeft_;
+          if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+            to_bitField0_ |= 0x00000008;
+          }
+          result.thrustRight_ = thrustRight_;
+          if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+            to_bitField0_ |= 0x00000010;
+          }
+          result.thrustForward_ = thrustForward_;
+          if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+            to_bitField0_ |= 0x00000020;
+          }
+          result.thrustBackward_ = thrustBackward_;
+          result.bitField0_ = to_bitField0_;
+          onBuilt();
+          return result;
+        }
+        
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof org.lsfn.starship.STS.STSup.Piloting) {
+            return mergeFrom((org.lsfn.starship.STS.STSup.Piloting)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+        
+        public Builder mergeFrom(org.lsfn.starship.STS.STSup.Piloting other) {
+          if (other == org.lsfn.starship.STS.STSup.Piloting.getDefaultInstance()) return this;
+          if (other.hasTurnAnti()) {
+            setTurnAnti(other.getTurnAnti());
+          }
+          if (other.hasTurnClock()) {
+            setTurnClock(other.getTurnClock());
+          }
+          if (other.hasThrustLeft()) {
+            setThrustLeft(other.getThrustLeft());
+          }
+          if (other.hasThrustRight()) {
+            setThrustRight(other.getThrustRight());
+          }
+          if (other.hasThrustForward()) {
+            setThrustForward(other.getThrustForward());
+          }
+          if (other.hasThrustBackward()) {
+            setThrustBackward(other.getThrustBackward());
+          }
+          this.mergeUnknownFields(other.getUnknownFields());
+          return this;
+        }
+        
+        public final boolean isInitialized() {
+          return true;
+        }
+        
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder(
+              this.getUnknownFields());
+          while (true) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                this.setUnknownFields(unknownFields.build());
+                onChanged();
+                return this;
+              default: {
+                if (!parseUnknownField(input, unknownFields,
+                                       extensionRegistry, tag)) {
+                  this.setUnknownFields(unknownFields.build());
+                  onChanged();
+                  return this;
+                }
+                break;
+              }
+              case 8: {
+                bitField0_ |= 0x00000001;
+                turnAnti_ = input.readBool();
+                break;
+              }
+              case 16: {
+                bitField0_ |= 0x00000002;
+                turnClock_ = input.readBool();
+                break;
+              }
+              case 24: {
+                bitField0_ |= 0x00000004;
+                thrustLeft_ = input.readBool();
+                break;
+              }
+              case 32: {
+                bitField0_ |= 0x00000008;
+                thrustRight_ = input.readBool();
+                break;
+              }
+              case 40: {
+                bitField0_ |= 0x00000010;
+                thrustForward_ = input.readBool();
+                break;
+              }
+              case 48: {
+                bitField0_ |= 0x00000020;
+                thrustBackward_ = input.readBool();
+                break;
+              }
+            }
+          }
+        }
+        
+        private int bitField0_;
+        
+        // optional bool turnAnti = 1;
+        private boolean turnAnti_ ;
+        public boolean hasTurnAnti() {
+          return ((bitField0_ & 0x00000001) == 0x00000001);
+        }
+        public boolean getTurnAnti() {
+          return turnAnti_;
+        }
+        public Builder setTurnAnti(boolean value) {
+          bitField0_ |= 0x00000001;
+          turnAnti_ = value;
+          onChanged();
+          return this;
+        }
+        public Builder clearTurnAnti() {
+          bitField0_ = (bitField0_ & ~0x00000001);
+          turnAnti_ = false;
+          onChanged();
+          return this;
+        }
+        
+        // optional bool turnClock = 2;
+        private boolean turnClock_ ;
+        public boolean hasTurnClock() {
+          return ((bitField0_ & 0x00000002) == 0x00000002);
+        }
+        public boolean getTurnClock() {
+          return turnClock_;
+        }
+        public Builder setTurnClock(boolean value) {
+          bitField0_ |= 0x00000002;
+          turnClock_ = value;
+          onChanged();
+          return this;
+        }
+        public Builder clearTurnClock() {
+          bitField0_ = (bitField0_ & ~0x00000002);
+          turnClock_ = false;
+          onChanged();
+          return this;
+        }
+        
+        // optional bool thrustLeft = 3;
+        private boolean thrustLeft_ ;
+        public boolean hasThrustLeft() {
+          return ((bitField0_ & 0x00000004) == 0x00000004);
+        }
+        public boolean getThrustLeft() {
+          return thrustLeft_;
+        }
+        public Builder setThrustLeft(boolean value) {
+          bitField0_ |= 0x00000004;
+          thrustLeft_ = value;
+          onChanged();
+          return this;
+        }
+        public Builder clearThrustLeft() {
+          bitField0_ = (bitField0_ & ~0x00000004);
+          thrustLeft_ = false;
+          onChanged();
+          return this;
+        }
+        
+        // optional bool thrustRight = 4;
+        private boolean thrustRight_ ;
+        public boolean hasThrustRight() {
+          return ((bitField0_ & 0x00000008) == 0x00000008);
+        }
+        public boolean getThrustRight() {
+          return thrustRight_;
+        }
+        public Builder setThrustRight(boolean value) {
+          bitField0_ |= 0x00000008;
+          thrustRight_ = value;
+          onChanged();
+          return this;
+        }
+        public Builder clearThrustRight() {
+          bitField0_ = (bitField0_ & ~0x00000008);
+          thrustRight_ = false;
+          onChanged();
+          return this;
+        }
+        
+        // optional bool thrustForward = 5;
+        private boolean thrustForward_ ;
+        public boolean hasThrustForward() {
+          return ((bitField0_ & 0x00000010) == 0x00000010);
+        }
+        public boolean getThrustForward() {
+          return thrustForward_;
+        }
+        public Builder setThrustForward(boolean value) {
+          bitField0_ |= 0x00000010;
+          thrustForward_ = value;
+          onChanged();
+          return this;
+        }
+        public Builder clearThrustForward() {
+          bitField0_ = (bitField0_ & ~0x00000010);
+          thrustForward_ = false;
+          onChanged();
+          return this;
+        }
+        
+        // optional bool thrustBackward = 6;
+        private boolean thrustBackward_ ;
+        public boolean hasThrustBackward() {
+          return ((bitField0_ & 0x00000020) == 0x00000020);
+        }
+        public boolean getThrustBackward() {
+          return thrustBackward_;
+        }
+        public Builder setThrustBackward(boolean value) {
+          bitField0_ |= 0x00000020;
+          thrustBackward_ = value;
+          onChanged();
+          return this;
+        }
+        public Builder clearThrustBackward() {
+          bitField0_ = (bitField0_ & ~0x00000020);
+          thrustBackward_ = false;
+          onChanged();
+          return this;
+        }
+        
+        // @@protoc_insertion_point(builder_scope:STSup.Piloting)
+      }
+      
+      static {
+        defaultInstance = new Piloting(true);
+        defaultInstance.initFields();
+      }
+      
+      // @@protoc_insertion_point(class_scope:STSup.Piloting)
     }
     
-    // optional .STSup.RCon rcon = 2;
-    public static final int RCON_FIELD_NUMBER = 2;
+    private int bitField0_;
+    // optional .STSup.RCon rcon = 1;
+    public static final int RCON_FIELD_NUMBER = 1;
     private org.lsfn.starship.STS.STSup.RCon rcon_;
     public boolean hasRcon() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     public org.lsfn.starship.STS.STSup.RCon getRcon() {
       return rcon_;
@@ -1499,9 +2070,50 @@ public final class STS {
       return rcon_;
     }
     
+    // optional .STSup.Connection connection = 2;
+    public static final int CONNECTION_FIELD_NUMBER = 2;
+    private org.lsfn.starship.STS.STSup.Connection connection_;
+    public boolean hasConnection() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public org.lsfn.starship.STS.STSup.Connection getConnection() {
+      return connection_;
+    }
+    public org.lsfn.starship.STS.STSup.ConnectionOrBuilder getConnectionOrBuilder() {
+      return connection_;
+    }
+    
+    // optional .STSup.Lobby lobby = 3;
+    public static final int LOBBY_FIELD_NUMBER = 3;
+    private org.lsfn.starship.STS.STSup.Lobby lobby_;
+    public boolean hasLobby() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    public org.lsfn.starship.STS.STSup.Lobby getLobby() {
+      return lobby_;
+    }
+    public org.lsfn.starship.STS.STSup.LobbyOrBuilder getLobbyOrBuilder() {
+      return lobby_;
+    }
+    
+    // optional .STSup.Piloting piloting = 4;
+    public static final int PILOTING_FIELD_NUMBER = 4;
+    private org.lsfn.starship.STS.STSup.Piloting piloting_;
+    public boolean hasPiloting() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    public org.lsfn.starship.STS.STSup.Piloting getPiloting() {
+      return piloting_;
+    }
+    public org.lsfn.starship.STS.STSup.PilotingOrBuilder getPilotingOrBuilder() {
+      return piloting_;
+    }
+    
     private void initFields() {
-      lobby_ = org.lsfn.starship.STS.STSup.Lobby.getDefaultInstance();
       rcon_ = org.lsfn.starship.STS.STSup.RCon.getDefaultInstance();
+      connection_ = org.lsfn.starship.STS.STSup.Connection.getDefaultInstance();
+      lobby_ = org.lsfn.starship.STS.STSup.Lobby.getDefaultInstance();
+      piloting_ = org.lsfn.starship.STS.STSup.Piloting.getDefaultInstance();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -1516,10 +2128,16 @@ public final class STS {
                         throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeMessage(1, lobby_);
+        output.writeMessage(1, rcon_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeMessage(2, rcon_);
+        output.writeMessage(2, connection_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeMessage(3, lobby_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeMessage(4, piloting_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -1532,11 +2150,19 @@ public final class STS {
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, lobby_);
+          .computeMessageSize(1, rcon_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, rcon_);
+          .computeMessageSize(2, connection_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, lobby_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, piloting_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1654,8 +2280,10 @@ public final class STS {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-          getLobbyFieldBuilder();
           getRconFieldBuilder();
+          getConnectionFieldBuilder();
+          getLobbyFieldBuilder();
+          getPilotingFieldBuilder();
         }
       }
       private static Builder create() {
@@ -1664,18 +2292,30 @@ public final class STS {
       
       public Builder clear() {
         super.clear();
-        if (lobbyBuilder_ == null) {
-          lobby_ = org.lsfn.starship.STS.STSup.Lobby.getDefaultInstance();
-        } else {
-          lobbyBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000001);
         if (rconBuilder_ == null) {
           rcon_ = org.lsfn.starship.STS.STSup.RCon.getDefaultInstance();
         } else {
           rconBuilder_.clear();
         }
+        bitField0_ = (bitField0_ & ~0x00000001);
+        if (connectionBuilder_ == null) {
+          connection_ = org.lsfn.starship.STS.STSup.Connection.getDefaultInstance();
+        } else {
+          connectionBuilder_.clear();
+        }
         bitField0_ = (bitField0_ & ~0x00000002);
+        if (lobbyBuilder_ == null) {
+          lobby_ = org.lsfn.starship.STS.STSup.Lobby.getDefaultInstance();
+        } else {
+          lobbyBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000004);
+        if (pilotingBuilder_ == null) {
+          piloting_ = org.lsfn.starship.STS.STSup.Piloting.getDefaultInstance();
+        } else {
+          pilotingBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
       
@@ -1717,18 +2357,34 @@ public final class STS {
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
+        if (rconBuilder_ == null) {
+          result.rcon_ = rcon_;
+        } else {
+          result.rcon_ = rconBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        if (connectionBuilder_ == null) {
+          result.connection_ = connection_;
+        } else {
+          result.connection_ = connectionBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
         if (lobbyBuilder_ == null) {
           result.lobby_ = lobby_;
         } else {
           result.lobby_ = lobbyBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-          to_bitField0_ |= 0x00000002;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
         }
-        if (rconBuilder_ == null) {
-          result.rcon_ = rcon_;
+        if (pilotingBuilder_ == null) {
+          result.piloting_ = piloting_;
         } else {
-          result.rcon_ = rconBuilder_.build();
+          result.piloting_ = pilotingBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -1746,11 +2402,17 @@ public final class STS {
       
       public Builder mergeFrom(org.lsfn.starship.STS.STSup other) {
         if (other == org.lsfn.starship.STS.STSup.getDefaultInstance()) return this;
+        if (other.hasRcon()) {
+          mergeRcon(other.getRcon());
+        }
+        if (other.hasConnection()) {
+          mergeConnection(other.getConnection());
+        }
         if (other.hasLobby()) {
           mergeLobby(other.getLobby());
         }
-        if (other.hasRcon()) {
-          mergeRcon(other.getRcon());
+        if (other.hasPiloting()) {
+          mergePiloting(other.getPiloting());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -1784,15 +2446,6 @@ public final class STS {
               break;
             }
             case 10: {
-              org.lsfn.starship.STS.STSup.Lobby.Builder subBuilder = org.lsfn.starship.STS.STSup.Lobby.newBuilder();
-              if (hasLobby()) {
-                subBuilder.mergeFrom(getLobby());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setLobby(subBuilder.buildPartial());
-              break;
-            }
-            case 18: {
               org.lsfn.starship.STS.STSup.RCon.Builder subBuilder = org.lsfn.starship.STS.STSup.RCon.newBuilder();
               if (hasRcon()) {
                 subBuilder.mergeFrom(getRcon());
@@ -1801,108 +2454,45 @@ public final class STS {
               setRcon(subBuilder.buildPartial());
               break;
             }
+            case 18: {
+              org.lsfn.starship.STS.STSup.Connection.Builder subBuilder = org.lsfn.starship.STS.STSup.Connection.newBuilder();
+              if (hasConnection()) {
+                subBuilder.mergeFrom(getConnection());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setConnection(subBuilder.buildPartial());
+              break;
+            }
+            case 26: {
+              org.lsfn.starship.STS.STSup.Lobby.Builder subBuilder = org.lsfn.starship.STS.STSup.Lobby.newBuilder();
+              if (hasLobby()) {
+                subBuilder.mergeFrom(getLobby());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setLobby(subBuilder.buildPartial());
+              break;
+            }
+            case 34: {
+              org.lsfn.starship.STS.STSup.Piloting.Builder subBuilder = org.lsfn.starship.STS.STSup.Piloting.newBuilder();
+              if (hasPiloting()) {
+                subBuilder.mergeFrom(getPiloting());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setPiloting(subBuilder.buildPartial());
+              break;
+            }
           }
         }
       }
       
       private int bitField0_;
       
-      // optional .STSup.Lobby lobby = 1;
-      private org.lsfn.starship.STS.STSup.Lobby lobby_ = org.lsfn.starship.STS.STSup.Lobby.getDefaultInstance();
-      private com.google.protobuf.SingleFieldBuilder<
-          org.lsfn.starship.STS.STSup.Lobby, org.lsfn.starship.STS.STSup.Lobby.Builder, org.lsfn.starship.STS.STSup.LobbyOrBuilder> lobbyBuilder_;
-      public boolean hasLobby() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
-      }
-      public org.lsfn.starship.STS.STSup.Lobby getLobby() {
-        if (lobbyBuilder_ == null) {
-          return lobby_;
-        } else {
-          return lobbyBuilder_.getMessage();
-        }
-      }
-      public Builder setLobby(org.lsfn.starship.STS.STSup.Lobby value) {
-        if (lobbyBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          lobby_ = value;
-          onChanged();
-        } else {
-          lobbyBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000001;
-        return this;
-      }
-      public Builder setLobby(
-          org.lsfn.starship.STS.STSup.Lobby.Builder builderForValue) {
-        if (lobbyBuilder_ == null) {
-          lobby_ = builderForValue.build();
-          onChanged();
-        } else {
-          lobbyBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000001;
-        return this;
-      }
-      public Builder mergeLobby(org.lsfn.starship.STS.STSup.Lobby value) {
-        if (lobbyBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) == 0x00000001) &&
-              lobby_ != org.lsfn.starship.STS.STSup.Lobby.getDefaultInstance()) {
-            lobby_ =
-              org.lsfn.starship.STS.STSup.Lobby.newBuilder(lobby_).mergeFrom(value).buildPartial();
-          } else {
-            lobby_ = value;
-          }
-          onChanged();
-        } else {
-          lobbyBuilder_.mergeFrom(value);
-        }
-        bitField0_ |= 0x00000001;
-        return this;
-      }
-      public Builder clearLobby() {
-        if (lobbyBuilder_ == null) {
-          lobby_ = org.lsfn.starship.STS.STSup.Lobby.getDefaultInstance();
-          onChanged();
-        } else {
-          lobbyBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000001);
-        return this;
-      }
-      public org.lsfn.starship.STS.STSup.Lobby.Builder getLobbyBuilder() {
-        bitField0_ |= 0x00000001;
-        onChanged();
-        return getLobbyFieldBuilder().getBuilder();
-      }
-      public org.lsfn.starship.STS.STSup.LobbyOrBuilder getLobbyOrBuilder() {
-        if (lobbyBuilder_ != null) {
-          return lobbyBuilder_.getMessageOrBuilder();
-        } else {
-          return lobby_;
-        }
-      }
-      private com.google.protobuf.SingleFieldBuilder<
-          org.lsfn.starship.STS.STSup.Lobby, org.lsfn.starship.STS.STSup.Lobby.Builder, org.lsfn.starship.STS.STSup.LobbyOrBuilder> 
-          getLobbyFieldBuilder() {
-        if (lobbyBuilder_ == null) {
-          lobbyBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              org.lsfn.starship.STS.STSup.Lobby, org.lsfn.starship.STS.STSup.Lobby.Builder, org.lsfn.starship.STS.STSup.LobbyOrBuilder>(
-                  lobby_,
-                  getParentForChildren(),
-                  isClean());
-          lobby_ = null;
-        }
-        return lobbyBuilder_;
-      }
-      
-      // optional .STSup.RCon rcon = 2;
+      // optional .STSup.RCon rcon = 1;
       private org.lsfn.starship.STS.STSup.RCon rcon_ = org.lsfn.starship.STS.STSup.RCon.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.lsfn.starship.STS.STSup.RCon, org.lsfn.starship.STS.STSup.RCon.Builder, org.lsfn.starship.STS.STSup.RConOrBuilder> rconBuilder_;
       public boolean hasRcon() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       public org.lsfn.starship.STS.STSup.RCon getRcon() {
         if (rconBuilder_ == null) {
@@ -1921,7 +2511,7 @@ public final class STS {
         } else {
           rconBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000001;
         return this;
       }
       public Builder setRcon(
@@ -1932,12 +2522,12 @@ public final class STS {
         } else {
           rconBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000001;
         return this;
       }
       public Builder mergeRcon(org.lsfn.starship.STS.STSup.RCon value) {
         if (rconBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) == 0x00000002) &&
+          if (((bitField0_ & 0x00000001) == 0x00000001) &&
               rcon_ != org.lsfn.starship.STS.STSup.RCon.getDefaultInstance()) {
             rcon_ =
               org.lsfn.starship.STS.STSup.RCon.newBuilder(rcon_).mergeFrom(value).buildPartial();
@@ -1948,7 +2538,7 @@ public final class STS {
         } else {
           rconBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000001;
         return this;
       }
       public Builder clearRcon() {
@@ -1958,11 +2548,11 @@ public final class STS {
         } else {
           rconBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
       public org.lsfn.starship.STS.STSup.RCon.Builder getRconBuilder() {
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000001;
         onChanged();
         return getRconFieldBuilder().getBuilder();
       }
@@ -1987,6 +2577,276 @@ public final class STS {
         return rconBuilder_;
       }
       
+      // optional .STSup.Connection connection = 2;
+      private org.lsfn.starship.STS.STSup.Connection connection_ = org.lsfn.starship.STS.STSup.Connection.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          org.lsfn.starship.STS.STSup.Connection, org.lsfn.starship.STS.STSup.Connection.Builder, org.lsfn.starship.STS.STSup.ConnectionOrBuilder> connectionBuilder_;
+      public boolean hasConnection() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      public org.lsfn.starship.STS.STSup.Connection getConnection() {
+        if (connectionBuilder_ == null) {
+          return connection_;
+        } else {
+          return connectionBuilder_.getMessage();
+        }
+      }
+      public Builder setConnection(org.lsfn.starship.STS.STSup.Connection value) {
+        if (connectionBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          connection_ = value;
+          onChanged();
+        } else {
+          connectionBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000002;
+        return this;
+      }
+      public Builder setConnection(
+          org.lsfn.starship.STS.STSup.Connection.Builder builderForValue) {
+        if (connectionBuilder_ == null) {
+          connection_ = builderForValue.build();
+          onChanged();
+        } else {
+          connectionBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000002;
+        return this;
+      }
+      public Builder mergeConnection(org.lsfn.starship.STS.STSup.Connection value) {
+        if (connectionBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002) &&
+              connection_ != org.lsfn.starship.STS.STSup.Connection.getDefaultInstance()) {
+            connection_ =
+              org.lsfn.starship.STS.STSup.Connection.newBuilder(connection_).mergeFrom(value).buildPartial();
+          } else {
+            connection_ = value;
+          }
+          onChanged();
+        } else {
+          connectionBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000002;
+        return this;
+      }
+      public Builder clearConnection() {
+        if (connectionBuilder_ == null) {
+          connection_ = org.lsfn.starship.STS.STSup.Connection.getDefaultInstance();
+          onChanged();
+        } else {
+          connectionBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+      public org.lsfn.starship.STS.STSup.Connection.Builder getConnectionBuilder() {
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return getConnectionFieldBuilder().getBuilder();
+      }
+      public org.lsfn.starship.STS.STSup.ConnectionOrBuilder getConnectionOrBuilder() {
+        if (connectionBuilder_ != null) {
+          return connectionBuilder_.getMessageOrBuilder();
+        } else {
+          return connection_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          org.lsfn.starship.STS.STSup.Connection, org.lsfn.starship.STS.STSup.Connection.Builder, org.lsfn.starship.STS.STSup.ConnectionOrBuilder> 
+          getConnectionFieldBuilder() {
+        if (connectionBuilder_ == null) {
+          connectionBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              org.lsfn.starship.STS.STSup.Connection, org.lsfn.starship.STS.STSup.Connection.Builder, org.lsfn.starship.STS.STSup.ConnectionOrBuilder>(
+                  connection_,
+                  getParentForChildren(),
+                  isClean());
+          connection_ = null;
+        }
+        return connectionBuilder_;
+      }
+      
+      // optional .STSup.Lobby lobby = 3;
+      private org.lsfn.starship.STS.STSup.Lobby lobby_ = org.lsfn.starship.STS.STSup.Lobby.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          org.lsfn.starship.STS.STSup.Lobby, org.lsfn.starship.STS.STSup.Lobby.Builder, org.lsfn.starship.STS.STSup.LobbyOrBuilder> lobbyBuilder_;
+      public boolean hasLobby() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      public org.lsfn.starship.STS.STSup.Lobby getLobby() {
+        if (lobbyBuilder_ == null) {
+          return lobby_;
+        } else {
+          return lobbyBuilder_.getMessage();
+        }
+      }
+      public Builder setLobby(org.lsfn.starship.STS.STSup.Lobby value) {
+        if (lobbyBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          lobby_ = value;
+          onChanged();
+        } else {
+          lobbyBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000004;
+        return this;
+      }
+      public Builder setLobby(
+          org.lsfn.starship.STS.STSup.Lobby.Builder builderForValue) {
+        if (lobbyBuilder_ == null) {
+          lobby_ = builderForValue.build();
+          onChanged();
+        } else {
+          lobbyBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000004;
+        return this;
+      }
+      public Builder mergeLobby(org.lsfn.starship.STS.STSup.Lobby value) {
+        if (lobbyBuilder_ == null) {
+          if (((bitField0_ & 0x00000004) == 0x00000004) &&
+              lobby_ != org.lsfn.starship.STS.STSup.Lobby.getDefaultInstance()) {
+            lobby_ =
+              org.lsfn.starship.STS.STSup.Lobby.newBuilder(lobby_).mergeFrom(value).buildPartial();
+          } else {
+            lobby_ = value;
+          }
+          onChanged();
+        } else {
+          lobbyBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000004;
+        return this;
+      }
+      public Builder clearLobby() {
+        if (lobbyBuilder_ == null) {
+          lobby_ = org.lsfn.starship.STS.STSup.Lobby.getDefaultInstance();
+          onChanged();
+        } else {
+          lobbyBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000004);
+        return this;
+      }
+      public org.lsfn.starship.STS.STSup.Lobby.Builder getLobbyBuilder() {
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return getLobbyFieldBuilder().getBuilder();
+      }
+      public org.lsfn.starship.STS.STSup.LobbyOrBuilder getLobbyOrBuilder() {
+        if (lobbyBuilder_ != null) {
+          return lobbyBuilder_.getMessageOrBuilder();
+        } else {
+          return lobby_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          org.lsfn.starship.STS.STSup.Lobby, org.lsfn.starship.STS.STSup.Lobby.Builder, org.lsfn.starship.STS.STSup.LobbyOrBuilder> 
+          getLobbyFieldBuilder() {
+        if (lobbyBuilder_ == null) {
+          lobbyBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              org.lsfn.starship.STS.STSup.Lobby, org.lsfn.starship.STS.STSup.Lobby.Builder, org.lsfn.starship.STS.STSup.LobbyOrBuilder>(
+                  lobby_,
+                  getParentForChildren(),
+                  isClean());
+          lobby_ = null;
+        }
+        return lobbyBuilder_;
+      }
+      
+      // optional .STSup.Piloting piloting = 4;
+      private org.lsfn.starship.STS.STSup.Piloting piloting_ = org.lsfn.starship.STS.STSup.Piloting.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          org.lsfn.starship.STS.STSup.Piloting, org.lsfn.starship.STS.STSup.Piloting.Builder, org.lsfn.starship.STS.STSup.PilotingOrBuilder> pilotingBuilder_;
+      public boolean hasPiloting() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      public org.lsfn.starship.STS.STSup.Piloting getPiloting() {
+        if (pilotingBuilder_ == null) {
+          return piloting_;
+        } else {
+          return pilotingBuilder_.getMessage();
+        }
+      }
+      public Builder setPiloting(org.lsfn.starship.STS.STSup.Piloting value) {
+        if (pilotingBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          piloting_ = value;
+          onChanged();
+        } else {
+          pilotingBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000008;
+        return this;
+      }
+      public Builder setPiloting(
+          org.lsfn.starship.STS.STSup.Piloting.Builder builderForValue) {
+        if (pilotingBuilder_ == null) {
+          piloting_ = builderForValue.build();
+          onChanged();
+        } else {
+          pilotingBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000008;
+        return this;
+      }
+      public Builder mergePiloting(org.lsfn.starship.STS.STSup.Piloting value) {
+        if (pilotingBuilder_ == null) {
+          if (((bitField0_ & 0x00000008) == 0x00000008) &&
+              piloting_ != org.lsfn.starship.STS.STSup.Piloting.getDefaultInstance()) {
+            piloting_ =
+              org.lsfn.starship.STS.STSup.Piloting.newBuilder(piloting_).mergeFrom(value).buildPartial();
+          } else {
+            piloting_ = value;
+          }
+          onChanged();
+        } else {
+          pilotingBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000008;
+        return this;
+      }
+      public Builder clearPiloting() {
+        if (pilotingBuilder_ == null) {
+          piloting_ = org.lsfn.starship.STS.STSup.Piloting.getDefaultInstance();
+          onChanged();
+        } else {
+          pilotingBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000008);
+        return this;
+      }
+      public org.lsfn.starship.STS.STSup.Piloting.Builder getPilotingBuilder() {
+        bitField0_ |= 0x00000008;
+        onChanged();
+        return getPilotingFieldBuilder().getBuilder();
+      }
+      public org.lsfn.starship.STS.STSup.PilotingOrBuilder getPilotingOrBuilder() {
+        if (pilotingBuilder_ != null) {
+          return pilotingBuilder_.getMessageOrBuilder();
+        } else {
+          return piloting_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          org.lsfn.starship.STS.STSup.Piloting, org.lsfn.starship.STS.STSup.Piloting.Builder, org.lsfn.starship.STS.STSup.PilotingOrBuilder> 
+          getPilotingFieldBuilder() {
+        if (pilotingBuilder_ == null) {
+          pilotingBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              org.lsfn.starship.STS.STSup.Piloting, org.lsfn.starship.STS.STSup.Piloting.Builder, org.lsfn.starship.STS.STSup.PilotingOrBuilder>(
+                  piloting_,
+                  getParentForChildren(),
+                  isClean());
+          piloting_ = null;
+        }
+        return pilotingBuilder_;
+      }
+      
       // @@protoc_insertion_point(builder_scope:STSup)
     }
     
@@ -2001,10 +2861,15 @@ public final class STS {
   public interface STSdownOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
     
-    // optional .STSdown.Reset reset = 1;
-    boolean hasReset();
-    org.lsfn.starship.STS.STSdown.Reset getReset();
-    org.lsfn.starship.STS.STSdown.ResetOrBuilder getResetOrBuilder();
+    // optional .STSdown.Lobby lobby = 1;
+    boolean hasLobby();
+    org.lsfn.starship.STS.STSdown.Lobby getLobby();
+    org.lsfn.starship.STS.STSdown.LobbyOrBuilder getLobbyOrBuilder();
+    
+    // optional .STSdown.VisualSensors visualSensors = 2;
+    boolean hasVisualSensors();
+    org.lsfn.starship.STS.STSdown.VisualSensors getVisualSensors();
+    org.lsfn.starship.STS.STSdown.VisualSensorsOrBuilder getVisualSensorsOrBuilder();
   }
   public static final class STSdown extends
       com.google.protobuf.GeneratedMessage
@@ -2034,54 +2899,126 @@ public final class STS {
       return org.lsfn.starship.STS.internal_static_STSdown_fieldAccessorTable;
     }
     
-    public interface ResetOrBuilder
+    public interface LobbyOrBuilder
         extends com.google.protobuf.MessageOrBuilder {
       
-      // optional uint32 reset = 1;
-      boolean hasReset();
-      int getReset();
+      // optional bool readyState = 1;
+      boolean hasReadyState();
+      boolean getReadyState();
+      
+      // optional string shipName = 2;
+      boolean hasShipName();
+      String getShipName();
+      
+      // repeated string shipsInGame = 3;
+      java.util.List<String> getShipsInGameList();
+      int getShipsInGameCount();
+      String getShipsInGame(int index);
+      
+      // optional bool gameStarted = 4;
+      boolean hasGameStarted();
+      boolean getGameStarted();
     }
-    public static final class Reset extends
+    public static final class Lobby extends
         com.google.protobuf.GeneratedMessage
-        implements ResetOrBuilder {
-      // Use Reset.newBuilder() to construct.
-      private Reset(Builder builder) {
+        implements LobbyOrBuilder {
+      // Use Lobby.newBuilder() to construct.
+      private Lobby(Builder builder) {
         super(builder);
       }
-      private Reset(boolean noInit) {}
+      private Lobby(boolean noInit) {}
       
-      private static final Reset defaultInstance;
-      public static Reset getDefaultInstance() {
+      private static final Lobby defaultInstance;
+      public static Lobby getDefaultInstance() {
         return defaultInstance;
       }
       
-      public Reset getDefaultInstanceForType() {
+      public Lobby getDefaultInstanceForType() {
         return defaultInstance;
       }
       
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return org.lsfn.starship.STS.internal_static_STSdown_Reset_descriptor;
+        return org.lsfn.starship.STS.internal_static_STSdown_Lobby_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return org.lsfn.starship.STS.internal_static_STSdown_Reset_fieldAccessorTable;
+        return org.lsfn.starship.STS.internal_static_STSdown_Lobby_fieldAccessorTable;
       }
       
       private int bitField0_;
-      // optional uint32 reset = 1;
-      public static final int RESET_FIELD_NUMBER = 1;
-      private int reset_;
-      public boolean hasReset() {
+      // optional bool readyState = 1;
+      public static final int READYSTATE_FIELD_NUMBER = 1;
+      private boolean readyState_;
+      public boolean hasReadyState() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public int getReset() {
-        return reset_;
+      public boolean getReadyState() {
+        return readyState_;
+      }
+      
+      // optional string shipName = 2;
+      public static final int SHIPNAME_FIELD_NUMBER = 2;
+      private java.lang.Object shipName_;
+      public boolean hasShipName() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      public String getShipName() {
+        java.lang.Object ref = shipName_;
+        if (ref instanceof String) {
+          return (String) ref;
+        } else {
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          String s = bs.toStringUtf8();
+          if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+            shipName_ = s;
+          }
+          return s;
+        }
+      }
+      private com.google.protobuf.ByteString getShipNameBytes() {
+        java.lang.Object ref = shipName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+          shipName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      
+      // repeated string shipsInGame = 3;
+      public static final int SHIPSINGAME_FIELD_NUMBER = 3;
+      private com.google.protobuf.LazyStringList shipsInGame_;
+      public java.util.List<String>
+          getShipsInGameList() {
+        return shipsInGame_;
+      }
+      public int getShipsInGameCount() {
+        return shipsInGame_.size();
+      }
+      public String getShipsInGame(int index) {
+        return shipsInGame_.get(index);
+      }
+      
+      // optional bool gameStarted = 4;
+      public static final int GAMESTARTED_FIELD_NUMBER = 4;
+      private boolean gameStarted_;
+      public boolean hasGameStarted() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      public boolean getGameStarted() {
+        return gameStarted_;
       }
       
       private void initFields() {
-        reset_ = 0;
+        readyState_ = false;
+        shipName_ = "";
+        shipsInGame_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        gameStarted_ = false;
       }
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
@@ -2096,7 +3033,16 @@ public final class STS {
                           throws java.io.IOException {
         getSerializedSize();
         if (((bitField0_ & 0x00000001) == 0x00000001)) {
-          output.writeUInt32(1, reset_);
+          output.writeBool(1, readyState_);
+        }
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          output.writeBytes(2, getShipNameBytes());
+        }
+        for (int i = 0; i < shipsInGame_.size(); i++) {
+          output.writeBytes(3, shipsInGame_.getByteString(i));
+        }
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          output.writeBool(4, gameStarted_);
         }
         getUnknownFields().writeTo(output);
       }
@@ -2109,7 +3055,24 @@ public final class STS {
         size = 0;
         if (((bitField0_ & 0x00000001) == 0x00000001)) {
           size += com.google.protobuf.CodedOutputStream
-            .computeUInt32Size(1, reset_);
+            .computeBoolSize(1, readyState_);
+        }
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBytesSize(2, getShipNameBytes());
+        }
+        {
+          int dataSize = 0;
+          for (int i = 0; i < shipsInGame_.size(); i++) {
+            dataSize += com.google.protobuf.CodedOutputStream
+              .computeBytesSizeNoTag(shipsInGame_.getByteString(i));
+          }
+          size += dataSize;
+          size += 1 * getShipsInGameList().size();
+        }
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBoolSize(4, gameStarted_);
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSerializedSize = size;
@@ -2123,41 +3086,41 @@ public final class STS {
         return super.writeReplace();
       }
       
-      public static org.lsfn.starship.STS.STSdown.Reset parseFrom(
+      public static org.lsfn.starship.STS.STSdown.Lobby parseFrom(
           com.google.protobuf.ByteString data)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return newBuilder().mergeFrom(data).buildParsed();
       }
-      public static org.lsfn.starship.STS.STSdown.Reset parseFrom(
+      public static org.lsfn.starship.STS.STSdown.Lobby parseFrom(
           com.google.protobuf.ByteString data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return newBuilder().mergeFrom(data, extensionRegistry)
                  .buildParsed();
       }
-      public static org.lsfn.starship.STS.STSdown.Reset parseFrom(byte[] data)
+      public static org.lsfn.starship.STS.STSdown.Lobby parseFrom(byte[] data)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return newBuilder().mergeFrom(data).buildParsed();
       }
-      public static org.lsfn.starship.STS.STSdown.Reset parseFrom(
+      public static org.lsfn.starship.STS.STSdown.Lobby parseFrom(
           byte[] data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return newBuilder().mergeFrom(data, extensionRegistry)
                  .buildParsed();
       }
-      public static org.lsfn.starship.STS.STSdown.Reset parseFrom(java.io.InputStream input)
+      public static org.lsfn.starship.STS.STSdown.Lobby parseFrom(java.io.InputStream input)
           throws java.io.IOException {
         return newBuilder().mergeFrom(input).buildParsed();
       }
-      public static org.lsfn.starship.STS.STSdown.Reset parseFrom(
+      public static org.lsfn.starship.STS.STSdown.Lobby parseFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
         return newBuilder().mergeFrom(input, extensionRegistry)
                  .buildParsed();
       }
-      public static org.lsfn.starship.STS.STSdown.Reset parseDelimitedFrom(java.io.InputStream input)
+      public static org.lsfn.starship.STS.STSdown.Lobby parseDelimitedFrom(java.io.InputStream input)
           throws java.io.IOException {
         Builder builder = newBuilder();
         if (builder.mergeDelimitedFrom(input)) {
@@ -2166,7 +3129,7 @@ public final class STS {
           return null;
         }
       }
-      public static org.lsfn.starship.STS.STSdown.Reset parseDelimitedFrom(
+      public static org.lsfn.starship.STS.STSdown.Lobby parseDelimitedFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
@@ -2177,12 +3140,12 @@ public final class STS {
           return null;
         }
       }
-      public static org.lsfn.starship.STS.STSdown.Reset parseFrom(
+      public static org.lsfn.starship.STS.STSdown.Lobby parseFrom(
           com.google.protobuf.CodedInputStream input)
           throws java.io.IOException {
         return newBuilder().mergeFrom(input).buildParsed();
       }
-      public static org.lsfn.starship.STS.STSdown.Reset parseFrom(
+      public static org.lsfn.starship.STS.STSdown.Lobby parseFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
@@ -2192,7 +3155,7 @@ public final class STS {
       
       public static Builder newBuilder() { return Builder.create(); }
       public Builder newBuilderForType() { return newBuilder(); }
-      public static Builder newBuilder(org.lsfn.starship.STS.STSdown.Reset prototype) {
+      public static Builder newBuilder(org.lsfn.starship.STS.STSdown.Lobby prototype) {
         return newBuilder().mergeFrom(prototype);
       }
       public Builder toBuilder() { return newBuilder(this); }
@@ -2205,18 +3168,18 @@ public final class STS {
       }
       public static final class Builder extends
           com.google.protobuf.GeneratedMessage.Builder<Builder>
-         implements org.lsfn.starship.STS.STSdown.ResetOrBuilder {
+         implements org.lsfn.starship.STS.STSdown.LobbyOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
-          return org.lsfn.starship.STS.internal_static_STSdown_Reset_descriptor;
+          return org.lsfn.starship.STS.internal_static_STSdown_Lobby_descriptor;
         }
         
         protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
             internalGetFieldAccessorTable() {
-          return org.lsfn.starship.STS.internal_static_STSdown_Reset_fieldAccessorTable;
+          return org.lsfn.starship.STS.internal_static_STSdown_Lobby_fieldAccessorTable;
         }
         
-        // Construct using org.lsfn.starship.STS.STSdown.Reset.newBuilder()
+        // Construct using org.lsfn.starship.STS.STSdown.Lobby.newBuilder()
         private Builder() {
           maybeForceBuilderInitialization();
         }
@@ -2235,8 +3198,14 @@ public final class STS {
         
         public Builder clear() {
           super.clear();
-          reset_ = 0;
+          readyState_ = false;
           bitField0_ = (bitField0_ & ~0x00000001);
+          shipName_ = "";
+          bitField0_ = (bitField0_ & ~0x00000002);
+          shipsInGame_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+          bitField0_ = (bitField0_ & ~0x00000004);
+          gameStarted_ = false;
+          bitField0_ = (bitField0_ & ~0x00000008);
           return this;
         }
         
@@ -2246,24 +3215,24 @@ public final class STS {
         
         public com.google.protobuf.Descriptors.Descriptor
             getDescriptorForType() {
-          return org.lsfn.starship.STS.STSdown.Reset.getDescriptor();
+          return org.lsfn.starship.STS.STSdown.Lobby.getDescriptor();
         }
         
-        public org.lsfn.starship.STS.STSdown.Reset getDefaultInstanceForType() {
-          return org.lsfn.starship.STS.STSdown.Reset.getDefaultInstance();
+        public org.lsfn.starship.STS.STSdown.Lobby getDefaultInstanceForType() {
+          return org.lsfn.starship.STS.STSdown.Lobby.getDefaultInstance();
         }
         
-        public org.lsfn.starship.STS.STSdown.Reset build() {
-          org.lsfn.starship.STS.STSdown.Reset result = buildPartial();
+        public org.lsfn.starship.STS.STSdown.Lobby build() {
+          org.lsfn.starship.STS.STSdown.Lobby result = buildPartial();
           if (!result.isInitialized()) {
             throw newUninitializedMessageException(result);
           }
           return result;
         }
         
-        private org.lsfn.starship.STS.STSdown.Reset buildParsed()
+        private org.lsfn.starship.STS.STSdown.Lobby buildParsed()
             throws com.google.protobuf.InvalidProtocolBufferException {
-          org.lsfn.starship.STS.STSdown.Reset result = buildPartial();
+          org.lsfn.starship.STS.STSdown.Lobby result = buildPartial();
           if (!result.isInitialized()) {
             throw newUninitializedMessageException(
               result).asInvalidProtocolBufferException();
@@ -2271,32 +3240,62 @@ public final class STS {
           return result;
         }
         
-        public org.lsfn.starship.STS.STSdown.Reset buildPartial() {
-          org.lsfn.starship.STS.STSdown.Reset result = new org.lsfn.starship.STS.STSdown.Reset(this);
+        public org.lsfn.starship.STS.STSdown.Lobby buildPartial() {
+          org.lsfn.starship.STS.STSdown.Lobby result = new org.lsfn.starship.STS.STSdown.Lobby(this);
           int from_bitField0_ = bitField0_;
           int to_bitField0_ = 0;
           if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
             to_bitField0_ |= 0x00000001;
           }
-          result.reset_ = reset_;
+          result.readyState_ = readyState_;
+          if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+            to_bitField0_ |= 0x00000002;
+          }
+          result.shipName_ = shipName_;
+          if (((bitField0_ & 0x00000004) == 0x00000004)) {
+            shipsInGame_ = new com.google.protobuf.UnmodifiableLazyStringList(
+                shipsInGame_);
+            bitField0_ = (bitField0_ & ~0x00000004);
+          }
+          result.shipsInGame_ = shipsInGame_;
+          if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+            to_bitField0_ |= 0x00000004;
+          }
+          result.gameStarted_ = gameStarted_;
           result.bitField0_ = to_bitField0_;
           onBuilt();
           return result;
         }
         
         public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof org.lsfn.starship.STS.STSdown.Reset) {
-            return mergeFrom((org.lsfn.starship.STS.STSdown.Reset)other);
+          if (other instanceof org.lsfn.starship.STS.STSdown.Lobby) {
+            return mergeFrom((org.lsfn.starship.STS.STSdown.Lobby)other);
           } else {
             super.mergeFrom(other);
             return this;
           }
         }
         
-        public Builder mergeFrom(org.lsfn.starship.STS.STSdown.Reset other) {
-          if (other == org.lsfn.starship.STS.STSdown.Reset.getDefaultInstance()) return this;
-          if (other.hasReset()) {
-            setReset(other.getReset());
+        public Builder mergeFrom(org.lsfn.starship.STS.STSdown.Lobby other) {
+          if (other == org.lsfn.starship.STS.STSdown.Lobby.getDefaultInstance()) return this;
+          if (other.hasReadyState()) {
+            setReadyState(other.getReadyState());
+          }
+          if (other.hasShipName()) {
+            setShipName(other.getShipName());
+          }
+          if (!other.shipsInGame_.isEmpty()) {
+            if (shipsInGame_.isEmpty()) {
+              shipsInGame_ = other.shipsInGame_;
+              bitField0_ = (bitField0_ & ~0x00000004);
+            } else {
+              ensureShipsInGameIsMutable();
+              shipsInGame_.addAll(other.shipsInGame_);
+            }
+            onChanged();
+          }
+          if (other.hasGameStarted()) {
+            setGameStarted(other.getGameStarted());
           }
           this.mergeUnknownFields(other.getUnknownFields());
           return this;
@@ -2331,7 +3330,22 @@ public final class STS {
               }
               case 8: {
                 bitField0_ |= 0x00000001;
-                reset_ = input.readUInt32();
+                readyState_ = input.readBool();
+                break;
+              }
+              case 18: {
+                bitField0_ |= 0x00000002;
+                shipName_ = input.readBytes();
+                break;
+              }
+              case 26: {
+                ensureShipsInGameIsMutable();
+                shipsInGame_.add(input.readBytes());
+                break;
+              }
+              case 32: {
+                bitField0_ |= 0x00000008;
+                gameStarted_ = input.readBool();
                 break;
               }
             }
@@ -2340,54 +3354,1743 @@ public final class STS {
         
         private int bitField0_;
         
-        // optional uint32 reset = 1;
-        private int reset_ ;
-        public boolean hasReset() {
+        // optional bool readyState = 1;
+        private boolean readyState_ ;
+        public boolean hasReadyState() {
           return ((bitField0_ & 0x00000001) == 0x00000001);
         }
-        public int getReset() {
-          return reset_;
+        public boolean getReadyState() {
+          return readyState_;
         }
-        public Builder setReset(int value) {
+        public Builder setReadyState(boolean value) {
           bitField0_ |= 0x00000001;
-          reset_ = value;
+          readyState_ = value;
           onChanged();
           return this;
         }
-        public Builder clearReset() {
+        public Builder clearReadyState() {
           bitField0_ = (bitField0_ & ~0x00000001);
-          reset_ = 0;
+          readyState_ = false;
           onChanged();
           return this;
         }
         
-        // @@protoc_insertion_point(builder_scope:STSdown.Reset)
+        // optional string shipName = 2;
+        private java.lang.Object shipName_ = "";
+        public boolean hasShipName() {
+          return ((bitField0_ & 0x00000002) == 0x00000002);
+        }
+        public String getShipName() {
+          java.lang.Object ref = shipName_;
+          if (!(ref instanceof String)) {
+            String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+            shipName_ = s;
+            return s;
+          } else {
+            return (String) ref;
+          }
+        }
+        public Builder setShipName(String value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+          shipName_ = value;
+          onChanged();
+          return this;
+        }
+        public Builder clearShipName() {
+          bitField0_ = (bitField0_ & ~0x00000002);
+          shipName_ = getDefaultInstance().getShipName();
+          onChanged();
+          return this;
+        }
+        void setShipName(com.google.protobuf.ByteString value) {
+          bitField0_ |= 0x00000002;
+          shipName_ = value;
+          onChanged();
+        }
+        
+        // repeated string shipsInGame = 3;
+        private com.google.protobuf.LazyStringList shipsInGame_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        private void ensureShipsInGameIsMutable() {
+          if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+            shipsInGame_ = new com.google.protobuf.LazyStringArrayList(shipsInGame_);
+            bitField0_ |= 0x00000004;
+           }
+        }
+        public java.util.List<String>
+            getShipsInGameList() {
+          return java.util.Collections.unmodifiableList(shipsInGame_);
+        }
+        public int getShipsInGameCount() {
+          return shipsInGame_.size();
+        }
+        public String getShipsInGame(int index) {
+          return shipsInGame_.get(index);
+        }
+        public Builder setShipsInGame(
+            int index, String value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureShipsInGameIsMutable();
+          shipsInGame_.set(index, value);
+          onChanged();
+          return this;
+        }
+        public Builder addShipsInGame(String value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureShipsInGameIsMutable();
+          shipsInGame_.add(value);
+          onChanged();
+          return this;
+        }
+        public Builder addAllShipsInGame(
+            java.lang.Iterable<String> values) {
+          ensureShipsInGameIsMutable();
+          super.addAll(values, shipsInGame_);
+          onChanged();
+          return this;
+        }
+        public Builder clearShipsInGame() {
+          shipsInGame_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+          bitField0_ = (bitField0_ & ~0x00000004);
+          onChanged();
+          return this;
+        }
+        void addShipsInGame(com.google.protobuf.ByteString value) {
+          ensureShipsInGameIsMutable();
+          shipsInGame_.add(value);
+          onChanged();
+        }
+        
+        // optional bool gameStarted = 4;
+        private boolean gameStarted_ ;
+        public boolean hasGameStarted() {
+          return ((bitField0_ & 0x00000008) == 0x00000008);
+        }
+        public boolean getGameStarted() {
+          return gameStarted_;
+        }
+        public Builder setGameStarted(boolean value) {
+          bitField0_ |= 0x00000008;
+          gameStarted_ = value;
+          onChanged();
+          return this;
+        }
+        public Builder clearGameStarted() {
+          bitField0_ = (bitField0_ & ~0x00000008);
+          gameStarted_ = false;
+          onChanged();
+          return this;
+        }
+        
+        // @@protoc_insertion_point(builder_scope:STSdown.Lobby)
       }
       
       static {
-        defaultInstance = new Reset(true);
+        defaultInstance = new Lobby(true);
         defaultInstance.initFields();
       }
       
-      // @@protoc_insertion_point(class_scope:STSdown.Reset)
+      // @@protoc_insertion_point(class_scope:STSdown.Lobby)
+    }
+    
+    public interface VisualSensorsOrBuilder
+        extends com.google.protobuf.MessageOrBuilder {
+      
+      // repeated .STSdown.VisualSensors.SpaceObject spaceObjects = 1;
+      java.util.List<org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject> 
+          getSpaceObjectsList();
+      org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject getSpaceObjects(int index);
+      int getSpaceObjectsCount();
+      java.util.List<? extends org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObjectOrBuilder> 
+          getSpaceObjectsOrBuilderList();
+      org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObjectOrBuilder getSpaceObjectsOrBuilder(
+          int index);
+    }
+    public static final class VisualSensors extends
+        com.google.protobuf.GeneratedMessage
+        implements VisualSensorsOrBuilder {
+      // Use VisualSensors.newBuilder() to construct.
+      private VisualSensors(Builder builder) {
+        super(builder);
+      }
+      private VisualSensors(boolean noInit) {}
+      
+      private static final VisualSensors defaultInstance;
+      public static VisualSensors getDefaultInstance() {
+        return defaultInstance;
+      }
+      
+      public VisualSensors getDefaultInstanceForType() {
+        return defaultInstance;
+      }
+      
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.lsfn.starship.STS.internal_static_STSdown_VisualSensors_descriptor;
+      }
+      
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.lsfn.starship.STS.internal_static_STSdown_VisualSensors_fieldAccessorTable;
+      }
+      
+      public interface SpaceObjectOrBuilder
+          extends com.google.protobuf.MessageOrBuilder {
+        
+        // optional .STSdown.VisualSensors.SpaceObject.Type type = 1;
+        boolean hasType();
+        org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Type getType();
+        
+        // optional .STSdown.VisualSensors.SpaceObject.Point position = 2;
+        boolean hasPosition();
+        org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point getPosition();
+        org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.PointOrBuilder getPositionOrBuilder();
+        
+        // optional double orientation = 3;
+        boolean hasOrientation();
+        double getOrientation();
+      }
+      public static final class SpaceObject extends
+          com.google.protobuf.GeneratedMessage
+          implements SpaceObjectOrBuilder {
+        // Use SpaceObject.newBuilder() to construct.
+        private SpaceObject(Builder builder) {
+          super(builder);
+        }
+        private SpaceObject(boolean noInit) {}
+        
+        private static final SpaceObject defaultInstance;
+        public static SpaceObject getDefaultInstance() {
+          return defaultInstance;
+        }
+        
+        public SpaceObject getDefaultInstanceForType() {
+          return defaultInstance;
+        }
+        
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return org.lsfn.starship.STS.internal_static_STSdown_VisualSensors_SpaceObject_descriptor;
+        }
+        
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return org.lsfn.starship.STS.internal_static_STSdown_VisualSensors_SpaceObject_fieldAccessorTable;
+        }
+        
+        public enum Type
+            implements com.google.protobuf.ProtocolMessageEnum {
+          SHIP(0, 0),
+          ASTEROID(1, 1),
+          ;
+          
+          public static final int SHIP_VALUE = 0;
+          public static final int ASTEROID_VALUE = 1;
+          
+          
+          public final int getNumber() { return value; }
+          
+          public static Type valueOf(int value) {
+            switch (value) {
+              case 0: return SHIP;
+              case 1: return ASTEROID;
+              default: return null;
+            }
+          }
+          
+          public static com.google.protobuf.Internal.EnumLiteMap<Type>
+              internalGetValueMap() {
+            return internalValueMap;
+          }
+          private static com.google.protobuf.Internal.EnumLiteMap<Type>
+              internalValueMap =
+                new com.google.protobuf.Internal.EnumLiteMap<Type>() {
+                  public Type findValueByNumber(int number) {
+                    return Type.valueOf(number);
+                  }
+                };
+          
+          public final com.google.protobuf.Descriptors.EnumValueDescriptor
+              getValueDescriptor() {
+            return getDescriptor().getValues().get(index);
+          }
+          public final com.google.protobuf.Descriptors.EnumDescriptor
+              getDescriptorForType() {
+            return getDescriptor();
+          }
+          public static final com.google.protobuf.Descriptors.EnumDescriptor
+              getDescriptor() {
+            return org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.getDescriptor().getEnumTypes().get(0);
+          }
+          
+          private static final Type[] VALUES = {
+            SHIP, ASTEROID, 
+          };
+          
+          public static Type valueOf(
+              com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+            if (desc.getType() != getDescriptor()) {
+              throw new java.lang.IllegalArgumentException(
+                "EnumValueDescriptor is not for this type.");
+            }
+            return VALUES[desc.getIndex()];
+          }
+          
+          private final int index;
+          private final int value;
+          
+          private Type(int index, int value) {
+            this.index = index;
+            this.value = value;
+          }
+          
+          // @@protoc_insertion_point(enum_scope:STSdown.VisualSensors.SpaceObject.Type)
+        }
+        
+        public interface PointOrBuilder
+            extends com.google.protobuf.MessageOrBuilder {
+          
+          // optional double x = 1;
+          boolean hasX();
+          double getX();
+          
+          // optional double y = 2;
+          boolean hasY();
+          double getY();
+        }
+        public static final class Point extends
+            com.google.protobuf.GeneratedMessage
+            implements PointOrBuilder {
+          // Use Point.newBuilder() to construct.
+          private Point(Builder builder) {
+            super(builder);
+          }
+          private Point(boolean noInit) {}
+          
+          private static final Point defaultInstance;
+          public static Point getDefaultInstance() {
+            return defaultInstance;
+          }
+          
+          public Point getDefaultInstanceForType() {
+            return defaultInstance;
+          }
+          
+          public static final com.google.protobuf.Descriptors.Descriptor
+              getDescriptor() {
+            return org.lsfn.starship.STS.internal_static_STSdown_VisualSensors_SpaceObject_Point_descriptor;
+          }
+          
+          protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+              internalGetFieldAccessorTable() {
+            return org.lsfn.starship.STS.internal_static_STSdown_VisualSensors_SpaceObject_Point_fieldAccessorTable;
+          }
+          
+          private int bitField0_;
+          // optional double x = 1;
+          public static final int X_FIELD_NUMBER = 1;
+          private double x_;
+          public boolean hasX() {
+            return ((bitField0_ & 0x00000001) == 0x00000001);
+          }
+          public double getX() {
+            return x_;
+          }
+          
+          // optional double y = 2;
+          public static final int Y_FIELD_NUMBER = 2;
+          private double y_;
+          public boolean hasY() {
+            return ((bitField0_ & 0x00000002) == 0x00000002);
+          }
+          public double getY() {
+            return y_;
+          }
+          
+          private void initFields() {
+            x_ = 0D;
+            y_ = 0D;
+          }
+          private byte memoizedIsInitialized = -1;
+          public final boolean isInitialized() {
+            byte isInitialized = memoizedIsInitialized;
+            if (isInitialized != -1) return isInitialized == 1;
+            
+            memoizedIsInitialized = 1;
+            return true;
+          }
+          
+          public void writeTo(com.google.protobuf.CodedOutputStream output)
+                              throws java.io.IOException {
+            getSerializedSize();
+            if (((bitField0_ & 0x00000001) == 0x00000001)) {
+              output.writeDouble(1, x_);
+            }
+            if (((bitField0_ & 0x00000002) == 0x00000002)) {
+              output.writeDouble(2, y_);
+            }
+            getUnknownFields().writeTo(output);
+          }
+          
+          private int memoizedSerializedSize = -1;
+          public int getSerializedSize() {
+            int size = memoizedSerializedSize;
+            if (size != -1) return size;
+          
+            size = 0;
+            if (((bitField0_ & 0x00000001) == 0x00000001)) {
+              size += com.google.protobuf.CodedOutputStream
+                .computeDoubleSize(1, x_);
+            }
+            if (((bitField0_ & 0x00000002) == 0x00000002)) {
+              size += com.google.protobuf.CodedOutputStream
+                .computeDoubleSize(2, y_);
+            }
+            size += getUnknownFields().getSerializedSize();
+            memoizedSerializedSize = size;
+            return size;
+          }
+          
+          private static final long serialVersionUID = 0L;
+          @java.lang.Override
+          protected java.lang.Object writeReplace()
+              throws java.io.ObjectStreamException {
+            return super.writeReplace();
+          }
+          
+          public static org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point parseFrom(
+              com.google.protobuf.ByteString data)
+              throws com.google.protobuf.InvalidProtocolBufferException {
+            return newBuilder().mergeFrom(data).buildParsed();
+          }
+          public static org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point parseFrom(
+              com.google.protobuf.ByteString data,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws com.google.protobuf.InvalidProtocolBufferException {
+            return newBuilder().mergeFrom(data, extensionRegistry)
+                     .buildParsed();
+          }
+          public static org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point parseFrom(byte[] data)
+              throws com.google.protobuf.InvalidProtocolBufferException {
+            return newBuilder().mergeFrom(data).buildParsed();
+          }
+          public static org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point parseFrom(
+              byte[] data,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws com.google.protobuf.InvalidProtocolBufferException {
+            return newBuilder().mergeFrom(data, extensionRegistry)
+                     .buildParsed();
+          }
+          public static org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point parseFrom(java.io.InputStream input)
+              throws java.io.IOException {
+            return newBuilder().mergeFrom(input).buildParsed();
+          }
+          public static org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point parseFrom(
+              java.io.InputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws java.io.IOException {
+            return newBuilder().mergeFrom(input, extensionRegistry)
+                     .buildParsed();
+          }
+          public static org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point parseDelimitedFrom(java.io.InputStream input)
+              throws java.io.IOException {
+            Builder builder = newBuilder();
+            if (builder.mergeDelimitedFrom(input)) {
+              return builder.buildParsed();
+            } else {
+              return null;
+            }
+          }
+          public static org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point parseDelimitedFrom(
+              java.io.InputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws java.io.IOException {
+            Builder builder = newBuilder();
+            if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+              return builder.buildParsed();
+            } else {
+              return null;
+            }
+          }
+          public static org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point parseFrom(
+              com.google.protobuf.CodedInputStream input)
+              throws java.io.IOException {
+            return newBuilder().mergeFrom(input).buildParsed();
+          }
+          public static org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point parseFrom(
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws java.io.IOException {
+            return newBuilder().mergeFrom(input, extensionRegistry)
+                     .buildParsed();
+          }
+          
+          public static Builder newBuilder() { return Builder.create(); }
+          public Builder newBuilderForType() { return newBuilder(); }
+          public static Builder newBuilder(org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point prototype) {
+            return newBuilder().mergeFrom(prototype);
+          }
+          public Builder toBuilder() { return newBuilder(this); }
+          
+          @java.lang.Override
+          protected Builder newBuilderForType(
+              com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            Builder builder = new Builder(parent);
+            return builder;
+          }
+          public static final class Builder extends
+              com.google.protobuf.GeneratedMessage.Builder<Builder>
+             implements org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.PointOrBuilder {
+            public static final com.google.protobuf.Descriptors.Descriptor
+                getDescriptor() {
+              return org.lsfn.starship.STS.internal_static_STSdown_VisualSensors_SpaceObject_Point_descriptor;
+            }
+            
+            protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+                internalGetFieldAccessorTable() {
+              return org.lsfn.starship.STS.internal_static_STSdown_VisualSensors_SpaceObject_Point_fieldAccessorTable;
+            }
+            
+            // Construct using org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point.newBuilder()
+            private Builder() {
+              maybeForceBuilderInitialization();
+            }
+            
+            private Builder(BuilderParent parent) {
+              super(parent);
+              maybeForceBuilderInitialization();
+            }
+            private void maybeForceBuilderInitialization() {
+              if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+              }
+            }
+            private static Builder create() {
+              return new Builder();
+            }
+            
+            public Builder clear() {
+              super.clear();
+              x_ = 0D;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              y_ = 0D;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              return this;
+            }
+            
+            public Builder clone() {
+              return create().mergeFrom(buildPartial());
+            }
+            
+            public com.google.protobuf.Descriptors.Descriptor
+                getDescriptorForType() {
+              return org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point.getDescriptor();
+            }
+            
+            public org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point getDefaultInstanceForType() {
+              return org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point.getDefaultInstance();
+            }
+            
+            public org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point build() {
+              org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point result = buildPartial();
+              if (!result.isInitialized()) {
+                throw newUninitializedMessageException(result);
+              }
+              return result;
+            }
+            
+            private org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point buildParsed()
+                throws com.google.protobuf.InvalidProtocolBufferException {
+              org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point result = buildPartial();
+              if (!result.isInitialized()) {
+                throw newUninitializedMessageException(
+                  result).asInvalidProtocolBufferException();
+              }
+              return result;
+            }
+            
+            public org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point buildPartial() {
+              org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point result = new org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point(this);
+              int from_bitField0_ = bitField0_;
+              int to_bitField0_ = 0;
+              if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+                to_bitField0_ |= 0x00000001;
+              }
+              result.x_ = x_;
+              if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+                to_bitField0_ |= 0x00000002;
+              }
+              result.y_ = y_;
+              result.bitField0_ = to_bitField0_;
+              onBuilt();
+              return result;
+            }
+            
+            public Builder mergeFrom(com.google.protobuf.Message other) {
+              if (other instanceof org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point) {
+                return mergeFrom((org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point)other);
+              } else {
+                super.mergeFrom(other);
+                return this;
+              }
+            }
+            
+            public Builder mergeFrom(org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point other) {
+              if (other == org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point.getDefaultInstance()) return this;
+              if (other.hasX()) {
+                setX(other.getX());
+              }
+              if (other.hasY()) {
+                setY(other.getY());
+              }
+              this.mergeUnknownFields(other.getUnknownFields());
+              return this;
+            }
+            
+            public final boolean isInitialized() {
+              return true;
+            }
+            
+            public Builder mergeFrom(
+                com.google.protobuf.CodedInputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+              com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+                com.google.protobuf.UnknownFieldSet.newBuilder(
+                  this.getUnknownFields());
+              while (true) {
+                int tag = input.readTag();
+                switch (tag) {
+                  case 0:
+                    this.setUnknownFields(unknownFields.build());
+                    onChanged();
+                    return this;
+                  default: {
+                    if (!parseUnknownField(input, unknownFields,
+                                           extensionRegistry, tag)) {
+                      this.setUnknownFields(unknownFields.build());
+                      onChanged();
+                      return this;
+                    }
+                    break;
+                  }
+                  case 9: {
+                    bitField0_ |= 0x00000001;
+                    x_ = input.readDouble();
+                    break;
+                  }
+                  case 17: {
+                    bitField0_ |= 0x00000002;
+                    y_ = input.readDouble();
+                    break;
+                  }
+                }
+              }
+            }
+            
+            private int bitField0_;
+            
+            // optional double x = 1;
+            private double x_ ;
+            public boolean hasX() {
+              return ((bitField0_ & 0x00000001) == 0x00000001);
+            }
+            public double getX() {
+              return x_;
+            }
+            public Builder setX(double value) {
+              bitField0_ |= 0x00000001;
+              x_ = value;
+              onChanged();
+              return this;
+            }
+            public Builder clearX() {
+              bitField0_ = (bitField0_ & ~0x00000001);
+              x_ = 0D;
+              onChanged();
+              return this;
+            }
+            
+            // optional double y = 2;
+            private double y_ ;
+            public boolean hasY() {
+              return ((bitField0_ & 0x00000002) == 0x00000002);
+            }
+            public double getY() {
+              return y_;
+            }
+            public Builder setY(double value) {
+              bitField0_ |= 0x00000002;
+              y_ = value;
+              onChanged();
+              return this;
+            }
+            public Builder clearY() {
+              bitField0_ = (bitField0_ & ~0x00000002);
+              y_ = 0D;
+              onChanged();
+              return this;
+            }
+            
+            // @@protoc_insertion_point(builder_scope:STSdown.VisualSensors.SpaceObject.Point)
+          }
+          
+          static {
+            defaultInstance = new Point(true);
+            defaultInstance.initFields();
+          }
+          
+          // @@protoc_insertion_point(class_scope:STSdown.VisualSensors.SpaceObject.Point)
+        }
+        
+        private int bitField0_;
+        // optional .STSdown.VisualSensors.SpaceObject.Type type = 1;
+        public static final int TYPE_FIELD_NUMBER = 1;
+        private org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Type type_;
+        public boolean hasType() {
+          return ((bitField0_ & 0x00000001) == 0x00000001);
+        }
+        public org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Type getType() {
+          return type_;
+        }
+        
+        // optional .STSdown.VisualSensors.SpaceObject.Point position = 2;
+        public static final int POSITION_FIELD_NUMBER = 2;
+        private org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point position_;
+        public boolean hasPosition() {
+          return ((bitField0_ & 0x00000002) == 0x00000002);
+        }
+        public org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point getPosition() {
+          return position_;
+        }
+        public org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.PointOrBuilder getPositionOrBuilder() {
+          return position_;
+        }
+        
+        // optional double orientation = 3;
+        public static final int ORIENTATION_FIELD_NUMBER = 3;
+        private double orientation_;
+        public boolean hasOrientation() {
+          return ((bitField0_ & 0x00000004) == 0x00000004);
+        }
+        public double getOrientation() {
+          return orientation_;
+        }
+        
+        private void initFields() {
+          type_ = org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Type.SHIP;
+          position_ = org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point.getDefaultInstance();
+          orientation_ = 0D;
+        }
+        private byte memoizedIsInitialized = -1;
+        public final boolean isInitialized() {
+          byte isInitialized = memoizedIsInitialized;
+          if (isInitialized != -1) return isInitialized == 1;
+          
+          memoizedIsInitialized = 1;
+          return true;
+        }
+        
+        public void writeTo(com.google.protobuf.CodedOutputStream output)
+                            throws java.io.IOException {
+          getSerializedSize();
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            output.writeEnum(1, type_.getNumber());
+          }
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            output.writeMessage(2, position_);
+          }
+          if (((bitField0_ & 0x00000004) == 0x00000004)) {
+            output.writeDouble(3, orientation_);
+          }
+          getUnknownFields().writeTo(output);
+        }
+        
+        private int memoizedSerializedSize = -1;
+        public int getSerializedSize() {
+          int size = memoizedSerializedSize;
+          if (size != -1) return size;
+        
+          size = 0;
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            size += com.google.protobuf.CodedOutputStream
+              .computeEnumSize(1, type_.getNumber());
+          }
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            size += com.google.protobuf.CodedOutputStream
+              .computeMessageSize(2, position_);
+          }
+          if (((bitField0_ & 0x00000004) == 0x00000004)) {
+            size += com.google.protobuf.CodedOutputStream
+              .computeDoubleSize(3, orientation_);
+          }
+          size += getUnknownFields().getSerializedSize();
+          memoizedSerializedSize = size;
+          return size;
+        }
+        
+        private static final long serialVersionUID = 0L;
+        @java.lang.Override
+        protected java.lang.Object writeReplace()
+            throws java.io.ObjectStreamException {
+          return super.writeReplace();
+        }
+        
+        public static org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject parseFrom(
+            com.google.protobuf.ByteString data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return newBuilder().mergeFrom(data).buildParsed();
+        }
+        public static org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject parseFrom(
+            com.google.protobuf.ByteString data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return newBuilder().mergeFrom(data, extensionRegistry)
+                   .buildParsed();
+        }
+        public static org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject parseFrom(byte[] data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return newBuilder().mergeFrom(data).buildParsed();
+        }
+        public static org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject parseFrom(
+            byte[] data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return newBuilder().mergeFrom(data, extensionRegistry)
+                   .buildParsed();
+        }
+        public static org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject parseFrom(java.io.InputStream input)
+            throws java.io.IOException {
+          return newBuilder().mergeFrom(input).buildParsed();
+        }
+        public static org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject parseFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          return newBuilder().mergeFrom(input, extensionRegistry)
+                   .buildParsed();
+        }
+        public static org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject parseDelimitedFrom(java.io.InputStream input)
+            throws java.io.IOException {
+          Builder builder = newBuilder();
+          if (builder.mergeDelimitedFrom(input)) {
+            return builder.buildParsed();
+          } else {
+            return null;
+          }
+        }
+        public static org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject parseDelimitedFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          Builder builder = newBuilder();
+          if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+            return builder.buildParsed();
+          } else {
+            return null;
+          }
+        }
+        public static org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject parseFrom(
+            com.google.protobuf.CodedInputStream input)
+            throws java.io.IOException {
+          return newBuilder().mergeFrom(input).buildParsed();
+        }
+        public static org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject parseFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          return newBuilder().mergeFrom(input, extensionRegistry)
+                   .buildParsed();
+        }
+        
+        public static Builder newBuilder() { return Builder.create(); }
+        public Builder newBuilderForType() { return newBuilder(); }
+        public static Builder newBuilder(org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject prototype) {
+          return newBuilder().mergeFrom(prototype);
+        }
+        public Builder toBuilder() { return newBuilder(this); }
+        
+        @java.lang.Override
+        protected Builder newBuilderForType(
+            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          Builder builder = new Builder(parent);
+          return builder;
+        }
+        public static final class Builder extends
+            com.google.protobuf.GeneratedMessage.Builder<Builder>
+           implements org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObjectOrBuilder {
+          public static final com.google.protobuf.Descriptors.Descriptor
+              getDescriptor() {
+            return org.lsfn.starship.STS.internal_static_STSdown_VisualSensors_SpaceObject_descriptor;
+          }
+          
+          protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+              internalGetFieldAccessorTable() {
+            return org.lsfn.starship.STS.internal_static_STSdown_VisualSensors_SpaceObject_fieldAccessorTable;
+          }
+          
+          // Construct using org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.newBuilder()
+          private Builder() {
+            maybeForceBuilderInitialization();
+          }
+          
+          private Builder(BuilderParent parent) {
+            super(parent);
+            maybeForceBuilderInitialization();
+          }
+          private void maybeForceBuilderInitialization() {
+            if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+              getPositionFieldBuilder();
+            }
+          }
+          private static Builder create() {
+            return new Builder();
+          }
+          
+          public Builder clear() {
+            super.clear();
+            type_ = org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Type.SHIP;
+            bitField0_ = (bitField0_ & ~0x00000001);
+            if (positionBuilder_ == null) {
+              position_ = org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point.getDefaultInstance();
+            } else {
+              positionBuilder_.clear();
+            }
+            bitField0_ = (bitField0_ & ~0x00000002);
+            orientation_ = 0D;
+            bitField0_ = (bitField0_ & ~0x00000004);
+            return this;
+          }
+          
+          public Builder clone() {
+            return create().mergeFrom(buildPartial());
+          }
+          
+          public com.google.protobuf.Descriptors.Descriptor
+              getDescriptorForType() {
+            return org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.getDescriptor();
+          }
+          
+          public org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject getDefaultInstanceForType() {
+            return org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.getDefaultInstance();
+          }
+          
+          public org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject build() {
+            org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject result = buildPartial();
+            if (!result.isInitialized()) {
+              throw newUninitializedMessageException(result);
+            }
+            return result;
+          }
+          
+          private org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject buildParsed()
+              throws com.google.protobuf.InvalidProtocolBufferException {
+            org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject result = buildPartial();
+            if (!result.isInitialized()) {
+              throw newUninitializedMessageException(
+                result).asInvalidProtocolBufferException();
+            }
+            return result;
+          }
+          
+          public org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject buildPartial() {
+            org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject result = new org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject(this);
+            int from_bitField0_ = bitField0_;
+            int to_bitField0_ = 0;
+            if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+              to_bitField0_ |= 0x00000001;
+            }
+            result.type_ = type_;
+            if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+              to_bitField0_ |= 0x00000002;
+            }
+            if (positionBuilder_ == null) {
+              result.position_ = position_;
+            } else {
+              result.position_ = positionBuilder_.build();
+            }
+            if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+              to_bitField0_ |= 0x00000004;
+            }
+            result.orientation_ = orientation_;
+            result.bitField0_ = to_bitField0_;
+            onBuilt();
+            return result;
+          }
+          
+          public Builder mergeFrom(com.google.protobuf.Message other) {
+            if (other instanceof org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject) {
+              return mergeFrom((org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject)other);
+            } else {
+              super.mergeFrom(other);
+              return this;
+            }
+          }
+          
+          public Builder mergeFrom(org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject other) {
+            if (other == org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.getDefaultInstance()) return this;
+            if (other.hasType()) {
+              setType(other.getType());
+            }
+            if (other.hasPosition()) {
+              mergePosition(other.getPosition());
+            }
+            if (other.hasOrientation()) {
+              setOrientation(other.getOrientation());
+            }
+            this.mergeUnknownFields(other.getUnknownFields());
+            return this;
+          }
+          
+          public final boolean isInitialized() {
+            return true;
+          }
+          
+          public Builder mergeFrom(
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws java.io.IOException {
+            com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+              com.google.protobuf.UnknownFieldSet.newBuilder(
+                this.getUnknownFields());
+            while (true) {
+              int tag = input.readTag();
+              switch (tag) {
+                case 0:
+                  this.setUnknownFields(unknownFields.build());
+                  onChanged();
+                  return this;
+                default: {
+                  if (!parseUnknownField(input, unknownFields,
+                                         extensionRegistry, tag)) {
+                    this.setUnknownFields(unknownFields.build());
+                    onChanged();
+                    return this;
+                  }
+                  break;
+                }
+                case 8: {
+                  int rawValue = input.readEnum();
+                  org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Type value = org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Type.valueOf(rawValue);
+                  if (value == null) {
+                    unknownFields.mergeVarintField(1, rawValue);
+                  } else {
+                    bitField0_ |= 0x00000001;
+                    type_ = value;
+                  }
+                  break;
+                }
+                case 18: {
+                  org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point.Builder subBuilder = org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point.newBuilder();
+                  if (hasPosition()) {
+                    subBuilder.mergeFrom(getPosition());
+                  }
+                  input.readMessage(subBuilder, extensionRegistry);
+                  setPosition(subBuilder.buildPartial());
+                  break;
+                }
+                case 25: {
+                  bitField0_ |= 0x00000004;
+                  orientation_ = input.readDouble();
+                  break;
+                }
+              }
+            }
+          }
+          
+          private int bitField0_;
+          
+          // optional .STSdown.VisualSensors.SpaceObject.Type type = 1;
+          private org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Type type_ = org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Type.SHIP;
+          public boolean hasType() {
+            return ((bitField0_ & 0x00000001) == 0x00000001);
+          }
+          public org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Type getType() {
+            return type_;
+          }
+          public Builder setType(org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Type value) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            bitField0_ |= 0x00000001;
+            type_ = value;
+            onChanged();
+            return this;
+          }
+          public Builder clearType() {
+            bitField0_ = (bitField0_ & ~0x00000001);
+            type_ = org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Type.SHIP;
+            onChanged();
+            return this;
+          }
+          
+          // optional .STSdown.VisualSensors.SpaceObject.Point position = 2;
+          private org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point position_ = org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point.getDefaultInstance();
+          private com.google.protobuf.SingleFieldBuilder<
+              org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point, org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point.Builder, org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.PointOrBuilder> positionBuilder_;
+          public boolean hasPosition() {
+            return ((bitField0_ & 0x00000002) == 0x00000002);
+          }
+          public org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point getPosition() {
+            if (positionBuilder_ == null) {
+              return position_;
+            } else {
+              return positionBuilder_.getMessage();
+            }
+          }
+          public Builder setPosition(org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point value) {
+            if (positionBuilder_ == null) {
+              if (value == null) {
+                throw new NullPointerException();
+              }
+              position_ = value;
+              onChanged();
+            } else {
+              positionBuilder_.setMessage(value);
+            }
+            bitField0_ |= 0x00000002;
+            return this;
+          }
+          public Builder setPosition(
+              org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point.Builder builderForValue) {
+            if (positionBuilder_ == null) {
+              position_ = builderForValue.build();
+              onChanged();
+            } else {
+              positionBuilder_.setMessage(builderForValue.build());
+            }
+            bitField0_ |= 0x00000002;
+            return this;
+          }
+          public Builder mergePosition(org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point value) {
+            if (positionBuilder_ == null) {
+              if (((bitField0_ & 0x00000002) == 0x00000002) &&
+                  position_ != org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point.getDefaultInstance()) {
+                position_ =
+                  org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point.newBuilder(position_).mergeFrom(value).buildPartial();
+              } else {
+                position_ = value;
+              }
+              onChanged();
+            } else {
+              positionBuilder_.mergeFrom(value);
+            }
+            bitField0_ |= 0x00000002;
+            return this;
+          }
+          public Builder clearPosition() {
+            if (positionBuilder_ == null) {
+              position_ = org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point.getDefaultInstance();
+              onChanged();
+            } else {
+              positionBuilder_.clear();
+            }
+            bitField0_ = (bitField0_ & ~0x00000002);
+            return this;
+          }
+          public org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point.Builder getPositionBuilder() {
+            bitField0_ |= 0x00000002;
+            onChanged();
+            return getPositionFieldBuilder().getBuilder();
+          }
+          public org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.PointOrBuilder getPositionOrBuilder() {
+            if (positionBuilder_ != null) {
+              return positionBuilder_.getMessageOrBuilder();
+            } else {
+              return position_;
+            }
+          }
+          private com.google.protobuf.SingleFieldBuilder<
+              org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point, org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point.Builder, org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.PointOrBuilder> 
+              getPositionFieldBuilder() {
+            if (positionBuilder_ == null) {
+              positionBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+                  org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point, org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point.Builder, org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.PointOrBuilder>(
+                      position_,
+                      getParentForChildren(),
+                      isClean());
+              position_ = null;
+            }
+            return positionBuilder_;
+          }
+          
+          // optional double orientation = 3;
+          private double orientation_ ;
+          public boolean hasOrientation() {
+            return ((bitField0_ & 0x00000004) == 0x00000004);
+          }
+          public double getOrientation() {
+            return orientation_;
+          }
+          public Builder setOrientation(double value) {
+            bitField0_ |= 0x00000004;
+            orientation_ = value;
+            onChanged();
+            return this;
+          }
+          public Builder clearOrientation() {
+            bitField0_ = (bitField0_ & ~0x00000004);
+            orientation_ = 0D;
+            onChanged();
+            return this;
+          }
+          
+          // @@protoc_insertion_point(builder_scope:STSdown.VisualSensors.SpaceObject)
+        }
+        
+        static {
+          defaultInstance = new SpaceObject(true);
+          defaultInstance.initFields();
+        }
+        
+        // @@protoc_insertion_point(class_scope:STSdown.VisualSensors.SpaceObject)
+      }
+      
+      // repeated .STSdown.VisualSensors.SpaceObject spaceObjects = 1;
+      public static final int SPACEOBJECTS_FIELD_NUMBER = 1;
+      private java.util.List<org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject> spaceObjects_;
+      public java.util.List<org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject> getSpaceObjectsList() {
+        return spaceObjects_;
+      }
+      public java.util.List<? extends org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObjectOrBuilder> 
+          getSpaceObjectsOrBuilderList() {
+        return spaceObjects_;
+      }
+      public int getSpaceObjectsCount() {
+        return spaceObjects_.size();
+      }
+      public org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject getSpaceObjects(int index) {
+        return spaceObjects_.get(index);
+      }
+      public org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObjectOrBuilder getSpaceObjectsOrBuilder(
+          int index) {
+        return spaceObjects_.get(index);
+      }
+      
+      private void initFields() {
+        spaceObjects_ = java.util.Collections.emptyList();
+      }
+      private byte memoizedIsInitialized = -1;
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized != -1) return isInitialized == 1;
+        
+        memoizedIsInitialized = 1;
+        return true;
+      }
+      
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        getSerializedSize();
+        for (int i = 0; i < spaceObjects_.size(); i++) {
+          output.writeMessage(1, spaceObjects_.get(i));
+        }
+        getUnknownFields().writeTo(output);
+      }
+      
+      private int memoizedSerializedSize = -1;
+      public int getSerializedSize() {
+        int size = memoizedSerializedSize;
+        if (size != -1) return size;
+      
+        size = 0;
+        for (int i = 0; i < spaceObjects_.size(); i++) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeMessageSize(1, spaceObjects_.get(i));
+        }
+        size += getUnknownFields().getSerializedSize();
+        memoizedSerializedSize = size;
+        return size;
+      }
+      
+      private static final long serialVersionUID = 0L;
+      @java.lang.Override
+      protected java.lang.Object writeReplace()
+          throws java.io.ObjectStreamException {
+        return super.writeReplace();
+      }
+      
+      public static org.lsfn.starship.STS.STSdown.VisualSensors parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return newBuilder().mergeFrom(data).buildParsed();
+      }
+      public static org.lsfn.starship.STS.STSdown.VisualSensors parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return newBuilder().mergeFrom(data, extensionRegistry)
+                 .buildParsed();
+      }
+      public static org.lsfn.starship.STS.STSdown.VisualSensors parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return newBuilder().mergeFrom(data).buildParsed();
+      }
+      public static org.lsfn.starship.STS.STSdown.VisualSensors parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return newBuilder().mergeFrom(data, extensionRegistry)
+                 .buildParsed();
+      }
+      public static org.lsfn.starship.STS.STSdown.VisualSensors parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return newBuilder().mergeFrom(input).buildParsed();
+      }
+      public static org.lsfn.starship.STS.STSdown.VisualSensors parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return newBuilder().mergeFrom(input, extensionRegistry)
+                 .buildParsed();
+      }
+      public static org.lsfn.starship.STS.STSdown.VisualSensors parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        Builder builder = newBuilder();
+        if (builder.mergeDelimitedFrom(input)) {
+          return builder.buildParsed();
+        } else {
+          return null;
+        }
+      }
+      public static org.lsfn.starship.STS.STSdown.VisualSensors parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        Builder builder = newBuilder();
+        if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+          return builder.buildParsed();
+        } else {
+          return null;
+        }
+      }
+      public static org.lsfn.starship.STS.STSdown.VisualSensors parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return newBuilder().mergeFrom(input).buildParsed();
+      }
+      public static org.lsfn.starship.STS.STSdown.VisualSensors parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return newBuilder().mergeFrom(input, extensionRegistry)
+                 .buildParsed();
+      }
+      
+      public static Builder newBuilder() { return Builder.create(); }
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder(org.lsfn.starship.STS.STSdown.VisualSensors prototype) {
+        return newBuilder().mergeFrom(prototype);
+      }
+      public Builder toBuilder() { return newBuilder(this); }
+      
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements org.lsfn.starship.STS.STSdown.VisualSensorsOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return org.lsfn.starship.STS.internal_static_STSdown_VisualSensors_descriptor;
+        }
+        
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return org.lsfn.starship.STS.internal_static_STSdown_VisualSensors_fieldAccessorTable;
+        }
+        
+        // Construct using org.lsfn.starship.STS.STSdown.VisualSensors.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+        
+        private Builder(BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+            getSpaceObjectsFieldBuilder();
+          }
+        }
+        private static Builder create() {
+          return new Builder();
+        }
+        
+        public Builder clear() {
+          super.clear();
+          if (spaceObjectsBuilder_ == null) {
+            spaceObjects_ = java.util.Collections.emptyList();
+            bitField0_ = (bitField0_ & ~0x00000001);
+          } else {
+            spaceObjectsBuilder_.clear();
+          }
+          return this;
+        }
+        
+        public Builder clone() {
+          return create().mergeFrom(buildPartial());
+        }
+        
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return org.lsfn.starship.STS.STSdown.VisualSensors.getDescriptor();
+        }
+        
+        public org.lsfn.starship.STS.STSdown.VisualSensors getDefaultInstanceForType() {
+          return org.lsfn.starship.STS.STSdown.VisualSensors.getDefaultInstance();
+        }
+        
+        public org.lsfn.starship.STS.STSdown.VisualSensors build() {
+          org.lsfn.starship.STS.STSdown.VisualSensors result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+        
+        private org.lsfn.starship.STS.STSdown.VisualSensors buildParsed()
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          org.lsfn.starship.STS.STSdown.VisualSensors result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(
+              result).asInvalidProtocolBufferException();
+          }
+          return result;
+        }
+        
+        public org.lsfn.starship.STS.STSdown.VisualSensors buildPartial() {
+          org.lsfn.starship.STS.STSdown.VisualSensors result = new org.lsfn.starship.STS.STSdown.VisualSensors(this);
+          int from_bitField0_ = bitField0_;
+          if (spaceObjectsBuilder_ == null) {
+            if (((bitField0_ & 0x00000001) == 0x00000001)) {
+              spaceObjects_ = java.util.Collections.unmodifiableList(spaceObjects_);
+              bitField0_ = (bitField0_ & ~0x00000001);
+            }
+            result.spaceObjects_ = spaceObjects_;
+          } else {
+            result.spaceObjects_ = spaceObjectsBuilder_.build();
+          }
+          onBuilt();
+          return result;
+        }
+        
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof org.lsfn.starship.STS.STSdown.VisualSensors) {
+            return mergeFrom((org.lsfn.starship.STS.STSdown.VisualSensors)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+        
+        public Builder mergeFrom(org.lsfn.starship.STS.STSdown.VisualSensors other) {
+          if (other == org.lsfn.starship.STS.STSdown.VisualSensors.getDefaultInstance()) return this;
+          if (spaceObjectsBuilder_ == null) {
+            if (!other.spaceObjects_.isEmpty()) {
+              if (spaceObjects_.isEmpty()) {
+                spaceObjects_ = other.spaceObjects_;
+                bitField0_ = (bitField0_ & ~0x00000001);
+              } else {
+                ensureSpaceObjectsIsMutable();
+                spaceObjects_.addAll(other.spaceObjects_);
+              }
+              onChanged();
+            }
+          } else {
+            if (!other.spaceObjects_.isEmpty()) {
+              if (spaceObjectsBuilder_.isEmpty()) {
+                spaceObjectsBuilder_.dispose();
+                spaceObjectsBuilder_ = null;
+                spaceObjects_ = other.spaceObjects_;
+                bitField0_ = (bitField0_ & ~0x00000001);
+                spaceObjectsBuilder_ = 
+                  com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                     getSpaceObjectsFieldBuilder() : null;
+              } else {
+                spaceObjectsBuilder_.addAllMessages(other.spaceObjects_);
+              }
+            }
+          }
+          this.mergeUnknownFields(other.getUnknownFields());
+          return this;
+        }
+        
+        public final boolean isInitialized() {
+          return true;
+        }
+        
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder(
+              this.getUnknownFields());
+          while (true) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                this.setUnknownFields(unknownFields.build());
+                onChanged();
+                return this;
+              default: {
+                if (!parseUnknownField(input, unknownFields,
+                                       extensionRegistry, tag)) {
+                  this.setUnknownFields(unknownFields.build());
+                  onChanged();
+                  return this;
+                }
+                break;
+              }
+              case 10: {
+                org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Builder subBuilder = org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.newBuilder();
+                input.readMessage(subBuilder, extensionRegistry);
+                addSpaceObjects(subBuilder.buildPartial());
+                break;
+              }
+            }
+          }
+        }
+        
+        private int bitField0_;
+        
+        // repeated .STSdown.VisualSensors.SpaceObject spaceObjects = 1;
+        private java.util.List<org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject> spaceObjects_ =
+          java.util.Collections.emptyList();
+        private void ensureSpaceObjectsIsMutable() {
+          if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+            spaceObjects_ = new java.util.ArrayList<org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject>(spaceObjects_);
+            bitField0_ |= 0x00000001;
+           }
+        }
+        
+        private com.google.protobuf.RepeatedFieldBuilder<
+            org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject, org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Builder, org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObjectOrBuilder> spaceObjectsBuilder_;
+        
+        public java.util.List<org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject> getSpaceObjectsList() {
+          if (spaceObjectsBuilder_ == null) {
+            return java.util.Collections.unmodifiableList(spaceObjects_);
+          } else {
+            return spaceObjectsBuilder_.getMessageList();
+          }
+        }
+        public int getSpaceObjectsCount() {
+          if (spaceObjectsBuilder_ == null) {
+            return spaceObjects_.size();
+          } else {
+            return spaceObjectsBuilder_.getCount();
+          }
+        }
+        public org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject getSpaceObjects(int index) {
+          if (spaceObjectsBuilder_ == null) {
+            return spaceObjects_.get(index);
+          } else {
+            return spaceObjectsBuilder_.getMessage(index);
+          }
+        }
+        public Builder setSpaceObjects(
+            int index, org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject value) {
+          if (spaceObjectsBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            ensureSpaceObjectsIsMutable();
+            spaceObjects_.set(index, value);
+            onChanged();
+          } else {
+            spaceObjectsBuilder_.setMessage(index, value);
+          }
+          return this;
+        }
+        public Builder setSpaceObjects(
+            int index, org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Builder builderForValue) {
+          if (spaceObjectsBuilder_ == null) {
+            ensureSpaceObjectsIsMutable();
+            spaceObjects_.set(index, builderForValue.build());
+            onChanged();
+          } else {
+            spaceObjectsBuilder_.setMessage(index, builderForValue.build());
+          }
+          return this;
+        }
+        public Builder addSpaceObjects(org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject value) {
+          if (spaceObjectsBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            ensureSpaceObjectsIsMutable();
+            spaceObjects_.add(value);
+            onChanged();
+          } else {
+            spaceObjectsBuilder_.addMessage(value);
+          }
+          return this;
+        }
+        public Builder addSpaceObjects(
+            int index, org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject value) {
+          if (spaceObjectsBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            ensureSpaceObjectsIsMutable();
+            spaceObjects_.add(index, value);
+            onChanged();
+          } else {
+            spaceObjectsBuilder_.addMessage(index, value);
+          }
+          return this;
+        }
+        public Builder addSpaceObjects(
+            org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Builder builderForValue) {
+          if (spaceObjectsBuilder_ == null) {
+            ensureSpaceObjectsIsMutable();
+            spaceObjects_.add(builderForValue.build());
+            onChanged();
+          } else {
+            spaceObjectsBuilder_.addMessage(builderForValue.build());
+          }
+          return this;
+        }
+        public Builder addSpaceObjects(
+            int index, org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Builder builderForValue) {
+          if (spaceObjectsBuilder_ == null) {
+            ensureSpaceObjectsIsMutable();
+            spaceObjects_.add(index, builderForValue.build());
+            onChanged();
+          } else {
+            spaceObjectsBuilder_.addMessage(index, builderForValue.build());
+          }
+          return this;
+        }
+        public Builder addAllSpaceObjects(
+            java.lang.Iterable<? extends org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject> values) {
+          if (spaceObjectsBuilder_ == null) {
+            ensureSpaceObjectsIsMutable();
+            super.addAll(values, spaceObjects_);
+            onChanged();
+          } else {
+            spaceObjectsBuilder_.addAllMessages(values);
+          }
+          return this;
+        }
+        public Builder clearSpaceObjects() {
+          if (spaceObjectsBuilder_ == null) {
+            spaceObjects_ = java.util.Collections.emptyList();
+            bitField0_ = (bitField0_ & ~0x00000001);
+            onChanged();
+          } else {
+            spaceObjectsBuilder_.clear();
+          }
+          return this;
+        }
+        public Builder removeSpaceObjects(int index) {
+          if (spaceObjectsBuilder_ == null) {
+            ensureSpaceObjectsIsMutable();
+            spaceObjects_.remove(index);
+            onChanged();
+          } else {
+            spaceObjectsBuilder_.remove(index);
+          }
+          return this;
+        }
+        public org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Builder getSpaceObjectsBuilder(
+            int index) {
+          return getSpaceObjectsFieldBuilder().getBuilder(index);
+        }
+        public org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObjectOrBuilder getSpaceObjectsOrBuilder(
+            int index) {
+          if (spaceObjectsBuilder_ == null) {
+            return spaceObjects_.get(index);  } else {
+            return spaceObjectsBuilder_.getMessageOrBuilder(index);
+          }
+        }
+        public java.util.List<? extends org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObjectOrBuilder> 
+             getSpaceObjectsOrBuilderList() {
+          if (spaceObjectsBuilder_ != null) {
+            return spaceObjectsBuilder_.getMessageOrBuilderList();
+          } else {
+            return java.util.Collections.unmodifiableList(spaceObjects_);
+          }
+        }
+        public org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Builder addSpaceObjectsBuilder() {
+          return getSpaceObjectsFieldBuilder().addBuilder(
+              org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.getDefaultInstance());
+        }
+        public org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Builder addSpaceObjectsBuilder(
+            int index) {
+          return getSpaceObjectsFieldBuilder().addBuilder(
+              index, org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.getDefaultInstance());
+        }
+        public java.util.List<org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Builder> 
+             getSpaceObjectsBuilderList() {
+          return getSpaceObjectsFieldBuilder().getBuilderList();
+        }
+        private com.google.protobuf.RepeatedFieldBuilder<
+            org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject, org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Builder, org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObjectOrBuilder> 
+            getSpaceObjectsFieldBuilder() {
+          if (spaceObjectsBuilder_ == null) {
+            spaceObjectsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+                org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject, org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Builder, org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObjectOrBuilder>(
+                    spaceObjects_,
+                    ((bitField0_ & 0x00000001) == 0x00000001),
+                    getParentForChildren(),
+                    isClean());
+            spaceObjects_ = null;
+          }
+          return spaceObjectsBuilder_;
+        }
+        
+        // @@protoc_insertion_point(builder_scope:STSdown.VisualSensors)
+      }
+      
+      static {
+        defaultInstance = new VisualSensors(true);
+        defaultInstance.initFields();
+      }
+      
+      // @@protoc_insertion_point(class_scope:STSdown.VisualSensors)
     }
     
     private int bitField0_;
-    // optional .STSdown.Reset reset = 1;
-    public static final int RESET_FIELD_NUMBER = 1;
-    private org.lsfn.starship.STS.STSdown.Reset reset_;
-    public boolean hasReset() {
+    // optional .STSdown.Lobby lobby = 1;
+    public static final int LOBBY_FIELD_NUMBER = 1;
+    private org.lsfn.starship.STS.STSdown.Lobby lobby_;
+    public boolean hasLobby() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
-    public org.lsfn.starship.STS.STSdown.Reset getReset() {
-      return reset_;
+    public org.lsfn.starship.STS.STSdown.Lobby getLobby() {
+      return lobby_;
     }
-    public org.lsfn.starship.STS.STSdown.ResetOrBuilder getResetOrBuilder() {
-      return reset_;
+    public org.lsfn.starship.STS.STSdown.LobbyOrBuilder getLobbyOrBuilder() {
+      return lobby_;
+    }
+    
+    // optional .STSdown.VisualSensors visualSensors = 2;
+    public static final int VISUALSENSORS_FIELD_NUMBER = 2;
+    private org.lsfn.starship.STS.STSdown.VisualSensors visualSensors_;
+    public boolean hasVisualSensors() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public org.lsfn.starship.STS.STSdown.VisualSensors getVisualSensors() {
+      return visualSensors_;
+    }
+    public org.lsfn.starship.STS.STSdown.VisualSensorsOrBuilder getVisualSensorsOrBuilder() {
+      return visualSensors_;
     }
     
     private void initFields() {
-      reset_ = org.lsfn.starship.STS.STSdown.Reset.getDefaultInstance();
+      lobby_ = org.lsfn.starship.STS.STSdown.Lobby.getDefaultInstance();
+      visualSensors_ = org.lsfn.starship.STS.STSdown.VisualSensors.getDefaultInstance();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -2402,7 +5105,10 @@ public final class STS {
                         throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeMessage(1, reset_);
+        output.writeMessage(1, lobby_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeMessage(2, visualSensors_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -2415,7 +5121,11 @@ public final class STS {
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, reset_);
+          .computeMessageSize(1, lobby_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, visualSensors_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -2533,7 +5243,8 @@ public final class STS {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-          getResetFieldBuilder();
+          getLobbyFieldBuilder();
+          getVisualSensorsFieldBuilder();
         }
       }
       private static Builder create() {
@@ -2542,12 +5253,18 @@ public final class STS {
       
       public Builder clear() {
         super.clear();
-        if (resetBuilder_ == null) {
-          reset_ = org.lsfn.starship.STS.STSdown.Reset.getDefaultInstance();
+        if (lobbyBuilder_ == null) {
+          lobby_ = org.lsfn.starship.STS.STSdown.Lobby.getDefaultInstance();
         } else {
-          resetBuilder_.clear();
+          lobbyBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000001);
+        if (visualSensorsBuilder_ == null) {
+          visualSensors_ = org.lsfn.starship.STS.STSdown.VisualSensors.getDefaultInstance();
+        } else {
+          visualSensorsBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
       
@@ -2589,10 +5306,18 @@ public final class STS {
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
-        if (resetBuilder_ == null) {
-          result.reset_ = reset_;
+        if (lobbyBuilder_ == null) {
+          result.lobby_ = lobby_;
         } else {
-          result.reset_ = resetBuilder_.build();
+          result.lobby_ = lobbyBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        if (visualSensorsBuilder_ == null) {
+          result.visualSensors_ = visualSensors_;
+        } else {
+          result.visualSensors_ = visualSensorsBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -2610,8 +5335,11 @@ public final class STS {
       
       public Builder mergeFrom(org.lsfn.starship.STS.STSdown other) {
         if (other == org.lsfn.starship.STS.STSdown.getDefaultInstance()) return this;
-        if (other.hasReset()) {
-          mergeReset(other.getReset());
+        if (other.hasLobby()) {
+          mergeLobby(other.getLobby());
+        }
+        if (other.hasVisualSensors()) {
+          mergeVisualSensors(other.getVisualSensors());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -2645,12 +5373,21 @@ public final class STS {
               break;
             }
             case 10: {
-              org.lsfn.starship.STS.STSdown.Reset.Builder subBuilder = org.lsfn.starship.STS.STSdown.Reset.newBuilder();
-              if (hasReset()) {
-                subBuilder.mergeFrom(getReset());
+              org.lsfn.starship.STS.STSdown.Lobby.Builder subBuilder = org.lsfn.starship.STS.STSdown.Lobby.newBuilder();
+              if (hasLobby()) {
+                subBuilder.mergeFrom(getLobby());
               }
               input.readMessage(subBuilder, extensionRegistry);
-              setReset(subBuilder.buildPartial());
+              setLobby(subBuilder.buildPartial());
+              break;
+            }
+            case 18: {
+              org.lsfn.starship.STS.STSdown.VisualSensors.Builder subBuilder = org.lsfn.starship.STS.STSdown.VisualSensors.newBuilder();
+              if (hasVisualSensors()) {
+                subBuilder.mergeFrom(getVisualSensors());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setVisualSensors(subBuilder.buildPartial());
               break;
             }
           }
@@ -2659,94 +5396,184 @@ public final class STS {
       
       private int bitField0_;
       
-      // optional .STSdown.Reset reset = 1;
-      private org.lsfn.starship.STS.STSdown.Reset reset_ = org.lsfn.starship.STS.STSdown.Reset.getDefaultInstance();
+      // optional .STSdown.Lobby lobby = 1;
+      private org.lsfn.starship.STS.STSdown.Lobby lobby_ = org.lsfn.starship.STS.STSdown.Lobby.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          org.lsfn.starship.STS.STSdown.Reset, org.lsfn.starship.STS.STSdown.Reset.Builder, org.lsfn.starship.STS.STSdown.ResetOrBuilder> resetBuilder_;
-      public boolean hasReset() {
+          org.lsfn.starship.STS.STSdown.Lobby, org.lsfn.starship.STS.STSdown.Lobby.Builder, org.lsfn.starship.STS.STSdown.LobbyOrBuilder> lobbyBuilder_;
+      public boolean hasLobby() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public org.lsfn.starship.STS.STSdown.Reset getReset() {
-        if (resetBuilder_ == null) {
-          return reset_;
+      public org.lsfn.starship.STS.STSdown.Lobby getLobby() {
+        if (lobbyBuilder_ == null) {
+          return lobby_;
         } else {
-          return resetBuilder_.getMessage();
+          return lobbyBuilder_.getMessage();
         }
       }
-      public Builder setReset(org.lsfn.starship.STS.STSdown.Reset value) {
-        if (resetBuilder_ == null) {
+      public Builder setLobby(org.lsfn.starship.STS.STSdown.Lobby value) {
+        if (lobbyBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          reset_ = value;
+          lobby_ = value;
           onChanged();
         } else {
-          resetBuilder_.setMessage(value);
+          lobbyBuilder_.setMessage(value);
         }
         bitField0_ |= 0x00000001;
         return this;
       }
-      public Builder setReset(
-          org.lsfn.starship.STS.STSdown.Reset.Builder builderForValue) {
-        if (resetBuilder_ == null) {
-          reset_ = builderForValue.build();
+      public Builder setLobby(
+          org.lsfn.starship.STS.STSdown.Lobby.Builder builderForValue) {
+        if (lobbyBuilder_ == null) {
+          lobby_ = builderForValue.build();
           onChanged();
         } else {
-          resetBuilder_.setMessage(builderForValue.build());
+          lobbyBuilder_.setMessage(builderForValue.build());
         }
         bitField0_ |= 0x00000001;
         return this;
       }
-      public Builder mergeReset(org.lsfn.starship.STS.STSdown.Reset value) {
-        if (resetBuilder_ == null) {
+      public Builder mergeLobby(org.lsfn.starship.STS.STSdown.Lobby value) {
+        if (lobbyBuilder_ == null) {
           if (((bitField0_ & 0x00000001) == 0x00000001) &&
-              reset_ != org.lsfn.starship.STS.STSdown.Reset.getDefaultInstance()) {
-            reset_ =
-              org.lsfn.starship.STS.STSdown.Reset.newBuilder(reset_).mergeFrom(value).buildPartial();
+              lobby_ != org.lsfn.starship.STS.STSdown.Lobby.getDefaultInstance()) {
+            lobby_ =
+              org.lsfn.starship.STS.STSdown.Lobby.newBuilder(lobby_).mergeFrom(value).buildPartial();
           } else {
-            reset_ = value;
+            lobby_ = value;
           }
           onChanged();
         } else {
-          resetBuilder_.mergeFrom(value);
+          lobbyBuilder_.mergeFrom(value);
         }
         bitField0_ |= 0x00000001;
         return this;
       }
-      public Builder clearReset() {
-        if (resetBuilder_ == null) {
-          reset_ = org.lsfn.starship.STS.STSdown.Reset.getDefaultInstance();
+      public Builder clearLobby() {
+        if (lobbyBuilder_ == null) {
+          lobby_ = org.lsfn.starship.STS.STSdown.Lobby.getDefaultInstance();
           onChanged();
         } else {
-          resetBuilder_.clear();
+          lobbyBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
-      public org.lsfn.starship.STS.STSdown.Reset.Builder getResetBuilder() {
+      public org.lsfn.starship.STS.STSdown.Lobby.Builder getLobbyBuilder() {
         bitField0_ |= 0x00000001;
         onChanged();
-        return getResetFieldBuilder().getBuilder();
+        return getLobbyFieldBuilder().getBuilder();
       }
-      public org.lsfn.starship.STS.STSdown.ResetOrBuilder getResetOrBuilder() {
-        if (resetBuilder_ != null) {
-          return resetBuilder_.getMessageOrBuilder();
+      public org.lsfn.starship.STS.STSdown.LobbyOrBuilder getLobbyOrBuilder() {
+        if (lobbyBuilder_ != null) {
+          return lobbyBuilder_.getMessageOrBuilder();
         } else {
-          return reset_;
+          return lobby_;
         }
       }
       private com.google.protobuf.SingleFieldBuilder<
-          org.lsfn.starship.STS.STSdown.Reset, org.lsfn.starship.STS.STSdown.Reset.Builder, org.lsfn.starship.STS.STSdown.ResetOrBuilder> 
-          getResetFieldBuilder() {
-        if (resetBuilder_ == null) {
-          resetBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              org.lsfn.starship.STS.STSdown.Reset, org.lsfn.starship.STS.STSdown.Reset.Builder, org.lsfn.starship.STS.STSdown.ResetOrBuilder>(
-                  reset_,
+          org.lsfn.starship.STS.STSdown.Lobby, org.lsfn.starship.STS.STSdown.Lobby.Builder, org.lsfn.starship.STS.STSdown.LobbyOrBuilder> 
+          getLobbyFieldBuilder() {
+        if (lobbyBuilder_ == null) {
+          lobbyBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              org.lsfn.starship.STS.STSdown.Lobby, org.lsfn.starship.STS.STSdown.Lobby.Builder, org.lsfn.starship.STS.STSdown.LobbyOrBuilder>(
+                  lobby_,
                   getParentForChildren(),
                   isClean());
-          reset_ = null;
+          lobby_ = null;
         }
-        return resetBuilder_;
+        return lobbyBuilder_;
+      }
+      
+      // optional .STSdown.VisualSensors visualSensors = 2;
+      private org.lsfn.starship.STS.STSdown.VisualSensors visualSensors_ = org.lsfn.starship.STS.STSdown.VisualSensors.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          org.lsfn.starship.STS.STSdown.VisualSensors, org.lsfn.starship.STS.STSdown.VisualSensors.Builder, org.lsfn.starship.STS.STSdown.VisualSensorsOrBuilder> visualSensorsBuilder_;
+      public boolean hasVisualSensors() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      public org.lsfn.starship.STS.STSdown.VisualSensors getVisualSensors() {
+        if (visualSensorsBuilder_ == null) {
+          return visualSensors_;
+        } else {
+          return visualSensorsBuilder_.getMessage();
+        }
+      }
+      public Builder setVisualSensors(org.lsfn.starship.STS.STSdown.VisualSensors value) {
+        if (visualSensorsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          visualSensors_ = value;
+          onChanged();
+        } else {
+          visualSensorsBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000002;
+        return this;
+      }
+      public Builder setVisualSensors(
+          org.lsfn.starship.STS.STSdown.VisualSensors.Builder builderForValue) {
+        if (visualSensorsBuilder_ == null) {
+          visualSensors_ = builderForValue.build();
+          onChanged();
+        } else {
+          visualSensorsBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000002;
+        return this;
+      }
+      public Builder mergeVisualSensors(org.lsfn.starship.STS.STSdown.VisualSensors value) {
+        if (visualSensorsBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002) &&
+              visualSensors_ != org.lsfn.starship.STS.STSdown.VisualSensors.getDefaultInstance()) {
+            visualSensors_ =
+              org.lsfn.starship.STS.STSdown.VisualSensors.newBuilder(visualSensors_).mergeFrom(value).buildPartial();
+          } else {
+            visualSensors_ = value;
+          }
+          onChanged();
+        } else {
+          visualSensorsBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000002;
+        return this;
+      }
+      public Builder clearVisualSensors() {
+        if (visualSensorsBuilder_ == null) {
+          visualSensors_ = org.lsfn.starship.STS.STSdown.VisualSensors.getDefaultInstance();
+          onChanged();
+        } else {
+          visualSensorsBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+      public org.lsfn.starship.STS.STSdown.VisualSensors.Builder getVisualSensorsBuilder() {
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return getVisualSensorsFieldBuilder().getBuilder();
+      }
+      public org.lsfn.starship.STS.STSdown.VisualSensorsOrBuilder getVisualSensorsOrBuilder() {
+        if (visualSensorsBuilder_ != null) {
+          return visualSensorsBuilder_.getMessageOrBuilder();
+        } else {
+          return visualSensors_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          org.lsfn.starship.STS.STSdown.VisualSensors, org.lsfn.starship.STS.STSdown.VisualSensors.Builder, org.lsfn.starship.STS.STSdown.VisualSensorsOrBuilder> 
+          getVisualSensorsFieldBuilder() {
+        if (visualSensorsBuilder_ == null) {
+          visualSensorsBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              org.lsfn.starship.STS.STSdown.VisualSensors, org.lsfn.starship.STS.STSdown.VisualSensors.Builder, org.lsfn.starship.STS.STSdown.VisualSensorsOrBuilder>(
+                  visualSensors_,
+                  getParentForChildren(),
+                  isClean());
+          visualSensors_ = null;
+        }
+        return visualSensorsBuilder_;
       }
       
       // @@protoc_insertion_point(builder_scope:STSdown)
@@ -2766,30 +5593,50 @@ public final class STS {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_STSup_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_STSup_Connection_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_STSup_Connection_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_STSup_Lobby_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_STSup_Lobby_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_STSup_Lobby_Connection_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_STSup_Lobby_Connection_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_STSup_RCon_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_STSup_RCon_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_STSup_Piloting_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_STSup_Piloting_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_STSdown_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_STSdown_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_STSdown_Reset_descriptor;
+    internal_static_STSdown_Lobby_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_STSdown_Reset_fieldAccessorTable;
+      internal_static_STSdown_Lobby_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_STSdown_VisualSensors_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_STSdown_VisualSensors_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_STSdown_VisualSensors_SpaceObject_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_STSdown_VisualSensors_SpaceObject_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_STSdown_VisualSensors_SpaceObject_Point_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_STSdown_VisualSensors_SpaceObject_Point_fieldAccessorTable;
   
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -2799,17 +5646,32 @@ public final class STS {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\023proto_src/STS.proto\"\272\002\n\005STSup\022\033\n\005lobby" +
-      "\030\001 \001(\0132\014.STSup.Lobby\022\031\n\004rcon\030\002 \001(\0132\013.STS" +
-      "up.RCon\032\337\001\n\005Lobby\022\022\n\nreadyState\030\001 \001(\010\022+\n" +
-      "\nconnection\030\002 \001(\0132\027.STSup.Lobby.Connecti" +
-      "on\032c\n\nConnection\0229\n\021connectionCommand\030\001 " +
-      "\001(\0162\036.STSup.Lobby.ConnectionCommand\022\014\n\004h" +
-      "ost\030\002 \001(\t\022\014\n\004port\030\003 \001(\r\"0\n\021ConnectionCom" +
-      "mand\022\013\n\007CONNECT\020\000\022\016\n\nDISCONNECT\020\001\032\027\n\004RCo" +
-      "n\022\017\n\007command\030\001 \001(\t\"@\n\007STSdown\022\035\n\005reset\030\001" +
-      " \001(\0132\016.STSdown.Reset\032\026\n\005Reset\022\r\n\005reset\030\001",
-      " \001(\rB\030\n\021org.lsfn.starshipB\003STS"
+      "\n\023proto_src/STS.proto\"\370\003\n\005STSup\022\031\n\004rcon\030" +
+      "\001 \001(\0132\013.STSup.RCon\022%\n\nconnection\030\002 \001(\0132\021" +
+      ".STSup.Connection\022\033\n\005lobby\030\003 \001(\0132\014.STSup" +
+      ".Lobby\022!\n\010piloting\030\004 \001(\0132\017.STSup.Pilotin" +
+      "g\032\232\001\n\nConnection\022>\n\021connectionCommand\030\001 " +
+      "\001(\0162#.STSup.Connection.ConnectionCommand" +
+      "\022\014\n\004host\030\002 \001(\t\022\014\n\004port\030\003 \001(\r\"0\n\021Connecti" +
+      "onCommand\022\013\n\007CONNECT\020\000\022\016\n\nDISCONNECT\020\001\032-" +
+      "\n\005Lobby\022\022\n\nreadyState\030\001 \001(\010\022\020\n\010shipName\030" +
+      "\002 \001(\t\032\027\n\004RCon\022\017\n\007command\030\001 \001(\t\032\207\001\n\010Pilot",
+      "ing\022\020\n\010turnAnti\030\001 \001(\010\022\021\n\tturnClock\030\002 \001(\010" +
+      "\022\022\n\nthrustLeft\030\003 \001(\010\022\023\n\013thrustRight\030\004 \001(" +
+      "\010\022\025\n\rthrustForward\030\005 \001(\010\022\026\n\016thrustBackwa" +
+      "rd\030\006 \001(\010\"\323\003\n\007STSdown\022\035\n\005lobby\030\001 \001(\0132\016.ST" +
+      "Sdown.Lobby\022-\n\rvisualSensors\030\002 \001(\0132\026.STS" +
+      "down.VisualSensors\032W\n\005Lobby\022\022\n\nreadyStat" +
+      "e\030\001 \001(\010\022\020\n\010shipName\030\002 \001(\t\022\023\n\013shipsInGame" +
+      "\030\003 \003(\t\022\023\n\013gameStarted\030\004 \001(\010\032\240\002\n\rVisualSe" +
+      "nsors\0228\n\014spaceObjects\030\001 \003(\0132\".STSdown.Vi" +
+      "sualSensors.SpaceObject\032\324\001\n\013SpaceObject\022",
+      "5\n\004type\030\001 \001(\0162\'.STSdown.VisualSensors.Sp" +
+      "aceObject.Type\022:\n\010position\030\002 \001(\0132(.STSdo" +
+      "wn.VisualSensors.SpaceObject.Point\022\023\n\013or" +
+      "ientation\030\003 \001(\001\032\035\n\005Point\022\t\n\001x\030\001 \001(\001\022\t\n\001y" +
+      "\030\002 \001(\001\"\036\n\004Type\022\010\n\004SHIP\020\000\022\014\n\010ASTEROID\020\001B\030" +
+      "\n\021org.lsfn.starshipB\003STS"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -2821,49 +5683,81 @@ public final class STS {
           internal_static_STSup_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_STSup_descriptor,
-              new java.lang.String[] { "Lobby", "Rcon", },
+              new java.lang.String[] { "Rcon", "Connection", "Lobby", "Piloting", },
               org.lsfn.starship.STS.STSup.class,
               org.lsfn.starship.STS.STSup.Builder.class);
-          internal_static_STSup_Lobby_descriptor =
+          internal_static_STSup_Connection_descriptor =
             internal_static_STSup_descriptor.getNestedTypes().get(0);
+          internal_static_STSup_Connection_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_STSup_Connection_descriptor,
+              new java.lang.String[] { "ConnectionCommand", "Host", "Port", },
+              org.lsfn.starship.STS.STSup.Connection.class,
+              org.lsfn.starship.STS.STSup.Connection.Builder.class);
+          internal_static_STSup_Lobby_descriptor =
+            internal_static_STSup_descriptor.getNestedTypes().get(1);
           internal_static_STSup_Lobby_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_STSup_Lobby_descriptor,
-              new java.lang.String[] { "ReadyState", "Connection", },
+              new java.lang.String[] { "ReadyState", "ShipName", },
               org.lsfn.starship.STS.STSup.Lobby.class,
               org.lsfn.starship.STS.STSup.Lobby.Builder.class);
-          internal_static_STSup_Lobby_Connection_descriptor =
-            internal_static_STSup_Lobby_descriptor.getNestedTypes().get(0);
-          internal_static_STSup_Lobby_Connection_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_STSup_Lobby_Connection_descriptor,
-              new java.lang.String[] { "ConnectionCommand", "Host", "Port", },
-              org.lsfn.starship.STS.STSup.Lobby.Connection.class,
-              org.lsfn.starship.STS.STSup.Lobby.Connection.Builder.class);
           internal_static_STSup_RCon_descriptor =
-            internal_static_STSup_descriptor.getNestedTypes().get(1);
+            internal_static_STSup_descriptor.getNestedTypes().get(2);
           internal_static_STSup_RCon_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_STSup_RCon_descriptor,
               new java.lang.String[] { "Command", },
               org.lsfn.starship.STS.STSup.RCon.class,
               org.lsfn.starship.STS.STSup.RCon.Builder.class);
+          internal_static_STSup_Piloting_descriptor =
+            internal_static_STSup_descriptor.getNestedTypes().get(3);
+          internal_static_STSup_Piloting_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_STSup_Piloting_descriptor,
+              new java.lang.String[] { "TurnAnti", "TurnClock", "ThrustLeft", "ThrustRight", "ThrustForward", "ThrustBackward", },
+              org.lsfn.starship.STS.STSup.Piloting.class,
+              org.lsfn.starship.STS.STSup.Piloting.Builder.class);
           internal_static_STSdown_descriptor =
             getDescriptor().getMessageTypes().get(1);
           internal_static_STSdown_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_STSdown_descriptor,
-              new java.lang.String[] { "Reset", },
+              new java.lang.String[] { "Lobby", "VisualSensors", },
               org.lsfn.starship.STS.STSdown.class,
               org.lsfn.starship.STS.STSdown.Builder.class);
-          internal_static_STSdown_Reset_descriptor =
+          internal_static_STSdown_Lobby_descriptor =
             internal_static_STSdown_descriptor.getNestedTypes().get(0);
-          internal_static_STSdown_Reset_fieldAccessorTable = new
+          internal_static_STSdown_Lobby_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_STSdown_Reset_descriptor,
-              new java.lang.String[] { "Reset", },
-              org.lsfn.starship.STS.STSdown.Reset.class,
-              org.lsfn.starship.STS.STSdown.Reset.Builder.class);
+              internal_static_STSdown_Lobby_descriptor,
+              new java.lang.String[] { "ReadyState", "ShipName", "ShipsInGame", "GameStarted", },
+              org.lsfn.starship.STS.STSdown.Lobby.class,
+              org.lsfn.starship.STS.STSdown.Lobby.Builder.class);
+          internal_static_STSdown_VisualSensors_descriptor =
+            internal_static_STSdown_descriptor.getNestedTypes().get(1);
+          internal_static_STSdown_VisualSensors_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_STSdown_VisualSensors_descriptor,
+              new java.lang.String[] { "SpaceObjects", },
+              org.lsfn.starship.STS.STSdown.VisualSensors.class,
+              org.lsfn.starship.STS.STSdown.VisualSensors.Builder.class);
+          internal_static_STSdown_VisualSensors_SpaceObject_descriptor =
+            internal_static_STSdown_VisualSensors_descriptor.getNestedTypes().get(0);
+          internal_static_STSdown_VisualSensors_SpaceObject_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_STSdown_VisualSensors_SpaceObject_descriptor,
+              new java.lang.String[] { "Type", "Position", "Orientation", },
+              org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.class,
+              org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Builder.class);
+          internal_static_STSdown_VisualSensors_SpaceObject_Point_descriptor =
+            internal_static_STSdown_VisualSensors_SpaceObject_descriptor.getNestedTypes().get(0);
+          internal_static_STSdown_VisualSensors_SpaceObject_Point_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_STSdown_VisualSensors_SpaceObject_Point_descriptor,
+              new java.lang.String[] { "X", "Y", },
+              org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point.class,
+              org.lsfn.starship.STS.STSdown.VisualSensors.SpaceObject.Point.Builder.class);
           return null;
         }
       };
