@@ -115,12 +115,12 @@ public class NebulaConnection extends Thread {
     }
     
     /**
-     * Sends a message to the Starship that this class is connected to.
+     * Sends a message to the Nebula that this class is connected to.
      * Won't sent a message when disconnected
      * @param upMessage The message to be sent.
      * @return The new connection status of the connection.
      */
-    public ConnectionStatus sendMessageToStarship(FFup upMessage) {
+    public ConnectionStatus sendMessageToNebula(FFup upMessage) {
         if(this.connectionStatus == ConnectionStatus.CONNECTED) {
             try {
                 upMessage.writeDelimitedTo(this.nebulaOutput);
@@ -134,7 +134,7 @@ public class NebulaConnection extends Thread {
         return this.connectionStatus;
     }
     
-    public synchronized List<FFdown> receiveMessagesFromStarship() {
+    public synchronized List<FFdown> receiveMessagesFromNebula() {
         List<FFdown> result = new ArrayList<FFdown>(this.nebulaMessages);
         this.nebulaMessages.clear();
         return result;

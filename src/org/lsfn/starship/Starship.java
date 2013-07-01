@@ -27,26 +27,26 @@ public class Starship {
     }
     
     private void startNebulaClient(String host, Integer port) {
-        System.out.println("Connecting...");
-        ConnectionStatus status = ConnectionStatus.DISCONNECTED;
-        if(host == null || port == null) {
-            status = this.nebulaConnection.connect();
-        } else {
-            status = this.nebulaConnection.connect(host, port);
-        }
-        if(status == ConnectionStatus.CONNECTED) {
-            this.nebulaConnection.start();
-            System.out.println("Connected.");
-        } else {
-            System.out.println("Connection failed.");
+        if(this.nebulaConnection.getConnectionStatus() == ConnectionStatus.DISCONNECTED) {
+            System.out.println("Connecting...");
+            ConnectionStatus status = ConnectionStatus.DISCONNECTED;
+            if(host == null || port == null) {
+                status = this.nebulaConnection.connect();
+            } else {
+                status = this.nebulaConnection.connect(host, port);
+            }
+            if(status == ConnectionStatus.CONNECTED) {
+                this.nebulaConnection.start();
+                System.out.println("Connected.");
+            } else {
+                System.out.println("Connection failed.");
+            }
         }
     }
 
     private void stopNebulaClient() {
-        if(this.nebulaConnection != null) {
-            if(this.nebulaConnection.getConnectionStatus() == ConnectionStatus.CONNECTED) {
-                this.nebulaConnection.disconnect();
-            }
+        if(this.nebulaConnection.getConnectionStatus() == ConnectionStatus.CONNECTED) {
+            this.nebulaConnection.disconnect();
         }
         System.out.println("Disconnected.");
     }

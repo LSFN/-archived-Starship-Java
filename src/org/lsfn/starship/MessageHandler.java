@@ -18,7 +18,6 @@ public class MessageHandler extends Thread {
     private NebulaConnection nebulaConnection;
     private Lobby lobby;
     private VisualSensors visualSensors;
-    private String shipName;
     private boolean running;
     
     public MessageHandler(ConsoleServer consoleServer, NebulaConnection nebulaConnection) {
@@ -34,7 +33,7 @@ public class MessageHandler extends Thread {
         while(this.running) {
          // Take input from Nebula, store it and pass it on.
             if(this.nebulaConnection.getConnectionStatus() == NebulaConnection.ConnectionStatus.CONNECTED) {
-                List<FFdown> downMessages = nebulaConnection.receiveMessagesFromStarship();
+                List<FFdown> downMessages = nebulaConnection.receiveMessagesFromNebula();
                 for(FFdown downMessage : downMessages) {
                     STSdown.Builder stsDown = STSdown.newBuilder();
                     if(downMessage.hasLobby()) {
@@ -54,7 +53,22 @@ public class MessageHandler extends Thread {
                 List<STSup> consoleUpMessages = upMessages.get(id);
                 for(STSup upMessage : consoleUpMessages) {
                     if(upMessage.hasConnection()) {
-                        // Make the connection
+                        STSup.Connection connection = upMessage.getConnection();
+                        if(connection.getConnectionCommand() == STSup.Connection.ConnectionCommand.CONNECT
+                                && this.nebulaConnection.getConnectionStatus() == ConnectionStatus.DISCONNECTED) {
+                            ConnectionStatus status = ConnectionStatus.DISCONNECTED;
+                            if(connection.hasHost() && connection.hasPort()) {
+                                status = this.nebulaConnection.connect(connection.getHost(), connection.getPort());
+                            } else {
+                                status = this.nebulaConnection.connect();
+                            }
+                            if(status == ConnectionStatus.CONNECTED) {
+                                this.nebulaConnection.start();
+                                System.out.println("Connected.");
+                            } else {
+                                System.out.println("Connection failed.");
+                            }
+                        }
                     }
                     if(this.nebulaConnection.getConnectionStatus() == NebulaConnection.ConnectionStatus.CONNECTED) {
                         FFup.Builder ffUp = FFup.newBuilder();
@@ -64,7 +78,7 @@ public class MessageHandler extends Thread {
                         if(upMessage.hasPiloting()) {
                             ffUp.setPiloting(Piloting.processPiloting(upMessage.getPiloting()));
                         }
-                        this.nebulaConnection.sendMessageToStarship(ffUp.build());
+                        this.nebulaConnection.sendMessageToNebula(ffUp.build());
                     }
                 }
             }
