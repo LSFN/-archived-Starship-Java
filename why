@@ -1,3 +1,0 @@
-protoc -I. --java_out=src/ proto_src/*.proto
-javac -classpath lib/*.jar -d build -sourcepath src src/org/lsfn/starship/*.java
-jar cfm starship.jar Manifest.txt lib -C build .
