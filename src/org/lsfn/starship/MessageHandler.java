@@ -31,7 +31,15 @@ public class MessageHandler extends Thread {
     public void run() {
         this.running = true;
         while(this.running) {
-         // Take input from Nebula, store it and pass it on.
+            // The only reason we need to handle connections (in A0.2) is so that
+            // the client can be filled in about the Starship's status 
+            for(UUID id : this.consoleServer.getConnectedConsoles()) {
+                STSdown.Builder stsDown = STSdown.newBuilder();
+                stsDown.setLobby(this.lobby.makeConsoleLobbyInfo(id));
+                this.consoleServer.sendMessageToConsole(id, stsDown.build());
+            }
+            
+            // Take input from Nebula, store it and pass it on.
             if(this.nebulaConnection.getConnectionStatus() == NebulaConnection.ConnectionStatus.CONNECTED) {
                 List<FFdown> downMessages = nebulaConnection.receiveMessagesFromNebula();
                 for(FFdown downMessage : downMessages) {
@@ -65,6 +73,7 @@ public class MessageHandler extends Thread {
                             if(status == ConnectionStatus.CONNECTED) {
                                 this.nebulaConnection.start();
                                 System.out.println("Connected.");
+                                sendConnectedMessages();
                             } else {
                                 System.out.println("Connection failed.");
                             }
@@ -73,6 +82,8 @@ public class MessageHandler extends Thread {
                     if(this.nebulaConnection.getConnectionStatus() == NebulaConnection.ConnectionStatus.CONNECTED) {
                         FFup.Builder ffUp = FFup.newBuilder();
                         if(upMessage.hasLobby()) {
+                            // Ok, yes, this method *does* have the word "process" in its name
+                            // but all it does is convert data from one protocol buffer to another
                             ffUp.setLobby(Lobby.processLobby(upMessage.getLobby()));
                         }
                         if(upMessage.hasPiloting()) {
@@ -89,5 +100,13 @@ public class MessageHandler extends Thread {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void sendConnectedMessages() {
+        STSdown.Builder stsDown = STSdown.newBuilder();
+        STSdown.Connection.Builder stsDownConnection = STSdown.Connection.newBuilder();
+        stsDownConnection.setConnected(true);
+        stsDown.setConnection(stsDownConnection);
+        this.consoleServer.sendMessageToAllConsoles(stsDown.build());
     }
 }

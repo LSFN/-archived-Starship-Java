@@ -2,6 +2,7 @@ package org.lsfn.starship;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.lsfn.starship.FF.FFdown;
 import org.lsfn.starship.FF.FFup;
@@ -69,4 +70,14 @@ public class Lobby {
     public boolean isGameStarted() {
         return gameStarted;
     }
+    
+    public STSdown.Lobby makeConsoleLobbyInfo(UUID id) {
+        STSdown.Lobby.Builder stsDownLobby = STSdown.Lobby.newBuilder();
+        stsDownLobby.setGameStarted(this.gameStarted)
+                .setReadyState(this.ready)
+                .setShipName(this.shipName)
+                .addAllShipsInGame(this.shipNames);
+        return stsDownLobby.build();
+    }
+
 }
