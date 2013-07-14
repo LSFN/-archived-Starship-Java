@@ -32,6 +32,7 @@ public class ConsoleListener {
         this.consoleSocket = consoleSocket;
         this.consoleInput = null;
         this.consoleOutput = null;
+        this.listenerStatus = ListenerStatus.NOT_SETUP;
     }
     
     public ListenerStatus getListenerStatus() {
@@ -70,6 +71,7 @@ public class ConsoleListener {
         if(this.listenerStatus == ListenerStatus.CONNECTED) {
             try {
                 downMessage.writeDelimitedTo(this.consoleOutput);
+                this.consoleOutput.flush();
             } catch (IOException e) {
                 e.printStackTrace();
                 this.listenerStatus = ListenerStatus.DISCONNECTED;
@@ -81,7 +83,9 @@ public class ConsoleListener {
     public List<STSup> receiveMessagesFromConsole() {
         List<STSup> upMessages = new ArrayList<STSup>();
         if(this.listenerStatus == ListenerStatus.NOT_SETUP) {
-            if(!setupStreams()) {
+            if(setupStreams()) {
+                this.listenerStatus = ListenerStatus.CONNECTED;
+            } else {
                 this.listenerStatus = ListenerStatus.DISCONNECTED;
             }
         }

@@ -107,11 +107,13 @@ public class ConsoleServer extends Thread {
     }
     
     public synchronized Map<UUID, List<STSup>> receiveMessagesFromConsoles() {
-        Map<UUID, List<STSup>> result = new HashMap<UUID, List<STSup>>();
-        for(UUID id : this.buffers.keySet()) {
-            List<STSup> buffer = this.buffers.get(id);
-            result.put(id, new ArrayList<STSup>(buffer));
+        Map<UUID, List<STSup>> result = this.buffers;
+        
+        this.buffers = new HashMap<UUID, List<STSup>>();
+        for(UUID id : result.keySet()) {
+            this.buffers.put(id, new ArrayList<STSup>());
         }
+        
         return result;
     }
     

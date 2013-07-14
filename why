@@ -1,0 +1,2 @@
+scons
+jar cfm starship.jar Manifest.txt -C build/ org/lsfn/starship/ lib
