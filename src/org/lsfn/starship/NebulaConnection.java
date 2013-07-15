@@ -125,6 +125,7 @@ public class NebulaConnection extends Thread {
             try {
                 upMessage.writeDelimitedTo(this.nebulaOutput);
                 this.nebulaOutput.flush();
+                System.out.println(upMessage);
             } catch (IOException e) {
                 e.printStackTrace();
                 closeConnection();

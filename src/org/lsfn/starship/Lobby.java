@@ -17,7 +17,7 @@ public class Lobby {
     private boolean gameStarted;
     
     public Lobby() {
-        this.shipName = "";
+        this.shipName = "Mungle Box";
         this.shipNames = new ArrayList<String>();
         this.ready = false;
         this.gameStarted = false;

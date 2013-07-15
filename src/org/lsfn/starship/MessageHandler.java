@@ -60,9 +60,7 @@ public class MessageHandler extends Thread {
             for(UUID id : upMessages.keySet()) {
                 List<STSup> consoleUpMessages = upMessages.get(id);
                 for(STSup upMessage : consoleUpMessages) {
-                    System.out.println(id.toString() + " received messages.");
                     if(upMessage.hasConnection()) {
-                        System.out.println("Received connection message.");
                         STSup.Connection connection = upMessage.getConnection();
                         if(connection.getConnectionCommand() == STSup.Connection.ConnectionCommand.CONNECT
                                 && this.nebulaConnection.getConnectionStatus() == ConnectionStatus.DISCONNECTED) {
