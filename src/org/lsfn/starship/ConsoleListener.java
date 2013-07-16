@@ -72,7 +72,7 @@ public class ConsoleListener {
             try {
                 downMessage.writeDelimitedTo(this.consoleOutput);
                 this.consoleOutput.flush();
-                System.out.println(downMessage);
+                System.out.println("STS\n" + downMessage);
             } catch (IOException e) {
                 e.printStackTrace();
                 this.listenerStatus = ListenerStatus.DISCONNECTED;
