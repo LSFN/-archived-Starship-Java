@@ -59,9 +59,13 @@ public class ConsoleServer extends Thread {
     }
     
     public ServerStatus listen() {
+        return this.listen(defaultPort);
+    }
+    
+    public ServerStatus listen(int port) {
         if(this.serverStatus == ServerStatus.CLOSED) {
             try {
-                this.consoleServer = new ServerSocket(defaultPort);
+                this.consoleServer = new ServerSocket(port);
                 this.consoleServer.setSoTimeout(pollWait);
                 this.listeners = new HashMap<UUID, ConsoleListener>();
                 this.buffers = new HashMap<UUID, List<STSup>>();
@@ -219,4 +223,5 @@ public class ConsoleServer extends Thread {
         }
         internalShutDown();
     }
+
 }

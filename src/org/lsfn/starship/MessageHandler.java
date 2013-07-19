@@ -35,6 +35,9 @@ public class MessageHandler extends Thread {
             // the client can be filled in about the Starship's status 
             for(UUID id : this.consoleServer.getConnectedConsoles()) {
                 STSdown.Builder stsDown = STSdown.newBuilder();
+                STSdown.Connection.Builder stsDownConnection = STSdown.Connection.newBuilder();
+                stsDownConnection.setConnected(this.nebulaConnection.getConnectionStatus() == NebulaConnection.ConnectionStatus.CONNECTED);
+                stsDown.setConnection(stsDownConnection);
                 stsDown.setLobby(this.lobby.makeConsoleLobbyInfo(id));
                 this.consoleServer.sendMessageToConsole(id, stsDown.build());
             }

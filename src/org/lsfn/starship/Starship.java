@@ -23,8 +23,12 @@ public class Starship {
         this.keepGoing = true;
     }
     
-    private void startConsoleServer() {
-        this.consoleServer.listen();
+    private void startConsoleServer(int port) {
+        if(port == -1) {
+            this.consoleServer.listen();
+        } else {
+            this.consoleServer.listen(port);
+        }
         this.consoleServer.start();
         this.messageHandler.start();
     }
@@ -68,7 +72,11 @@ public class Starship {
         String[] commandParts = commandStr.split(" ");
          
         if(commandParts[0].equals("listen")) {
-            startConsoleServer();
+            if(commandParts.length >= 2) {
+                startConsoleServer(Integer.parseInt(commandParts[1]));
+            } else {
+                startConsoleServer(-1);
+            }
         } else if(commandParts[0].equals("connect")) {
             if(commandParts.length == 3) {
                 startNebulaClient(commandParts[1], Integer.parseInt(commandParts[2]));
