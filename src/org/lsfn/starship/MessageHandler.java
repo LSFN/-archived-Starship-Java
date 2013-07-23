@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.lsfn.starship.FF.FFdown;
-import org.lsfn.starship.FF.FFup;
 import org.lsfn.starship.NebulaConnection.ConnectionStatus;
 import org.lsfn.starship.STS.STSdown;
 import org.lsfn.starship.STS.STSup;
@@ -44,16 +42,15 @@ public class MessageHandler extends Thread {
             
             // Take input from Nebula, store it and pass it on.
             if(this.nebulaConnection.getConnectionStatus() == NebulaConnection.ConnectionStatus.CONNECTED) {
-                List<FFdown> downMessages = nebulaConnection.receiveMessagesFromNebula();
-                for(FFdown downMessage : downMessages) {
-                    STSdown.Builder stsDown = STSdown.newBuilder();
+                List<STSdown> downMessages = nebulaConnection.receiveMessagesFromNebula();
+                for(STSdown downMessage : downMessages) {
                     if(downMessage.hasLobby()) {
-                        stsDown.setLobby(lobby.processLobby(downMessage.getLobby()));
+                        lobby.processLobby(downMessage.getLobby());
                     }
                     if(downMessage.hasVisualSensors()) {
-                        stsDown.setVisualSensors(visualSensors.processVisualSensors(downMessage.getVisualSensors()));
+                        visualSensors.processVisualSensors(downMessage.getVisualSensors());
                     }
-                    this.consoleServer.sendMessageToAllConsoles(stsDown.build());
+                    this.consoleServer.sendMessageToAllConsoles(downMessage);
                 }
             }
                 
@@ -83,16 +80,7 @@ public class MessageHandler extends Thread {
                         }
                     }
                     if(this.nebulaConnection.getConnectionStatus() == NebulaConnection.ConnectionStatus.CONNECTED) {
-                        FFup.Builder ffUp = FFup.newBuilder();
-                        if(upMessage.hasLobby()) {
-                            // Ok, yes, this method *does* have the word "process" in its name
-                            // but all it does is convert data from one protocol buffer to another
-                            ffUp.setLobby(Lobby.processLobby(upMessage.getLobby()));
-                        }
-                        if(upMessage.hasPiloting()) {
-                            ffUp.setPiloting(Piloting.processPiloting(upMessage.getPiloting()));
-                        }
-                        this.nebulaConnection.sendMessageToNebula(ffUp.build());
+                        this.nebulaConnection.sendMessageToNebula(upMessage);
                     }
                 }
             }

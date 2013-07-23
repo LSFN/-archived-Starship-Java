@@ -7,7 +7,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lsfn.starship.FF.*;
+import org.lsfn.starship.STS.*;
 
 public class NebulaConnection extends Thread {
 
@@ -18,7 +18,7 @@ public class NebulaConnection extends Thread {
     private Socket nebulaSocket;
     private BufferedInputStream nebulaInput;
     private BufferedOutputStream nebulaOutput;
-    private ArrayList<FFdown> nebulaMessages;
+    private ArrayList<STSdown> nebulaMessages;
     
     private String host;
     private Integer port;
@@ -89,7 +89,7 @@ public class NebulaConnection extends Thread {
                 this.nebulaSocket = new Socket(this.host, this.port);
                 this.nebulaInput = new BufferedInputStream(nebulaSocket.getInputStream());
                 this.nebulaOutput = new BufferedOutputStream(nebulaSocket.getOutputStream());
-                this.nebulaMessages = new ArrayList<FFdown>();
+                this.nebulaMessages = new ArrayList<STSdown>();
                 this.connectionStatus = ConnectionStatus.CONNECTED;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -120,7 +120,7 @@ public class NebulaConnection extends Thread {
      * @param upMessage The message to be sent.
      * @return The new connection status of the connection.
      */
-    public ConnectionStatus sendMessageToNebula(FFup upMessage) {
+    public ConnectionStatus sendMessageToNebula(STSup upMessage) {
         if(this.connectionStatus == ConnectionStatus.CONNECTED) {
             try {
                 upMessage.writeDelimitedTo(this.nebulaOutput);
@@ -136,13 +136,13 @@ public class NebulaConnection extends Thread {
         return this.connectionStatus;
     }
     
-    public synchronized List<FFdown> receiveMessagesFromNebula() {
-        List<FFdown> result = new ArrayList<FFdown>(this.nebulaMessages);
+    public synchronized List<STSdown> receiveMessagesFromNebula() {
+        List<STSdown> result = new ArrayList<STSdown>(this.nebulaMessages);
         this.nebulaMessages.clear();
         return result;
     }
 
-    private synchronized void addMessageToBuffer(FFdown downMessage) {
+    private synchronized void addMessageToBuffer(STSdown downMessage) {
         this.nebulaMessages.add(downMessage);
     }
     
@@ -151,7 +151,7 @@ public class NebulaConnection extends Thread {
         while(this.connectionStatus == ConnectionStatus.CONNECTED) {
             try {
                 if(this.nebulaInput.available() > 0) {
-                    FFdown downMessage = FFdown.parseDelimitedFrom(this.nebulaInput);
+                    STSdown downMessage = STSdown.parseDelimitedFrom(this.nebulaInput);
                     addMessageToBuffer(downMessage);
                 }
             } catch (IOException e) {
