@@ -7,18 +7,22 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lsfn.starship.STS.*;
+import org.lsfn.starship.STS.STSdown;
+import org.lsfn.starship.STS.STSup;
 
 public class NebulaConnection extends Thread {
 
     private static final String defaultHost = "localhost";
     private static final Integer defaultPort = 39461;
     private static final Integer pollWait = 50;
+    private static final long timeout = 5000;
     
     private Socket nebulaSocket;
     private BufferedInputStream nebulaInput;
     private BufferedOutputStream nebulaOutput;
     private ArrayList<STSdown> nebulaMessages;
+    private long timeLastMessageSent;
+    private long timeLastMessageReceived;
     
     private String host;
     private Integer port;
@@ -35,6 +39,8 @@ public class NebulaConnection extends Thread {
         this.nebulaInput = null;
         this.nebulaOutput = null;
         this.nebulaMessages = null;
+        this.timeLastMessageSent = System.currentTimeMillis();
+        this.timeLastMessageReceived = System.currentTimeMillis();
         this.host = null;
         this.port = null;
         this.connectionStatus = ConnectionStatus.DISCONNECTED;
@@ -49,6 +55,14 @@ public class NebulaConnection extends Thread {
     }
     
     public ConnectionStatus getConnectionStatus() {
+        if(System.currentTimeMillis() >= this.timeLastMessageReceived + timeout) {
+            return this.disconnect();
+        } else {
+            if(System.currentTimeMillis() >= this.timeLastMessageSent + timeout - 1000) {
+                STSup.Builder stsUp = STSup.newBuilder();
+                sendMessageToNebula(stsUp.build());
+            }
+        }
         return connectionStatus;
     }
     

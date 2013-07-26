@@ -10,6 +10,8 @@ import org.lsfn.starship.NebulaConnection.ConnectionStatus;
 
 public class Starship {
 
+    private static final String defaultHost = "localhost";
+    
     private ConsoleServer consoleServer;
     private NebulaConnection nebulaConnection;
     private MessageHandler messageHandler;
@@ -19,7 +21,7 @@ public class Starship {
         // TODO make sure ConsoleServer and NebulaConnection can do multiple runs without needing a new one of them. 
         this.consoleServer = new ConsoleServer();
         this.nebulaConnection = new NebulaConnection();
-        this.messageHandler = new MessageHandler(this.consoleServer, this.nebulaConnection);
+        this.messageHandler = new MessageHandler(this.consoleServer);
         this.keepGoing = true;
     }
     

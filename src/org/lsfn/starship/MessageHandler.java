@@ -6,23 +6,30 @@ import java.util.UUID;
 
 import org.lsfn.starship.NebulaConnection.ConnectionStatus;
 import org.lsfn.starship.STS.STSdown;
+import org.lsfn.starship.STS.STSdown.Join;
+import org.lsfn.starship.STS.STSdown.Join.Response;
 import org.lsfn.starship.STS.STSup;
+import org.lsfn.starship.STS.STSup.Join.JoinType;
 
 public class MessageHandler extends Thread {
 
+    private static final Integer defaultNebulaPort = 39461;
     private static final int pollWait = 50;
     
     private ConsoleServer consoleServer;
     private NebulaConnection nebulaConnection;
+    private UUID rejoinToken;
     private Lobby lobby;
     private VisualSensors visualSensors;
     private boolean running;
     
-    public MessageHandler(ConsoleServer consoleServer, NebulaConnection nebulaConnection) {
+    public MessageHandler(ConsoleServer consoleServer) {
         this.consoleServer = consoleServer;
-        this.nebulaConnection = nebulaConnection;
+        this.nebulaConnection = new NebulaConnection();
+        this.rejoinToken = null;
         this.lobby = new Lobby();
         this.visualSensors = new VisualSensors();
+        this.running = false;
     }
     
     @Override
@@ -44,6 +51,9 @@ public class MessageHandler extends Thread {
             if(this.nebulaConnection.getConnectionStatus() == NebulaConnection.ConnectionStatus.CONNECTED) {
                 List<STSdown> downMessages = nebulaConnection.receiveMessagesFromNebula();
                 for(STSdown downMessage : downMessages) {
+                    if(downMessage.hasJoin()) {
+                        handleJoin(downMessage.getJoin());
+                    }
                     if(downMessage.hasLobby()) {
                         lobby.processLobby(downMessage.getLobby());
                     }
@@ -73,7 +83,7 @@ public class MessageHandler extends Thread {
                             if(status == ConnectionStatus.CONNECTED) {
                                 this.nebulaConnection.start();
                                 System.out.println("Connected.");
-                                sendConnectedMessages();
+                                sendJoinRequest();
                             } else {
                                 System.out.println("Connection failed.");
                             }
@@ -93,6 +103,30 @@ public class MessageHandler extends Thread {
         }
     }
 
+    private void handleJoin(STSdown.Join join) {
+        if(join.getResponse() == Response.JOIN_ACCEPTED) {
+            this.rejoinToken = UUID.fromString(join.getRejoinToken());
+            sendConnectedMessages();
+        } else if(join.getResponse() == Response.JOIN_REJECTED) {
+            // No notifications for connection failure at the moment.
+        } else if(join.getResponse() == Response.REJOIN_ACCEPTED) {
+            sendConnectedMessages();
+        }
+    }
+
+    private void sendJoinRequest() {
+        STSup.Builder stsUp = STSup.newBuilder();
+        STSup.Join.Builder stsUpJoin = STSup.Join.newBuilder();
+        if(this.rejoinToken != null) {
+            stsUpJoin.setType(STSup.Join.JoinType.REJOIN);
+            stsUpJoin.setRejoinToken(this.rejoinToken.toString());
+        } else {
+            stsUpJoin.setType(STSup.Join.JoinType.JOIN);
+        }
+        stsUp.setJoin(stsUpJoin);
+        this.nebulaConnection.sendMessageToNebula(stsUp.build());
+    }
+    
     private void sendConnectedMessages() {
         STSdown.Builder stsDown = STSdown.newBuilder();
         STSdown.Connection.Builder stsDownConnection = STSdown.Connection.newBuilder();

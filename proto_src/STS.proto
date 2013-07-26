@@ -2,6 +2,23 @@ option java_package = "org.lsfn.starship";
 option java_outer_classname = "STS";
 
 message STSup {
+    message Ping {
+    }
+
+    message RCon {
+        optional string command = 1;
+    }
+
+    message Join {
+        enum JoinType {
+            JOIN = 0;
+            REJOIN = 1;
+        }
+        
+        optional JoinType type = 1;
+        optional string rejoinToken = 2;
+    }
+
     message Connection {
         enum ConnectionCommand {
             CONNECT = 0;
@@ -13,16 +30,12 @@ message STSup {
         optional uint32 port = 3;
     }
 
-	message Lobby {
-		optional bool readyState = 1;
-		optional string shipName = 2;
-	}
-	
-	message RCon {
-		optional string command = 1;
-	}
-	
-	message Piloting {
+    message Lobby {
+        optional bool readyState = 1;
+        optional string shipName = 2;
+    }
+    
+    message Piloting {
         optional bool turnAnti = 1;
         optional bool turnClock = 2;
         optional bool thrustLeft = 3;
@@ -30,26 +43,42 @@ message STSup {
         optional bool thrustForward = 5;
         optional bool thrustBackward = 6;
     }
-	
-	optional RCon rcon = 1;
-	optional Connection connection = 2;
-	optional Lobby lobby = 3;
-	optional Piloting piloting = 4;
+    
+    optional Ping ping = 1;
+    optional RCon rcon = 2;
+    optional Join join = 3;
+    optional Connection connection = 4;
+    optional Lobby lobby = 5;
+    optional Piloting piloting = 6;
 }
 
 message STSdown {
+    message Pong {
+    }
+
+    message Join {
+        enum Response {
+            JOIN_ACCEPTED = 0;
+            REJOIN_ACCEPTED = 1;
+            JOIN_REJECTED = 2;
+        }
+        
+        optional Response response = 1;
+        optional string rejoinToken = 2;
+    }
+
     message Connection {
         optional bool connected = 1;
     }
 
-	message Lobby {
-	   optional bool readyState = 1;
-	   optional string shipName = 2;
-	   repeated string shipsInGame = 3;
-	   optional bool gameStarted = 4;
-	}
-	
-	message VisualSensors {
+    message Lobby {
+       optional bool readyState = 1;
+       optional string shipName = 2;
+       repeated string shipsInGame = 3;
+       optional bool gameStarted = 4;
+    }
+    
+    message VisualSensors {
         message SpaceObject {
             enum Type {
                 SHIP = 0;
@@ -70,7 +99,9 @@ message STSdown {
         repeated SpaceObject spaceObjects = 1;
     }
     
-    optional Connection connection = 1;
-    optional Lobby lobby = 2;
-    optional VisualSensors visualSensors = 3;
+    optional Pong pong = 1;
+    optional Join join = 2;
+    optional Connection connection = 3;
+    optional Lobby lobby = 4;
+    optional VisualSensors visualSensors = 5;
 }
