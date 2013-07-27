@@ -6,148 +6,127 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.lsfn.starship.STS.STSdown;
+import org.lsfn.starship.STS.STSdown.Join.Response;
 import org.lsfn.starship.STS.STSup;
 
 public class NebulaConnection extends Thread {
 
-    private static final String defaultHost = "localhost";
-    private static final Integer defaultPort = 39461;
-    private static final Integer pollWait = 50;
+    private static final Integer tickInterval = 50;
     private static final long timeout = 5000;
+    private static final long timeBetweenPings = 3000;
     
     private Socket nebulaSocket;
     private BufferedInputStream nebulaInput;
     private BufferedOutputStream nebulaOutput;
-    private ArrayList<STSdown> nebulaMessages;
-    private long timeLastMessageSent;
+    private List<STSdown> nebulaMessages;
     private long timeLastMessageReceived;
-    
-    private String host;
-    private Integer port;
-    
-    public enum ConnectionStatus {
-        CONNECTED,
-        DISCONNECTED
-    }
-    private ConnectionStatus connectionStatus;
+    private boolean joined;
+    private STSup pingRequest;
+    private UUID rejoinToken;
     
     public NebulaConnection() {
-        super();
         this.nebulaSocket = null;
         this.nebulaInput = null;
         this.nebulaOutput = null;
-        this.nebulaMessages = null;
-        this.timeLastMessageSent = System.currentTimeMillis();
+        this.nebulaMessages = new ArrayList<STSdown>();
         this.timeLastMessageReceived = System.currentTimeMillis();
-        this.host = null;
-        this.port = null;
-        this.connectionStatus = ConnectionStatus.DISCONNECTED;
+        this.joined = false;
+        this.pingRequest = STSup.newBuilder().setPing(STSup.Ping.newBuilder()).build();
+        this.rejoinToken = null;
     }
     
-    public String getHost() {
-        return host;
-    }
-
-    public Integer getPort() {
-        return port;
-    }
-    
-    public ConnectionStatus getConnectionStatus() {
-        if(System.currentTimeMillis() >= this.timeLastMessageReceived + timeout) {
-            return this.disconnect();
-        } else {
-            if(System.currentTimeMillis() >= this.timeLastMessageSent + timeout - 1000) {
-                STSup.Builder stsUp = STSup.newBuilder();
-                sendMessageToNebula(stsUp.build());
-            }
-        }
-        return connectionStatus;
-    }
-    
-    private void clearConnection() {
-        this.nebulaSocket = null;
-        this.nebulaInput = null;
-        this.nebulaOutput = null;
-        this.nebulaMessages = null;
-    }
-    
-    /**
-     * Closes the connection to the remote host.
-     * Designed for cases where we don't care if closing the connection fails,
-     * we are getting out of this connection one way or the other...
-     * ...like a bad relationship.
-     */
-    private void closeConnection() {
+    public boolean join(String host, Integer port) {
+        this.joined = false;
         try {
-            this.nebulaOutput.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            this.nebulaSocket = new Socket(host, port);
+            this.nebulaInput = new BufferedInputStream(nebulaSocket.getInputStream());
+            this.nebulaOutput = new BufferedOutputStream(nebulaSocket.getOutputStream());
+            // If no exception occurs, joining can proceed.
+        } catch(IOException e) {
+            return this.joined;
         }
-    }
-    
-    /**
-     * Connects to the given host on the given port.
-     * Will not connect to another host whilst connected.
-     * Will not change the connection status from previous disconnected status if connection fails.
-     * @param host The host to connect to.
-     * @param port The port to connect on.
-     * @return The new connection status of the connection.
-     */
-    public ConnectionStatus connect(String host, Integer port) {
-        if(this.connectionStatus != ConnectionStatus.CONNECTED) {
-            this.host = host;
-            this.port = port;
+        
+        // Send a joining message
+        STSup.Builder stsUp = STSup.newBuilder();
+        STSup.Join.Builder stsUpJoin = STSup.Join.newBuilder();
+        if(rejoinToken == null) {
+            stsUpJoin.setType(STSup.Join.JoinType.JOIN);
+        } else {
+            stsUpJoin.setType(STSup.Join.JoinType.REJOIN);
+            stsUpJoin.setRejoinToken(this.rejoinToken.toString());
+        }
+        stsUp.setJoin(stsUpJoin);
+        this.sendMessageToNebula(stsUp.build());
+        
+        // We wait for a response to the join request and return appropriately
+        long timeInitiated = System.currentTimeMillis();
+        boolean waiting = false;
+        while(waiting) {
             try {
-                this.nebulaSocket = new Socket(this.host, this.port);
-                this.nebulaInput = new BufferedInputStream(nebulaSocket.getInputStream());
-                this.nebulaOutput = new BufferedOutputStream(nebulaSocket.getOutputStream());
-                this.nebulaMessages = new ArrayList<STSdown>();
-                this.connectionStatus = ConnectionStatus.CONNECTED;
+                if(this.nebulaInput.available() > 0) {
+                    STSdown downMessage = STSdown.parseDelimitedFrom(this.nebulaInput);
+                    if(downMessage.hasJoin()) {
+                        STSdown.Join join = downMessage.getJoin();
+                        if(join.getResponse() == Response.JOIN_ACCEPTED) {
+                            waiting = false;
+                            this.joined = true;
+                            this.rejoinToken = UUID.fromString(join.getRejoinToken());
+                        } else if(join.getResponse() == Response.REJOIN_ACCEPTED) {
+                            waiting = false;
+                            this.joined = true;
+                        } else if(join.getResponse() == Response.JOIN_REJECTED) {
+                            waiting = false;
+                        }
+                    }
+                }
             } catch (IOException e) {
                 e.printStackTrace();
-                clearConnection();
+                waiting = false;
+            }
+            try {
+                Thread.sleep(tickInterval);
+            } catch (InterruptedException e) {
+                waiting = false;
+            }
+            if(System.currentTimeMillis() >= timeInitiated + timeout) {
+                waiting = false;
             }
         }
-        return this.connectionStatus;
+        
+        return this.joined;
     }
     
-    public ConnectionStatus connect() {
-        return this.connect(defaultHost, defaultPort);
+    public boolean isJoined() {
+        if(System.currentTimeMillis() >= this.timeLastMessageReceived + timeout) {
+            this.disconnect();
+        }
+        return this.joined;
     }
     
-    /**
-     * Disconnects from the remote host.
-     * @return The new connection status of the connection.
-     */
-    public ConnectionStatus disconnect() {
-        closeConnection();
-        clearConnection();
-        this.connectionStatus = ConnectionStatus.DISCONNECTED;
-        return this.connectionStatus;
+    public void disconnect() {
+        try {
+            this.nebulaSocket.close();
+        } catch (IOException e) {
+            // We don't care
+            e.printStackTrace();
+        }
+        this.joined = false;
     }
     
-    /**
-     * Sends a message to the Nebula that this class is connected to.
-     * Won't sent a message when disconnected
-     * @param upMessage The message to be sent.
-     * @return The new connection status of the connection.
-     */
-    public ConnectionStatus sendMessageToNebula(STSup upMessage) {
-        if(this.connectionStatus == ConnectionStatus.CONNECTED) {
+    public void sendMessageToNebula(STSup upMessage) {
+        if(this.joined) {
             try {
                 upMessage.writeDelimitedTo(this.nebulaOutput);
                 this.nebulaOutput.flush();
                 System.out.println("FF\n" + upMessage);
             } catch (IOException e) {
                 e.printStackTrace();
-                closeConnection();
-                clearConnection();
-                this.connectionStatus = ConnectionStatus.DISCONNECTED;
+                this.joined = false;
             }
         }
-        return this.connectionStatus;
     }
     
     public synchronized List<STSdown> receiveMessagesFromNebula() {
@@ -162,7 +141,7 @@ public class NebulaConnection extends Thread {
     
     @Override
     public void run() {
-        while(this.connectionStatus == ConnectionStatus.CONNECTED) {
+        while(this.joined) {
             try {
                 if(this.nebulaInput.available() > 0) {
                     STSdown downMessage = STSdown.parseDelimitedFrom(this.nebulaInput);
@@ -170,15 +149,20 @@ public class NebulaConnection extends Thread {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                closeConnection();
-                clearConnection();
+                this.joined = false;
             }
+            
+            if(System.currentTimeMillis() >= this.timeLastMessageReceived + timeBetweenPings) {
+                sendMessageToNebula(pingRequest);
+            }
+            
             try {
-                Thread.sleep(pollWait);
+                Thread.sleep(tickInterval);
             } catch (InterruptedException e) {
                 // An interrupt indicates that something has happened to the connection
                 // This loop will now probably terminate.
             }
         }
     }
+    
 }

@@ -4,15 +4,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.lsfn.starship.NebulaConnection.ConnectionStatus;
 import org.lsfn.starship.STS.STSdown;
-import org.lsfn.starship.STS.STSdown.Join;
 import org.lsfn.starship.STS.STSdown.Join.Response;
 import org.lsfn.starship.STS.STSup;
-import org.lsfn.starship.STS.STSup.Join.JoinType;
 
 public class MessageHandler extends Thread {
 
+    private static final String defaultNebulaHost = "localhost";
     private static final Integer defaultNebulaPort = 39461;
     private static final int pollWait = 50;
     
@@ -41,14 +39,14 @@ public class MessageHandler extends Thread {
             for(UUID id : this.consoleServer.getConnectedConsoles()) {
                 STSdown.Builder stsDown = STSdown.newBuilder();
                 STSdown.Connection.Builder stsDownConnection = STSdown.Connection.newBuilder();
-                stsDownConnection.setConnected(this.nebulaConnection.getConnectionStatus() == NebulaConnection.ConnectionStatus.CONNECTED);
+                stsDownConnection.setConnected(this.nebulaConnection.isJoined());
                 stsDown.setConnection(stsDownConnection);
                 stsDown.setLobby(this.lobby.makeConsoleLobbyInfo(id));
                 this.consoleServer.sendMessageToConsole(id, stsDown.build());
             }
             
             // Take input from Nebula, store it and pass it on.
-            if(this.nebulaConnection.getConnectionStatus() == NebulaConnection.ConnectionStatus.CONNECTED) {
+            if(this.nebulaConnection.isJoined()) {
                 List<STSdown> downMessages = nebulaConnection.receiveMessagesFromNebula();
                 for(STSdown downMessage : downMessages) {
                     if(downMessage.hasJoin()) {
@@ -73,23 +71,23 @@ public class MessageHandler extends Thread {
                     if(upMessage.hasConnection()) {
                         STSup.Connection connection = upMessage.getConnection();
                         if(connection.getConnectionCommand() == STSup.Connection.ConnectionCommand.CONNECT
-                                && this.nebulaConnection.getConnectionStatus() == ConnectionStatus.DISCONNECTED) {
-                            ConnectionStatus status = ConnectionStatus.DISCONNECTED;
+                                && !this.nebulaConnection.isJoined()) {
+                            boolean joined = false;
                             if(connection.hasHost() && connection.hasPort()) {
-                                status = this.nebulaConnection.connect(connection.getHost(), connection.getPort());
+                                joined = this.nebulaConnection.join(connection.getHost(), connection.getPort());
                             } else {
-                                status = this.nebulaConnection.connect();
+                                joined = this.nebulaConnection.join(defaultNebulaHost, defaultNebulaPort);
                             }
-                            if(status == ConnectionStatus.CONNECTED) {
+                            if(joined) {
                                 this.nebulaConnection.start();
-                                System.out.println("Connected.");
+                                System.out.println("Joined Nebula succeessfully.");
                                 sendJoinRequest();
                             } else {
-                                System.out.println("Connection failed.");
+                                System.out.println("Failed to join Nebula.");
                             }
                         }
                     }
-                    if(this.nebulaConnection.getConnectionStatus() == NebulaConnection.ConnectionStatus.CONNECTED) {
+                    if(this.nebulaConnection.isJoined()) {
                         this.nebulaConnection.sendMessageToNebula(upMessage);
                     }
                 }

@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import org.lsfn.starship.ConsoleServer.ServerStatus;
-import org.lsfn.starship.NebulaConnection.ConnectionStatus;
 
 
 public class Starship {
@@ -35,39 +34,9 @@ public class Starship {
         this.messageHandler.start();
     }
     
-    private void startNebulaClient(String host, Integer port) {
-        if(this.nebulaConnection.getConnectionStatus() == ConnectionStatus.DISCONNECTED) {
-            System.out.println("Connecting...");
-            ConnectionStatus status = ConnectionStatus.DISCONNECTED;
-            if(host == null || port == null) {
-                status = this.nebulaConnection.connect();
-            } else {
-                status = this.nebulaConnection.connect(host, port);
-            }
-            if(status == ConnectionStatus.CONNECTED) {
-                this.nebulaConnection.start();
-                System.out.println("Connected.");
-            } else {
-                System.out.println("Connection failed.");
-            }
-        }
-    }
-
-    private void stopNebulaClient() {
-        if(this.nebulaConnection.getConnectionStatus() == ConnectionStatus.CONNECTED) {
-            this.nebulaConnection.disconnect();
-        }
-        System.out.println("Disconnected.");
-    }
-    
     private void printHelp() {
         System.out.println("Starship commands:");
         System.out.println("\thelp                  : print this help text.");
-        System.out.println("\tlisten                : opens the console server on the default port.");
-        System.out.println("\tconnect <host> <port> : connects to the Nebula on the given host and port.");
-        System.out.println("\tconnect               : connects to the Nebula on the default host and port.");
-        System.out.println("\tdisconnect            : disconnects from the Nebula if connected.");
-        System.out.println("\texit                  : end this program.");
     }
     
     private void processCommand(String commandStr) {
@@ -79,14 +48,6 @@ public class Starship {
             } else {
                 startConsoleServer(-1);
             }
-        } else if(commandParts[0].equals("connect")) {
-            if(commandParts.length == 3) {
-                startNebulaClient(commandParts[1], Integer.parseInt(commandParts[2]));
-            } else if(commandParts.length == 1) {
-                startNebulaClient(null, null);
-            }
-        } else if(commandParts[0].equals("disconnect")) {
-            stopNebulaClient();
         } else if(commandParts[0].equals("exit")) {
             this.keepGoing = false;
         } else if(commandParts[0].equals("help")) {
