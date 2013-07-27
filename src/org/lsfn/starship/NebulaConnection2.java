@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.lsfn.starship.STS.STSdown;
+import org.lsfn.starship.STS.STSdown.Join.Response;
 import org.lsfn.starship.STS.STSup;
 
 public class NebulaConnection2 extends Thread {
@@ -22,7 +23,7 @@ public class NebulaConnection2 extends Thread {
     private BufferedOutputStream nebulaOutput;
     private List<STSdown> nebulaMessages;
     private long timeLastMessageReceived;
-    private boolean connected;
+    private boolean joined;
     private STSup pingRequest;
     private UUID rejoinToken;
     
@@ -32,28 +33,77 @@ public class NebulaConnection2 extends Thread {
         this.nebulaOutput = null;
         this.nebulaMessages = new ArrayList<STSdown>();
         this.timeLastMessageReceived = System.currentTimeMillis();
-        this.connected = false;
+        this.joined = false;
         this.pingRequest = STSup.newBuilder().setPing(STSup.Ping.newBuilder()).build();
         this.rejoinToken = null;
     }
     
-    public boolean connect(String host, Integer port) {
+    public boolean connectAndJoin(String host, Integer port) {
+        this.joined = false;
         try {
             this.nebulaSocket = new Socket(host, port);
             this.nebulaInput = new BufferedInputStream(nebulaSocket.getInputStream());
             this.nebulaOutput = new BufferedOutputStream(nebulaSocket.getOutputStream());
-            this.connected = true;
+            // If no exception occurs, joining can proceed.
         } catch(IOException e) {
-            this.connected = false;
+            return this.joined;
         }
-        return this.connected;
+        
+        // Send a joining message
+        STSup.Builder stsUp = STSup.newBuilder();
+        STSup.Join.Builder stsUpJoin = STSup.Join.newBuilder();
+        if(rejoinToken == null) {
+            stsUpJoin.setType(STSup.Join.JoinType.JOIN);
+        } else {
+            stsUpJoin.setType(STSup.Join.JoinType.REJOIN);
+            stsUpJoin.setRejoinToken(this.rejoinToken.toString());
+        }
+        stsUp.setJoin(stsUpJoin);
+        this.sendMessageToNebula(stsUp.build());
+        
+        // We wait for a response to the join request and return appropriately
+        long timeInitiated = System.currentTimeMillis();
+        boolean waiting = false;
+        while(waiting) {
+            try {
+                if(this.nebulaInput.available() > 0) {
+                    STSdown downMessage = STSdown.parseDelimitedFrom(this.nebulaInput);
+                    if(downMessage.hasJoin()) {
+                        STSdown.Join join = downMessage.getJoin();
+                        if(join.getResponse() == Response.JOIN_ACCEPTED) {
+                            waiting = false;
+                            this.joined = true;
+                            this.rejoinToken = UUID.fromString(join.getRejoinToken());
+                        } else if(join.getResponse() == Response.REJOIN_ACCEPTED) {
+                            waiting = false;
+                            this.joined = true;
+                        } else if(join.getResponse() == Response.JOIN_REJECTED) {
+                            waiting = false;
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                waiting = false;
+            }
+            try {
+                Thread.sleep(tickInterval);
+            } catch (InterruptedException e) {
+                waiting = false;
+            }
+            if(System.currentTimeMillis() >= timeInitiated + timeout) {
+                waiting = false;
+            }
+        }
+        
+        return this.joined;
     }
     
     public boolean isConnected() {
         if(System.currentTimeMillis() >= this.timeLastMessageReceived + timeout) {
             this.disconnect();
         }
-        return this.connected;
+        return this.joined;
     }
     
     public void disconnect() {
@@ -63,18 +113,18 @@ public class NebulaConnection2 extends Thread {
             // We don't care
             e.printStackTrace();
         }
-        this.connected = false;
+        this.joined = false;
     }
     
     public void sendMessageToNebula(STSup upMessage) {
-        if(this.connected) {
+        if(this.joined) {
             try {
                 upMessage.writeDelimitedTo(this.nebulaOutput);
                 this.nebulaOutput.flush();
                 System.out.println("FF\n" + upMessage);
             } catch (IOException e) {
                 e.printStackTrace();
-                this.connected = false;
+                this.joined = false;
             }
         }
     }
@@ -91,7 +141,7 @@ public class NebulaConnection2 extends Thread {
     
     @Override
     public void run() {
-        while(this.connected) {
+        while(this.joined) {
             try {
                 if(this.nebulaInput.available() > 0) {
                     STSdown downMessage = STSdown.parseDelimitedFrom(this.nebulaInput);
@@ -99,7 +149,7 @@ public class NebulaConnection2 extends Thread {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                this.connected = false;
+                this.joined = false;
             }
             
             if(System.currentTimeMillis() >= this.timeLastMessageReceived + timeBetweenPings) {
