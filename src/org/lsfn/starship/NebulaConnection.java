@@ -23,6 +23,7 @@ public class NebulaConnection extends Thread {
     private BufferedOutputStream nebulaOutput;
     private List<STSdown> nebulaMessages;
     private long timeLastMessageReceived;
+    private long timeLastMessageSent;
     private boolean joined;
     private STSup pingRequest;
     private UUID rejoinToken;
@@ -32,7 +33,8 @@ public class NebulaConnection extends Thread {
         this.nebulaInput = null;
         this.nebulaOutput = null;
         this.nebulaMessages = new ArrayList<STSdown>();
-        this.timeLastMessageReceived = System.currentTimeMillis();
+        this.timeLastMessageSent = 0;
+        this.timeLastMessageReceived = 0;
         this.joined = false;
         this.pingRequest = STSup.newBuilder().setPing(STSup.Ping.newBuilder()).build();
         this.rejoinToken = null;
@@ -46,6 +48,7 @@ public class NebulaConnection extends Thread {
             this.nebulaOutput = new BufferedOutputStream(nebulaSocket.getOutputStream());
             // If no exception occurs, joining can proceed.
         } catch(IOException e) {
+            e.printStackTrace();
             return this.joined;
         }
         
@@ -59,14 +62,24 @@ public class NebulaConnection extends Thread {
             stsUpJoin.setRejoinToken(this.rejoinToken.toString());
         }
         stsUp.setJoin(stsUpJoin);
-        this.sendMessageToNebula(stsUp.build());
+        STSup upMessage = stsUp.build();
+        try {
+            upMessage.writeDelimitedTo(this.nebulaOutput);
+            this.nebulaOutput.flush();
+            System.out.println("FF\n" + upMessage);
+            this.timeLastMessageSent = System.currentTimeMillis();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return this.joined;
+        }
         
         // We wait for a response to the join request and return appropriately
         long timeInitiated = System.currentTimeMillis();
-        boolean waiting = false;
+        boolean waiting = true;
         while(waiting) {
             try {
                 if(this.nebulaInput.available() > 0) {
+                    this.timeLastMessageReceived = System.currentTimeMillis();
                     STSdown downMessage = STSdown.parseDelimitedFrom(this.nebulaInput);
                     if(downMessage.hasJoin()) {
                         STSdown.Join join = downMessage.getJoin();
@@ -100,7 +113,7 @@ public class NebulaConnection extends Thread {
     }
     
     public boolean isJoined() {
-        if(System.currentTimeMillis() >= this.timeLastMessageReceived + timeout) {
+        if(this.joined && System.currentTimeMillis() >= this.timeLastMessageReceived + timeout) {
             this.disconnect();
         }
         return this.joined;
@@ -122,6 +135,7 @@ public class NebulaConnection extends Thread {
                 upMessage.writeDelimitedTo(this.nebulaOutput);
                 this.nebulaOutput.flush();
                 System.out.println("FF\n" + upMessage);
+                this.timeLastMessageSent = System.currentTimeMillis();
             } catch (IOException e) {
                 e.printStackTrace();
                 this.joined = false;
@@ -144,6 +158,7 @@ public class NebulaConnection extends Thread {
         while(this.joined) {
             try {
                 if(this.nebulaInput.available() > 0) {
+                    this.timeLastMessageReceived = System.currentTimeMillis();
                     STSdown downMessage = STSdown.parseDelimitedFrom(this.nebulaInput);
                     addMessageToBuffer(downMessage);
                 }
@@ -152,7 +167,8 @@ public class NebulaConnection extends Thread {
                 this.joined = false;
             }
             
-            if(System.currentTimeMillis() >= this.timeLastMessageReceived + timeBetweenPings) {
+            if(System.currentTimeMillis() >= this.timeLastMessageSent + timeBetweenPings) {
+                System.out.println("Sending ping request");
                 sendMessageToNebula(pingRequest);
             }
             

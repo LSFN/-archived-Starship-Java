@@ -9,17 +9,13 @@ import org.lsfn.starship.ConsoleServer.ServerStatus;
 
 public class Starship {
 
-    private static final String defaultHost = "localhost";
-    
     private ConsoleServer consoleServer;
-    private NebulaConnection nebulaConnection;
     private MessageHandler messageHandler;
     private boolean keepGoing;
     
     public Starship() {
         // TODO make sure ConsoleServer and NebulaConnection can do multiple runs without needing a new one of them. 
         this.consoleServer = new ConsoleServer();
-        this.nebulaConnection = new NebulaConnection();
         this.messageHandler = new MessageHandler(this.consoleServer);
         this.keepGoing = true;
     }
@@ -36,7 +32,9 @@ public class Starship {
     
     private void printHelp() {
         System.out.println("Starship commands:");
-        System.out.println("\thelp                  : print this help text.");
+        System.out.println("\thelp                  : Print this help text.");
+        System.out.println("\tlisten                : Listens for Starship connections on the default port.");
+        System.out.println("\texit                  : Exit the program.");
     }
     
     private void processCommand(String commandStr) {
