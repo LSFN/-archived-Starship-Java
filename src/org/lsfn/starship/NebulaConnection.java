@@ -17,6 +17,7 @@ public class NebulaConnection extends Thread {
     private static final Integer tickInterval = 50;
     private static final long timeout = 5000;
     private static final long timeBetweenPings = 3000;
+    private static final STSup pingMessage = STSup.newBuilder().build();
     
     private Socket nebulaSocket;
     private BufferedInputStream nebulaInput;
@@ -25,7 +26,6 @@ public class NebulaConnection extends Thread {
     private long timeLastMessageReceived;
     private long timeLastMessageSent;
     private boolean joined;
-    private STSup pingRequest;
     private UUID rejoinToken;
     
     public NebulaConnection() {
@@ -36,7 +36,6 @@ public class NebulaConnection extends Thread {
         this.timeLastMessageSent = 0;
         this.timeLastMessageReceived = 0;
         this.joined = false;
-        this.pingRequest = STSup.newBuilder().setPing(STSup.Ping.newBuilder()).build();
         this.rejoinToken = null;
     }
     
@@ -134,7 +133,6 @@ public class NebulaConnection extends Thread {
             try {
                 upMessage.writeDelimitedTo(this.nebulaOutput);
                 this.nebulaOutput.flush();
-                System.out.println("FF\n" + upMessage);
                 this.timeLastMessageSent = System.currentTimeMillis();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -160,7 +158,10 @@ public class NebulaConnection extends Thread {
                 if(this.nebulaInput.available() > 0) {
                     this.timeLastMessageReceived = System.currentTimeMillis();
                     STSdown downMessage = STSdown.parseDelimitedFrom(this.nebulaInput);
-                    addMessageToBuffer(downMessage);
+                    // Messages of size 0 are keep alives
+                    if(downMessage.getSerializedSize() > 0) {
+                        addMessageToBuffer(downMessage);
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -168,8 +169,7 @@ public class NebulaConnection extends Thread {
             }
             
             if(System.currentTimeMillis() >= this.timeLastMessageSent + timeBetweenPings) {
-                System.out.println("Sending ping request");
-                sendMessageToNebula(pingRequest);
+                sendMessageToNebula(pingMessage);
             }
             
             try {

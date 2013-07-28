@@ -10,97 +10,95 @@ import java.util.List;
 import org.lsfn.starship.STS.*;
 
 /**
- * Listens to a single socket.
- * Designed to be discarded when disconnected.
+ * The idea here is that if the connection fails for some reason,
+ * the send / receive methods will not produce exceptions.
+ * If a disconnection occurs, the enclosing class should check for this
+ * by periodically querying getConnectionStatus().
  * @author Lukeus_Maximus
  *
  */
 public class ConsoleListener {
 
+    private static final long timeout = 5000;
+    private static final STSdown pongMessage = STSdown.newBuilder().build();
+    
     private Socket consoleSocket;
     private BufferedInputStream consoleInput;
     private BufferedOutputStream consoleOutput;
+    private Long timeLastMessageReceived;
+    private boolean connected;
     
-    public enum ListenerStatus {
-        NOT_SETUP,
-        CONNECTED,
-        DISCONNECTED
-    }
-    private ListenerStatus listenerStatus;
-    
-    public ConsoleListener(Socket consoleSocket) {
+    /**
+     * If this throws and error, the incoming connection should be discarded immediately.
+     * @param consoleSocket
+     * @throws IOException
+     */
+    public ConsoleListener(Socket consoleSocket) throws IOException {
         this.consoleSocket = consoleSocket;
-        this.consoleInput = null;
-        this.consoleOutput = null;
-        this.listenerStatus = ListenerStatus.NOT_SETUP;
+        this.consoleInput = new BufferedInputStream(this.consoleSocket.getInputStream());
+        this.consoleOutput = new BufferedOutputStream(this.consoleSocket.getOutputStream());
+        this.timeLastMessageReceived = System.currentTimeMillis();
+        this.connected = true;
     }
     
-    public ListenerStatus getListenerStatus() {
-        return this.listenerStatus;
-    }
-    
-    private boolean setupStreams() {
-        try {
-            this.consoleInput = new BufferedInputStream(this.consoleSocket.getInputStream());
-            this.consoleOutput = new BufferedOutputStream(this.consoleSocket.getOutputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
+    /**
+     * It is expected that this is called periodically by enclosing classes
+     * to check that this listener is still useful.
+     * @return true if still connected to client, false otherwise 
+     */
+    public boolean isConnected() {
+        // Check for a timeout
+        if(this.connected && System.currentTimeMillis() >= this.timeLastMessageReceived + timeout) {
+            disconnect();
         }
-        return true;
+        return connected;
     }
     
-    public ListenerStatus disconnect() {
+    /**
+     * Disconnects the socket that this listener was listening to.
+     */
+    public void disconnect() {
         try {
             this.consoleSocket.close();
         } catch (IOException e) {
-            // We simply don't care if this fails.
-            // This assumes nothing bad comes of a close() failing.
-            e.printStackTrace();
+            // We don't care
+            // This object will soon be garbage collected anyway
         }
-        this.listenerStatus = ListenerStatus.DISCONNECTED;
-        return this.listenerStatus;
+        this.connected = false;
     }
     
-    public ListenerStatus sendMessageToConsole(STSdown downMessage) {
-        if(this.listenerStatus == ListenerStatus.NOT_SETUP) {
-            if(!setupStreams()) {
-                this.listenerStatus = ListenerStatus.DISCONNECTED;
-            }
-        }
-        if(this.listenerStatus == ListenerStatus.CONNECTED) {
+    public void sendMessageToConsole(STSdown downMessage) {
+        if(this.connected) {
             try {
                 downMessage.writeDelimitedTo(this.consoleOutput);
                 this.consoleOutput.flush();
-                System.out.println("STS\n" + downMessage);
             } catch (IOException e) {
                 e.printStackTrace();
-                this.listenerStatus = ListenerStatus.DISCONNECTED;
+                this.connected = false;
             }
         }
-        return this.listenerStatus;
     }
     
     public List<STSup> receiveMessagesFromConsole() {
         List<STSup> upMessages = new ArrayList<STSup>();
-        if(this.listenerStatus == ListenerStatus.NOT_SETUP) {
-            if(setupStreams()) {
-                this.listenerStatus = ListenerStatus.CONNECTED;
-            } else {
-                this.listenerStatus = ListenerStatus.DISCONNECTED;
-            }
-        }
-        if(this.listenerStatus == ListenerStatus.CONNECTED) {
+        if(this.connected) {
             try {
                 while(this.consoleInput.available() > 0) {
+                    this.timeLastMessageReceived = System.currentTimeMillis();
                     STSup upMessage = STSup.parseDelimitedFrom(this.consoleInput);
-                    upMessages.add(upMessage);
+                    // Messages of size 0 are keep alives
+                    if(upMessage.getSerializedSize() == 0) {
+                        sendMessageToConsole(pongMessage);
+                    } else {
+                        upMessages.add(upMessage);
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                this.listenerStatus = ListenerStatus.DISCONNECTED;
+                this.connected = false;
             }
         }
         return upMessages;
     }
+    
 }

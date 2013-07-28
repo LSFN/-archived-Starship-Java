@@ -7,221 +7,148 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
-import org.lsfn.starship.ConsoleListener.ListenerStatus;
-import org.lsfn.starship.STS.STSdown;
-import org.lsfn.starship.STS.STSup;
+import org.lsfn.starship.STS.STSup.Join.JoinType;
+import org.lsfn.starship.STS.*;
 
 /**
- * Creates a listener for each connection.
- * Each connection assigned unique ID.
- * ID can be used to receive messages from and to send to a specific console.
+ * This class acts as a server for the Console clients to the Nebula.
+ * It runs as a separate thread that listens for new connections
+ * and processes received messages. It presents different clients
+ * through its methods and *not* different connections. Rejoining clients
+ * will show up under the same ID.
  * @author Lukeus_Maximus
  *
  */
 public class ConsoleServer extends Thread {
+    // TODO throw a whole bunch of synchronize keywords at this. 
     
-    private static final Integer defaultPort = 39460;
-    private static final Integer pollWait = 50;
+    private static final Integer tickInterval = 50;
     
     private ServerSocket consoleServer;
-    private Map<UUID, ConsoleListener> listeners;
+    private Map<UUID, ConsoleListener> clients;
     private Map<UUID, List<STSup>> buffers;
     private List<UUID> connectedConsoles;
     private List<UUID> disconnectedConsoles;
-    
-    public enum ServerStatus {
-        CLOSED,
-        OPEN
-    }
-    private ServerStatus serverStatus;
+    private boolean open;
     
     public ConsoleServer() {
-        clearServer();
-        serverStatus = ServerStatus.CLOSED;
-    }
-    
-    public void clearServer() {
-        consoleServer = null;
-        listeners = null;
-        buffers = null;
-        connectedConsoles = null;
-        disconnectedConsoles = null;
-    }
-    
-    public ServerStatus getListenStatus() {
-        return serverStatus;
-    }
-    
-    public ServerStatus listen() {
-        return this.listen(defaultPort);
-    }
-    
-    public ServerStatus listen(int port) {
-        if(this.serverStatus == ServerStatus.CLOSED) {
-            try {
-                this.consoleServer = new ServerSocket(port);
-                this.consoleServer.setSoTimeout(pollWait);
-                this.listeners = new HashMap<UUID, ConsoleListener>();
-                this.buffers = new HashMap<UUID, List<STSup>>();
-                this.connectedConsoles = new ArrayList<UUID>();
-                this.disconnectedConsoles = new ArrayList<UUID>();
-                this.serverStatus = ServerStatus.OPEN;
-                System.out.println("Listening on port " + this.consoleServer.getLocalPort());
-            } catch (IOException e) {
-                e.printStackTrace();
-                clearServer();
-                this.serverStatus = ServerStatus.CLOSED;
-            }
-        }
-        return this.serverStatus;
-    }
-    
-    /**
-     * Returns a list of the consoles that have connected since last polled.
-     * @return List of consoles that have connected.
-     */
-    public synchronized List<UUID> getConnectedConsoles() {
-        List<UUID> result = new ArrayList<UUID>(this.connectedConsoles);
-        this.connectedConsoles.clear();
-        return result;
-    }
-    
-    private synchronized void addConnectedConsole(UUID id) {
-        this.connectedConsoles.add(id);
-    }
-    
-    /**
-     * Returns a list of the consoles that have disconnected since last polled.
-     * @return List of consoles that have disconnected.
-     */
-    public synchronized List<UUID> getDisconnectedConsoles() {
-        List<UUID> result = new ArrayList<UUID>(this.disconnectedConsoles);
-        this.disconnectedConsoles.clear();
-        return result;
-    }
-    
-    private synchronized void addDisconnectedConsole(UUID id) {
-        this.disconnectedConsoles.add(id);
-    }
-    
-    public synchronized Map<UUID, List<STSup>> receiveMessagesFromConsoles() {
-        Map<UUID, List<STSup>> result = this.buffers;
-        
+        this.consoleServer = null;
+        this.clients = new HashMap<UUID, ConsoleListener>();
         this.buffers = new HashMap<UUID, List<STSup>>();
-        for(UUID id : result.keySet()) {
-            this.buffers.put(id, new ArrayList<STSup>());
+        this.connectedConsoles = new ArrayList<UUID>();
+        this.disconnectedConsoles = new ArrayList<UUID>();
+        this.open = false;
+    }
+    
+    public boolean listen(Integer port) {
+        try {
+            this.consoleServer = new ServerSocket(port);
+            this.consoleServer.setSoTimeout(tickInterval);
+            this.open = true;
+            System.out.println("Listening on port " + port);
+        } catch (IOException e) {
+            e.printStackTrace();
+            this.open = false;
         }
-        
+        return this.open;
+    }
+    
+    public List<UUID> getConnectedConsoles() {
+        List<UUID> result = this.connectedConsoles;
+        this.connectedConsoles = new ArrayList<UUID>();
         return result;
     }
     
-    private synchronized void addMessagesToBuffer(UUID id, List<STSup> upMessages) {
-        this.buffers.get(id).addAll(upMessages);
+    public List<UUID> getDisconnectedConsoles() {
+        List<UUID> result = this.disconnectedConsoles;
+        this.disconnectedConsoles = new ArrayList<UUID>();
+        return result;
     }
     
-    public void disconnectConsole(UUID id) {
-        if(this.listeners.containsKey(id)) {
-            this.listeners.get(id).disconnect();
-        }
+    public boolean isOpen() {
+        return this.open;
     }
     
     public void sendMessageToConsole(UUID id, STSdown downMessage) {
-        ConsoleListener listener = getListener(id);
+        ConsoleListener listener = this.clients.get(id);
         if(listener != null) {
             listener.sendMessageToConsole(downMessage);
         }
     }
     
     public void sendMessageToAllConsoles(STSdown downMessage) {
-        Set<UUID> ids = getListenerIDs();
-        for(UUID id: ids) {
-            ConsoleListener listener = getListener(id);
-            if(listener != null) {
-                listener.sendMessageToConsole(downMessage);
-            }
+        for(UUID clientID : this.clients.keySet()) {
+            sendMessageToConsole(clientID, downMessage);
         }
     }
     
-    private synchronized void addListener(UUID id, ConsoleListener listener) {
-        this.listeners.put(id, listener);
-        this.buffers.put(id, new ArrayList<STSup>());
+    public synchronized Map<UUID, List<STSup>> receiveMessagesFromConsoles() {
+        Map<UUID, List<STSup>> result = buffers;
+        buffers = new HashMap<UUID, List<STSup>>();
+        return result;
     }
     
-    private synchronized void removeListener(UUID id) {
-        this.listeners.remove(id);
-        this.buffers.remove(id);
-    }
-    
-    private synchronized ConsoleListener getListener(UUID id) {
-        return this.listeners.get(id);
-    }
-    
-    private synchronized Set<UUID> getListenerIDs() {
-        return new HashSet<UUID>(this.listeners.keySet());
-    }
-    
-    public ServerStatus shutDown() {
-        this.serverStatus = ServerStatus.CLOSED;
-        try {
-            this.consoleServer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public synchronized void addMessageToBuffers(UUID clientID, STSup message) {
+        if(!buffers.containsKey(clientID)) {
+            buffers.put(clientID, new ArrayList<STSup>());
         }
-        return this.serverStatus;
+        buffers.get(clientID).add(message);
     }
     
-    private void internalShutDown() {
-        if(!this.consoleServer.isClosed()) {
-            try {
-                this.consoleServer.close();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        }
-        for(UUID id : getListenerIDs()) {
-            getListener(id).disconnect();
-        }
-        clearServer();
-    }
     
+    // TODO sort synchronisation issues
     @Override
     public void run() {
-        while(this.serverStatus == ServerStatus.OPEN) {
-            for(UUID id : getListenerIDs()) {
-                ConsoleListener listener = getListener(id);
-                List<STSup> upMessages = listener.receiveMessagesFromConsole();
-                addMessagesToBuffer(id, upMessages);
-                if(listener.getListenerStatus() == ListenerStatus.DISCONNECTED) {
-                    System.out.println("Console " + id.toString() + " disconnected.");
-                    removeListener(id);
-                    addDisconnectedConsole(id);
+        while(this.open) {
+            // Process messages from listeners.
+            Iterator<UUID> clientIterator = this.clients.keySet().iterator();
+            while(clientIterator.hasNext()) {
+                UUID clientID = clientIterator.next();
+                ConsoleListener listener = this.clients.get(clientID);
+                if(listener.isConnected()) {
+                    List<STSup> messages = listener.receiveMessagesFromConsole();
+                    for(STSup message : messages) {
+                        this.addMessageToBuffers(clientID, message);
+                    }
+                } else {
+                    // The client has disconnected
+                    clientIterator.remove();
+                    this.disconnectedConsoles.add(clientID);              
                 }
             }
+            
+            // Accept new connections
+            Socket consoleSocket = null;
             try {
-                UUID id = UUID.randomUUID();
-                Socket consoleSocket = this.consoleServer.accept();
-                addListener(id, new ConsoleListener(consoleSocket));
-                addConnectedConsole(id);
-                System.out.println("New Console " + id.toString() + " connected from " + consoleSocket.getInetAddress());
+                consoleSocket = this.consoleServer.accept();
             } catch (SocketTimeoutException e) {
                 // Timeouts are normal, do nothing
             } catch (SocketException e) {
                 // If the server is closed, it closed because we asked it to.
-                if(this.serverStatus == ServerStatus.OPEN) {
+                if(this.open) {
                     e.printStackTrace();
                 }
             } catch (IOException e) {
                 // Shutdown if anything else goes wrong
-                this.serverStatus = ServerStatus.CLOSED;
+                this.open = false;
+            }
+            
+            if(consoleSocket != null) {
+                try {
+                    ConsoleListener listener = new ConsoleListener(consoleSocket);
+                    UUID newID = UUID.randomUUID();
+                    this.clients.put(newID, listener);
+                    this.connectedConsoles.add(newID);
+                } catch (IOException e) {
+                    // Listener creation failed
+                    // Nothing to do here
+                }
             }
         }
-        internalShutDown();
     }
-
 }

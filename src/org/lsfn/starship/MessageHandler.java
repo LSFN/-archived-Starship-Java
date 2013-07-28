@@ -11,6 +11,7 @@ public class MessageHandler extends Thread {
 
     private static final String defaultNebulaHost = "localhost";
     private static final Integer defaultNebulaPort = 39461;
+    private static final Integer defaultConsolePort = 39460;
     private static final int tickInterval = 50;
     
     private ConsoleServer consoleServer;
@@ -19,8 +20,8 @@ public class MessageHandler extends Thread {
     private VisualSensors visualSensors;
     private boolean running;
     
-    public MessageHandler(ConsoleServer consoleServer) {
-        this.consoleServer = consoleServer;
+    public MessageHandler() {
+        this.consoleServer = new ConsoleServer();
         this.nebulaConnection = new NebulaConnection();
         this.lobby = new Lobby();
         this.visualSensors = new VisualSensors();
@@ -29,6 +30,10 @@ public class MessageHandler extends Thread {
     
     @Override
     public void run() {
+        // TODO combine listen and start
+        this.consoleServer.listen(defaultConsolePort);
+        this.consoleServer.start();
+        
         this.running = true;
         while(this.running) {
             // The only reason we need to handle connections (in A0.2) is so that
