@@ -65,7 +65,7 @@ public class NebulaConnection extends Thread {
         try {
             upMessage.writeDelimitedTo(this.nebulaOutput);
             this.nebulaOutput.flush();
-            System.out.println("FF\n" + upMessage);
+            System.out.println("UP\n" + upMessage);
             this.timeLastMessageSent = System.currentTimeMillis();
         } catch (IOException e) {
             e.printStackTrace();
@@ -106,6 +106,10 @@ public class NebulaConnection extends Thread {
             if(System.currentTimeMillis() >= timeInitiated + timeout) {
                 waiting = false;
             }
+        }
+        
+        if(this.joined) {
+            this.start();
         }
         
         return this.joined;

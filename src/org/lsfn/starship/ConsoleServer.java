@@ -144,6 +144,7 @@ public class ConsoleServer extends Thread {
                     UUID newID = UUID.randomUUID();
                     this.clients.put(newID, listener);
                     this.connectedConsoles.add(newID);
+                    System.out.println("New Console connected");
                 } catch (IOException e) {
                     // Listener creation failed
                     // Nothing to do here

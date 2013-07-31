@@ -78,7 +78,6 @@ public class MessageHandler extends Thread {
                                 joined = this.nebulaConnection.join(defaultNebulaHost, defaultNebulaPort);
                             }
                             if(joined) {
-                                this.nebulaConnection.start();
                                 System.out.println("Joined Nebula succeessfully.");
                                 sendConnectedMessages();
                             } else {
