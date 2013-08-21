@@ -12,13 +12,14 @@ import org.lsfn.starship.STS.STSdown;
 import org.lsfn.starship.STS.STSdown.Join.Response;
 import org.lsfn.starship.STS.STSup;
 
-public class NebulaConnection extends Thread {
+public class NebulaConnection implements Runnable {
 
     private static final Integer tickInterval = 50;
     private static final long timeout = 5000;
     private static final long timeBetweenPings = 3000;
     private static final STSup pingMessage = STSup.newBuilder().build();
     
+    private Thread nebulaConnectionThread;
     private Socket nebulaSocket;
     private BufferedInputStream nebulaInput;
     private BufferedOutputStream nebulaOutput;
@@ -29,6 +30,7 @@ public class NebulaConnection extends Thread {
     private UUID rejoinToken;
     
     public NebulaConnection() {
+        this.nebulaConnectionThread = null;
         this.nebulaSocket = null;
         this.nebulaInput = null;
         this.nebulaOutput = null;
@@ -109,7 +111,8 @@ public class NebulaConnection extends Thread {
         }
         
         if(this.joined) {
-            this.start();
+            this.nebulaConnectionThread = new Thread(this);
+            this.nebulaConnectionThread.start();
         }
         
         return this.joined;
@@ -130,6 +133,11 @@ public class NebulaConnection extends Thread {
             e.printStackTrace();
         }
         this.joined = false;
+        try {
+            this.nebulaConnectionThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
     
     public void sendMessageToNebula(STSup upMessage) {
@@ -140,7 +148,7 @@ public class NebulaConnection extends Thread {
                 this.timeLastMessageSent = System.currentTimeMillis();
             } catch (IOException e) {
                 e.printStackTrace();
-                this.joined = false;
+                disconnect();
             }
         }
     }
@@ -169,7 +177,7 @@ public class NebulaConnection extends Thread {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                this.joined = false;
+                disconnect();
             }
             
             if(System.currentTimeMillis() >= this.timeLastMessageSent + timeBetweenPings) {
