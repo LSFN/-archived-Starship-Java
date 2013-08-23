@@ -83,6 +83,10 @@ public class MessageHandler extends Thread {
                             } else {
                                 System.out.println("Failed to join Nebula.");
                             }
+                        } else if(connection.getConnectionCommand() == STSup.Connection.ConnectionCommand.DISCONNECT
+                                && this.nebulaConnection.isJoined()) {
+                            this.nebulaConnection.disconnect();
+                            sendDisonnectedMessages();
                         }
                     }
                     if(this.nebulaConnection.isJoined()) {
@@ -105,6 +109,15 @@ public class MessageHandler extends Thread {
         stsDownConnection.setConnected(true);
         stsDown.setConnection(stsDownConnection);
         System.out.println("Sending connected message.");
+        this.consoleServer.sendMessageToAllConsoles(stsDown.build());
+    }
+    
+    private void sendDisonnectedMessages() {
+        STSdown.Builder stsDown = STSdown.newBuilder();
+        STSdown.Connection.Builder stsDownConnection = STSdown.Connection.newBuilder();
+        stsDownConnection.setConnected(false);
+        stsDown.setConnection(stsDownConnection);
+        System.out.println("Sending disconnected message.");
         this.consoleServer.sendMessageToAllConsoles(stsDown.build());
     }
 }
