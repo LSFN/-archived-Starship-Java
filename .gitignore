@@ -12,3 +12,4 @@
 # Build directory #
 /build
 /src/org/lsfn/starship/STS.java
+/src/org/lsfn/common/STS.java

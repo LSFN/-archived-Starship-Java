@@ -4,8 +4,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.lsfn.starship.STS.STSdown;
-import org.lsfn.starship.STS.STSup;
+import org.lsfn.common.STS.STSdown;
+import org.lsfn.common.STS.STSup;
+import org.lsfn.starship.cache.Engines;
+import org.lsfn.starship.cache.Lobby;
+import org.lsfn.starship.cache.PowerDistribution;
+import org.lsfn.starship.cache.Reactor;
+import org.lsfn.starship.cache.Thrusters;
+import org.lsfn.starship.cache.VisualSensors;
 
 public class MessageHandler extends Thread {
 
@@ -18,6 +24,10 @@ public class MessageHandler extends Thread {
     private NebulaConnection nebulaConnection;
     private Lobby lobby;
     private VisualSensors visualSensors;
+    private Reactor reactor;
+    private PowerDistribution powerDistribution;
+    private Engines engines;
+    private Thrusters thrusters;
     private boolean running;
     
     public MessageHandler() {
@@ -25,6 +35,10 @@ public class MessageHandler extends Thread {
         this.nebulaConnection = new NebulaConnection();
         this.lobby = new Lobby();
         this.visualSensors = new VisualSensors();
+        this.reactor = new Reactor();
+        this.powerDistribution = new PowerDistribution();
+        this.engines = new Engines();
+        this.thrusters = new Thrusters();
         this.running = false;
     }
     
@@ -57,12 +71,24 @@ public class MessageHandler extends Thread {
                     if(downMessage.hasVisualSensors()) {
                         visualSensors.processVisualSensors(downMessage.getVisualSensors());
                     }
+                    if(downMessage.hasReactor()) {
+                    	reactor.processReactor(downMessage.getReactor());
+                    }
+                    if(downMessage.hasPowerDistribution()) {
+                    	powerDistribution.processPowerDistribution(downMessage.getPowerDistribution());
+                    }
+                    if(downMessage.hasEngines()) {
+                    	
+                    }
+                    if(downMessage.hasThrusters()) {
+                    	
+                    }
                     this.consoleServer.sendMessageToAllConsoles(downMessage);
                 }
             }
                 
             // Take input from Consoles and pass it on.
-            // Perform no processing on the input.
+            // Cache the input
             Map<UUID, List<STSup>> upMessages = consoleServer.receiveMessagesFromConsoles();
             for(UUID id : upMessages.keySet()) {
                 List<STSup> consoleUpMessages = upMessages.get(id);
@@ -89,6 +115,19 @@ public class MessageHandler extends Thread {
                             sendDisonnectedMessages();
                         }
                     }
+                    if(upMessage.hasReactor()) {
+                    	reactor.processReactor(upMessage.getReactor());
+                    }
+                    if(upMessage.hasPowerDistribution()) {
+                    	powerDistribution.processPowerDistribution(upMessage.getPowerDistribution());
+                    }
+                    if(upMessage.hasEngines()) {
+                    	engines.processEngines(upMessage.getEngines());
+                    }
+                    if(upMessage.hasThrusters()) {
+                    	thrusters.processThrusters(upMessage.getThrusters());
+                    }
+                    
                     if(this.nebulaConnection.isJoined()) {
                         this.nebulaConnection.sendMessageToNebula(upMessage);
                     }

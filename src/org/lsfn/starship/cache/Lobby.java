@@ -1,10 +1,10 @@
-package org.lsfn.starship;
+package org.lsfn.starship.cache;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.lsfn.starship.STS.STSdown;
+import org.lsfn.common.STS.STSdown;
 
 public class Lobby {
     

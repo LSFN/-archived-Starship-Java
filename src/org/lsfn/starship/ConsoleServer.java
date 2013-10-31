@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.lsfn.starship.STS.STSup.Join.JoinType;
-import org.lsfn.starship.STS.*;
+import org.lsfn.common.STS.STSdown;
+import org.lsfn.common.STS.STSup;
 
 /**
  * This class acts as a server for the Console clients to the Nebula.

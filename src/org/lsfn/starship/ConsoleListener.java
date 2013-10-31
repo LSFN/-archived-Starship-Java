@@ -7,7 +7,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lsfn.starship.STS.*;
+import org.lsfn.common.STS.STSdown;
+import org.lsfn.common.STS.STSup;
 
 /**
  * The idea here is that if the connection fails for some reason,
